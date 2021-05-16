@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>EventApp</title>
+    @yield('style')
 </head>
 <body>
     @yield('content')
