@@ -9,9 +9,30 @@
 
 <header>
     <nav>
-        <div class="header" >
-            <h1>Header</h1>
-            <p>My supercool header</p>
+        <div class="header" data-position="inline" style="width: 100%">
+            <table>
+                <tr>
+                    <th>
+                        <h1 style="display: inline; margin: 12px; float:left;">EventsApp</h1>
+                    </th>
+                    <th>
+                        <input style="display: block; float:left;" type="button" value="home">
+                    </th>
+                    <th>
+                        <input style="display: block; float:left;" type="button" value="In evidenza">
+                    </th>
+                    <th>
+                        <input style="display: block; float:left;" type="button" value="Esplora">
+                    </th>
+                    <th>
+                        <input style="display: block; float:left;" type="button" value="Form">
+                    <th style="width: 100%">
+                    </th>
+                    <th>
+                        <input style="display: inline; margin-right: 12px; float:left;" type="button" value="Login">
+                    </th>
+                </tr>
+            </table>
         </div>
     </nav>
 </header>
