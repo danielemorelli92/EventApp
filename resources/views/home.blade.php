@@ -3,11 +3,10 @@
 @section('content')
     <h1>HOME PAGE</h1>
 
-
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-                <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
             @else
                 <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
 
@@ -17,10 +16,6 @@
             @endauth
         </div>
     @endif
-
-
-
-
 
     <a href="/events">Lista eventi</a>
 @endsection
