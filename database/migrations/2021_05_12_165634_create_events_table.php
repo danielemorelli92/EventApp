@@ -36,14 +36,12 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('event_id');
-            $table->timestamps();
         });
         //tag dell'evento
         Schema::create('event_tag', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
             $table->foreignId('tag_id');
-            $table->timestamps();
         });
     }
 
