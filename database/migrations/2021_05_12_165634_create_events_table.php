@@ -15,6 +15,19 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->string('host');
+            $table->string('type'); //probabilmente questo campo si espanderà nell'entità Category
+            $table->unsignedInteger('max_partecipants')->nullable();
+            $table->decimal('price')->nullable();
+            $table->string('ticket_office', 2083)->nullable();
+            $table->string('website', 2083)->nullable();
+            $table->text('address')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->dateTime('starting_time')->nullable();
+            $table->dateTime('ending_time')->nullable();
             $table->timestamps();
         });
     }
