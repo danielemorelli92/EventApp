@@ -30,6 +30,13 @@ class CreateEventsTable extends Migration
             $table->dateTime('ending_time')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('event_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('users_id');
+            $table->foreignId('events_id');
+            $table->timestamps();
+        });
     }
 
     /**
