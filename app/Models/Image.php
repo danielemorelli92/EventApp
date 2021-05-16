@@ -9,6 +9,12 @@ class Image extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'url',
+        'title',
+        'event_id'
+    ];
+
     public function events() {
         return $this->belongsTo(Event::class);
     }

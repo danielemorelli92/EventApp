@@ -26,7 +26,7 @@ class CreateEventsTable extends Migration
             $table->text('address')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->dateTime('starting_time')->nullable();
+            $table->dateTime('starting_time')->nullable(); //TODO - Per testing ora è nullable
             $table->dateTime('ending_time')->nullable();
             $table->timestamps();
         });
@@ -43,6 +43,7 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->foreignId('event_id');
             $table->foreignId('tag_id');
+            $table->timestamps();
         });
     }
 
@@ -54,5 +55,7 @@ class CreateEventsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('events');
+        Schema::dropIfExists('event_user');
+        Schema::dropIfExists('event_tag');
     }
 }

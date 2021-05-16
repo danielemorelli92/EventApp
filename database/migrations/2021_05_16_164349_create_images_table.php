@@ -17,6 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->string('url', 2083);
             $table->string('title')->nullable();
+            $table->foreignId('event_id');
             $table->timestamps();
         });
     }
