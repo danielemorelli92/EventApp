@@ -4,3 +4,15 @@ body, html {
     margin: 0;
 }
 
+.header{
+    padding: 60px;
+    text-align: center;
+    background: lime;
+    color: red;
+    font-size: 30px;
+}
+.header-element{
+    display: block;
+    float:left;
+    background-color: #00ff00
+}
