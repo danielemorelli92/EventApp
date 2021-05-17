@@ -6,11 +6,27 @@
 
 @section('content')
 
-    <div class="two-columns-container">
-        <div class="main-content-column">Main</div>
-        <div class="right-side-column">
-            <h1>Right</h1></div>
+
+    <div class="main-content-column">
+        <h2>Eventi in base ai filtri</h2>
+        <div class="events-list">
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+            <div class="event-item-rectangle"></div>
+        </div>
+
     </div>
+    <div class="right-side-column">
+        <h1>Right</h1></div>
 
 
     <!--

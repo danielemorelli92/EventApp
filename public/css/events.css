@@ -3,21 +3,46 @@ body, html {
     height: 100%;
     margin: 0;
 }
-
+.whole-page-two-columns{
+    width: 100%;
+    height: 100%;
+    background: blue;
+    grid-template-areas: "top-bar top-bar"
+    "main sidebar";
+    display: grid;
+    grid-template-columns: auto 300px;
+    grid-template-rows: 120px auto;
+}
 .header{
+    grid-area: top-bar;
+    height: 120px;
     text-align: center;
     background: lime;
     font-size: 30px;
-}
-
-.two-columns-container{
-    display: flex;
-    flex-direction: row;
-    background: #00ff00;
-}
-.main-content-column{
-    background: #ff00ff;
+    /*TODO bloccare scrolling*/
 }
 .right-side-column{
+    grid-area: sidebar;
+    width: 300px;
+    background: #ff0000;
+    /*bloccare scrolling*/
+}
+.main-content-column{
+    grid-area: main;
+    width: 100%;
     background: #ff00ff;
+    /*scrolling interno?*/
+}
+.events-list{
+    background: #002000;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*TODO inserire margine sinistro flessibile*/
+}
+.event-item-rectangle{
+    width: 550px;
+    height: 180px;
+    background: #ffffff;
+    margin: 8px;
 }
