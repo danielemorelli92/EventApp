@@ -22,8 +22,10 @@ body, html {
     /*TODO bloccare scrolling*/
 }
 .right-side-column{
-    grid-area: sidebar;
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    grid-area: sidebar;
     background: #ff0000;
     /*bloccare scrolling*/
 }
