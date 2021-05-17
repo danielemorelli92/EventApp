@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.layout-header-two-columns')
 
 @section ('style')
     <link rel="stylesheet" type="text/css" href="{{ url('/css/events.css') }}"

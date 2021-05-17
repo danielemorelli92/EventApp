@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.layout-header-two-columns')
 
 @section('content')
     <h1>HOME PAGE</h1>
