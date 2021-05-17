@@ -6,6 +6,12 @@
 
 @section('content')
 
+    <div class="two-columns-container">
+        <div class="main-content-column">Main</div>
+        <div class="right-side-column">
+            <h1>Right</h1></div>
+    </div>
+
 
     <!--
 

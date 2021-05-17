@@ -9,3 +9,15 @@ body, html {
     background: lime;
     font-size: 30px;
 }
+
+.two-columns-container{
+    display: flex;
+    flex-direction: row;
+    background: #00ff00;
+}
+.main-content-column{
+    background: #ff00ff;
+}
+.right-side-column{
+    background: #ff00ff;
+}
