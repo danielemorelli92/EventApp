@@ -14,12 +14,23 @@ body, html {
     grid-template-rows: 64px auto;
 }
 .header{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     grid-area: top-bar;
     height: 64px;
     text-align: center;
     background: lime;
     font-size: 16px;
     /*TODO bloccare scrolling*/
+}
+.header-logo{
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+}
+.header-tabs{
+    /*TODO stile dei bottoni per cambio tab*/
 }
 .right-side-column{
     width: 300px;

@@ -8,22 +8,19 @@
 <body>
 
 <div class="whole-page-two-columns">
-            <div class="header" data-position="inline" style="width: 100%">
-                <table>
-                    <tr>
-                        <th><h1 style="display: inline; margin: 12px; float:left;">EventsApp</h1></th>
-                        <th><input style="display: block; float:left;" type="button" value="home"></th>
-                        <th><input style="display: block; float:left;" type="button" value="In evidenza"></th>
-                        <th><input style="display: block; float:left;" type="button" value="Esplora"></th>
-                        <th><input style="display: block; float:left;" type="button" value="Form"></th>
-                        <th style="width: 100%"></th> <!-- spacer -->
-                        <th><input style="display: inline; margin-right: 12px; float:left;" type="button" value="Login"></th>
-                    </tr>
-                </table>
-            </div>
+    <div class="header" data-position="inline" style="width: 100%">
+
+        <div class="header-logo" style="margin: 12px;">EventsApp</div>
+        <input class="header-tabs" type="button" value="home">
+        <input class="header-tabs" type="button" value="In evidenza">
+        <input class="header-tabs" type="button" value="Esplora">
+        <input class="header-tabs" type="button" value="Form">
+        <div style="width: 100%"></div> <!--spacer-->
+        <input style="margin-right: 4px;" type="button" value="Registrati">
+        <input style="margin-right: 12px;" type="button" value="Login">
+    </div>
     @yield('content')
 </div>
-
 
 
 </body>
