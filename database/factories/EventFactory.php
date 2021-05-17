@@ -22,7 +22,19 @@ class EventFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->sentence(),
+            'description' => $this->faker->text(),
+            'host' => $this->faker->name(),
+            'type' => $this->faker->word(),
+            'max_partecipants' => $this->faker->numberBetween(10, 10000),
+            'price' => $this->faker->numberBetween(0, 50000),
+            'ticket_office' => $this->faker->url(),
+            'website' => $this->faker->url(),
+            'address' => $this->faker->address(),
+            'latitude' => $this->faker->latitude(),
+            'longitude' => $this->faker->longitude(),
+            'starting_time' => $this->faker->dateTime(),
+            'ending_time' => $this->faker->dateTime()
         ];
     }
 }
