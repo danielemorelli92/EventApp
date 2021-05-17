@@ -11,14 +11,14 @@ body, html {
     "main sidebar";
     display: grid;
     grid-template-columns: auto 300px;
-    grid-template-rows: 90px auto;
+    grid-template-rows: 64px auto;
 }
 .header{
     grid-area: top-bar;
-    height: 90px;
+    height: 64px;
     text-align: center;
     background: lime;
-    font-size: 24px;
+    font-size: 16px;
     /*TODO bloccare scrolling*/
 }
 .right-side-column{
