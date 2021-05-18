@@ -11,7 +11,7 @@
         <div class="main-content-column">
             <div class="section-title">Eventi in base ai filtri</div>
             <div class="events-list">
-                <a class="event-rectangle" href="#">
+                <a class="event-rectangle" href="/event">
                         <div class="event-rectangle-image-container">
                             <!--TODO inserire immagine <img src="imgBOH" alt="BOHBOH">-->
                         </div>

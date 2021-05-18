@@ -27,26 +27,6 @@
         </div>
         <div style="width: auto; height: min-content; display: flex; flex-wrap: wrap; margin: 8px">
             <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
-            <div class="category-oval">Category</div>
         </div>
     </div>
 
