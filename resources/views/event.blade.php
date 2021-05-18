@@ -36,7 +36,7 @@
 
         </div>
         <button style="margin-top: auto">Registrati</button>
-        <button>Aggiungi al calendario</button>
+        <!--<button>Aggiungi al calendario</button>-->
 
     </div>
     </div>
