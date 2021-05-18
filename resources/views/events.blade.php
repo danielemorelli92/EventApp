@@ -37,7 +37,7 @@
         <div class="events-parameters-selection-box">
 
         </div>
-        <div class="section-title">Interessi</div>
+        <div class="section-title">Filtra per interesse</div>
         <div class="categories-selection-box">
         </div>
     </div>
