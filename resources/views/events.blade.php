@@ -16,8 +16,22 @@
     </div>
 
     <div class="right-side-column">
+
+        <div class="section-title">Ricerca per testo</div>
+        <form method="post" action="/" class="modulo-ricerca">
+            <input id="ricerca_testuale" class="modulo-ricerca-item" type="text" placeholder="Cerca per..." required>
+            <input id="submit" type="submit" value="CERCA">
+        </form>
+
         <div class="section-title">Filtro distanza/data</div>
-        <div class="events-parameters-selection-box"></div>
+        <div class="events-parameters-selection-box">
+            <form method="post" action="/" class="modulo-ricerca" style="margin-top: 4px">
+                <input id="luogo" class="modulo-ricerca-item" type="text" placeholder="Luogo" required>
+                <input id="distanza_max" class="modulo-ricerca-item" type="text" placeholder="Distanza max" required>
+                <input id="submit" type="submit" value="CONFERMA">
+            </form>
+        </div>
+
         <div class="section-title">Filtra per interesse</div>
         <div class="categories-selection-box">
         </div>
