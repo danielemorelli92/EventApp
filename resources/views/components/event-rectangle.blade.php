@@ -5,9 +5,6 @@
     <div class="event-rectangle-title">Event title</div>
     <div class="event-rectangle-attributes-group">
         <div class="event-rectangle-attribute">
-            Category
-        </div>
-        <div class="event-rectangle-attribute">
             Place
         </div>
         <div class="event-rectangle-attribute">

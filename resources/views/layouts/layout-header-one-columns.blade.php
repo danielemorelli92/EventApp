@@ -7,9 +7,8 @@
 </head>
 <body>
 
-<div class="whole-page-three-columns">
+<div class="whole-page-one-columns">
     <div class="header" style="width: 100%">
-
         <div class="header-logo" style="margin: 12px;">EventsApp</div>
         <form action="/">
             <input class="header-tabs" type="submit" value="Home" />

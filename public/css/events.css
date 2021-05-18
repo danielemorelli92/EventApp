@@ -7,6 +7,16 @@ a{
     text-decoration: inherit;
     color: inherit;
 }
+.whole-page-one-columns{
+    width: 100%;
+    height: 100%;
+    background: blue;
+    grid-template-areas: "top-bar"
+    "main";
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 64px auto;
+}
 .whole-page-two-columns{
     width: 100%;
     height: 100%;

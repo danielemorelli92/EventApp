@@ -25,6 +25,9 @@ Route::get('/', function () {
 Route::get('/events', function () {
     return view('events');
 });
+Route::get('/events-highlighted', function () {
+    return view('events-highlighted');
+});
 Route::get('/event', function () {
     return view('event');
 });

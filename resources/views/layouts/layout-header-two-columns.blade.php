@@ -13,7 +13,7 @@
         <form action="/">
             <input class="header-tabs" type="submit" value="Home" />
         </form>
-        <form action="#">
+        <form action="/events-highlighted">
             <input class="header-tabs" type="submit" value="In evidenza" />
         </form>
         <form action="/events">
