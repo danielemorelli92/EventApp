@@ -99,8 +99,8 @@ a{
     max-width: 800px;
     flex-grow: 1;
     display: grid;
-    grid-template-areas: "image title"
-    "image attributes";
+    grid-template-areas: "image-rectangle title-rectangle"
+    "image-rectangle attributes-rectangle";
     grid-template-columns: 180px auto;
     grid-template-rows: 136px 44px;
     width: 550px;
@@ -126,12 +126,12 @@ a{
     margin-top: 8px;
     margin-bottom: 8px;
     background-color:#aaa;
-    grid-area: image;
+    grid-area: image-rectangle;
 }
 .event-rectangle-title{
     word-wrap: break-word;
     background-color:#aaa;
-    grid-area: title;
+    grid-area: title-rectangle;
     margin: 8px;
     font-size: 22px;
     font-weight: bold;
@@ -140,12 +140,53 @@ a{
     display: flex;
     width: auto;
     background-color:#fff;
-    grid-area: attributes;
+    grid-area: attributes-rectangle;
     margin: 8px;
 }
 .event-rectangle-attribute{
     text-align: center;
     font-size: 18px;
+    flex-grow: 1;
+    font-weight: normal
+}
+.event-square{
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    height: 180px;
+    background: #ffffff;
+    margin: 8px;
+}
+.event-square-image-container{
+    height: 100%;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    background-color:#aaa;
+}
+.event-square-title{
+    word-wrap: break-word;
+    background-color:#fff;
+    min-height: 36px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-right: 8px;
+    margin-left: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.event-square-attributes-group{
+    display: flex;
+    width: auto;
+    background-color:#fff;
+    margin-bottom: 8px;
+    margin-top: 0px;
+    margin-right: 8px;
+    margin-left: 8px;
+}
+.event-square-attribute{
+    text-align: center;
+    font-size: 16px;
     flex-grow: 1;
     font-weight: normal
 }
