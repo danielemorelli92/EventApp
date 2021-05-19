@@ -1,4 +1,4 @@
-<a class="event-square" href="/event">
+<a name="event" class="event-square" href="/event">
     <div class="event-square-image-container">
         <!--TODO inserire immagine <img src="imgBOH" alt="BOHBOH">-->
     </div>
