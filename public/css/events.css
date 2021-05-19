@@ -275,3 +275,8 @@ a{
     width: auto;
     height: 400px;
 }
+
+.image-small {
+    max-width:100%;
+    max-height:100%;
+}

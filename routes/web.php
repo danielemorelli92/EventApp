@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\{Event};
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +24,17 @@ Route::get('/', function () {
     return view('home');
 });
 Route::get('/events', function () {
-    return view('events');
+    return view('events', [
+        'events' => Event::all()
+    ]);
 });
 Route::get('/events-highlighted', function () {
     return view('events-highlighted');
 });
-Route::get('/event', function () {
-    return view('event');
+Route::get('/event/{event}', function (Event $event) {
+    return view('event', [
+        'event' => $event
+    ]);
 });
 Route::get('/dashboard', function () {
     return view('dashboard');
