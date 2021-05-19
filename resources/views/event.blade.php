@@ -10,7 +10,7 @@
     <div class="left-side-column">
         <div style="display: flex; align-items: center; flex-direction: row">
             <div style="margin-left: 8px; background-color: green; width: 16px; height: 16px"></div>
-            <div class="section-title">torna a lista eventi</div> <!-- TODO cambiare stile -->
+            <div class="section-title">chiudi</div> <!-- TODO cambiare stile -->
         </div>
         <div class="section-title">Immagini</div>
         <div class="event-images-list">
@@ -35,7 +35,20 @@
         <div class="event-info-box">
 
         </div>
-        <button style="margin-top: auto">Registrati</button>
+        @if (Route::has('login'))
+            @auth
+                <button style="margin-top: auto">Registrati</button>
+            @else
+                <form method="get" action="/" class="not-registered-user-info-form"
+                      style="margin-top: auto; margin-bottom: 8px; display: flex; flex-direction: column; width: 100%"
+                >
+                    <input style="margin-left: 8px; margin-right: 8px;"  name="cf-form" type="text" placeholder="Codice fiscale" required>
+                    <button style="margin-left: 8px; margin-right: 8px;">Registrati</button>
+
+                </form>
+            @endauth
+        @endif
+
         <!--<button>Aggiungi al calendario</button>-->
 
     </div>
