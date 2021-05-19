@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\{Event};
+use App\Models\{Event,Tag,User};
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +25,8 @@ Route::get('/', function () {
 });
 Route::get('/events', function () {
     return view('events', [
-        'events' => Event::all()
+        'events' => Event::all(),
+        'tags' => Tag::all()
     ]);
 });
 Route::get('/events-highlighted', function () {
