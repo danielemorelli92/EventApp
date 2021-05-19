@@ -27,15 +27,15 @@
         </div>
     </div>
 
-    <form method="get" action="/" class="right-side-column" style="...">
-        <input id="submit" type="submit" value="CERCA">
-        <input name="ricerca_testuale" class="modulo-ricerca-item" type="text" placeholder="Ricerca testuale" >
+    <form method="get" action="/events" class="right-side-column" style="...">
+        <input type="submit" value="CERCA">
+        <input name="search" class="modulo-ricerca-item" type="text" placeholder="Ricerca testuale">
         <label class="section-title">Filtro distanza</label>
-        <input id="luogo" class="modulo-ricerca-item" type="text" placeholder="Luogo" >
-        <input id="distanza-max" class="modulo-ricerca-item" type="text" placeholder="Distanza max" >
+        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo" >
+        <input class="modulo-ricerca-item" type="text" name="dist-max" placeholder="Distanza max" >
         <label class="section-title">Filtro data</label>
         <div>
-            <input type="radio" class="radio-filter-item" id="data-max" name="data-max" value="today">
+            <input type="radio" class="radio-filter-item" id="data-max" name="data-max" value="today" default>
             <label for="data-max">Oggi</label>
         </div>
         <div>
@@ -54,7 +54,7 @@
         <label class="section-title">Filtra per interesse</label>
         <div>
             @foreach($tags as $tag)
-                <input type="checkbox" class="checkbox-filter-item" id="category" name="{{ $tag->id }}" value="a-category">
+                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}">
                 <label for="category">{{ $tag->body }}<br></label>
             @endforeach
         </div>

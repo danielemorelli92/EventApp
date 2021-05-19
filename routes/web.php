@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
-use App\Models\{Event,Tag,User};
+use App\Models\{Event};
 
 /*
 |--------------------------------------------------------------------------
@@ -23,20 +24,17 @@ Route::get('/', function () {
 Route::get('/', function () {
     return view('home');
 });
-Route::get('/events', function () {
-    return view('events', [
-        'events' => Event::all(),
-        'tags' => Tag::all()
-    ]);
-});
+
+Route::get('/events', [EventController::class, 'index']);
+
 Route::get('/events-highlighted', function () {
-    return view('events-highlighted');
-});
-Route::get('/event/{event}', function (Event $event) {
-    return view('event', [
-        'event' => $event
+    return view('events-highlighted', [
+        'events' => Event::all()
     ]);
 });
+
+Route::get('/event/{event}', [EventController::class, 'show']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
