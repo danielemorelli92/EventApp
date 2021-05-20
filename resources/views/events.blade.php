@@ -35,19 +35,19 @@
         <input class="modulo-ricerca-item" type="text" name="dist-max" placeholder="Distanza max" >
         <label class="section-title">Filtro data</label>
         <div>
-            <input type="radio" class="radio-filter-item" id="data-max" name="data-max" value="today" default>
+            <input type="radio" class="radio-filter-item" name="data-max" value="today" default>
             <label for="data-max">Oggi</label>
         </div>
         <div>
-            <input type="radio" class="radio-filter-item" id="data-max" name="data-max" value="tomorrow">
+            <input type="radio" class="radio-filter-item" name="data-max" value="tomorrow">
             <label for="data-max">Domani</label>
         </div>
         <div>
-            <input type="radio" class="radio-filter-item" id="data-max" name="data-max" value="week">
+            <input type="radio" class="radio-filter-item" name="data-max" value="week">
             <label for="data-max">Questa settimana</label>
         </div>
         <div>
-            <input type="radio" class="radio-filter-item" id="data-max" name="data-max" value="month">
+            <input type="radio" class="radio-filter-item" name="data-max" value="month">
             <label for="data-max">Questo mese</label>
         </div>
 

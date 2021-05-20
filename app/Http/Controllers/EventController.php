@@ -21,14 +21,14 @@ class EventController extends Controller
 
         $query = DB::table('events');
 
-        if (count($param) != 0) {
+        if (count($param) > 0) {
 
             if (array_key_exists('search', $param) and !blank($param['search'])) {
                 $query->where('title','like','%' . $param['search'] . '%');
                 $query->orWhere('description','like','%' . $param['search'] . '%');
             }
             if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
-                $query->where('address', '=', $param['luogo']);
+                //$query->where('address', 'like', $param['luogo']);
             }
             /*if (!blank($param['dist-max'])) {
                 $filters[] = ['']
