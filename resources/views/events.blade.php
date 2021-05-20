@@ -29,10 +29,16 @@
 
     <form method="get" action="/events" class="right-side-column" style="...">
         <input type="submit" value="CERCA">
-        <input name="search" class="modulo-ricerca-item" type="text" placeholder="Ricerca testuale">
+        <input
+            name="search"
+            class="modulo-ricerca-item"
+            type="text"
+            placeholder="Ricerca testuale"
+            value="{{ request('search') }}"
+        >
         <label class="section-title">Filtro distanza</label>
-        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo" >
-        <input class="modulo-ricerca-item" type="text" name="dist-max" placeholder="Distanza max" >
+        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo">
+        <input class="modulo-ricerca-item" type="text" name="dist-max" placeholder="Distanza max">
         <label class="section-title">Filtro data</label>
         <div>
             <input type="radio" class="radio-filter-item" name="data-max" value="today" default>

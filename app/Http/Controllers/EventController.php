@@ -19,7 +19,7 @@ class EventController extends Controller
             }
         }
 
-        $query = DB::table('events');
+        $query = Event::query();
 
         if (count($param) > 0) {
 

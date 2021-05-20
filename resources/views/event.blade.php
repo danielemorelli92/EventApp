@@ -36,34 +36,43 @@
         <div class="event-info-box">
 
         </div>
+    @if (Route::has('login'))
+        @auth
+            @if($event->users->contains(Auth::user())) <!-- Controlla se l'utente collegato è registrato all'evento -->
+                <!-- onClick usa JavaScript, andrebbe prima comunicata al server
+                      la registrazione dell'utente, poi il refresh che già c'è -->
+                <form action="/delete-registration" method="post">
+                    @csrf
+                    <button type="submit" name="event" value="{{ $event->id }}"
+                            style="margin-top: auto">Annulla registrazione
+                    </button>
+                </form>
 
-        @if (false) <!-- TODO if che controlla se l'utente è registrato all'evento -->
-            <!-- onClick usa JavaScript, andrebbe prima comunicata al server
-                  la registrazione dell'utente, poi il refresh che già c'è -->
-            <button onClick="window.location.reload();" style="margin-top: auto">Annulla registrazione</button>
-        @else
-            @if (Route::has('login'))
-                @auth <!-- sei loggato-->
-                                <!-- onClick usa JavaScript, andrebbe prima comunicata al server
-                                      la registrazione dell'utente, poi il refresh che già c'è -->
-                        <button onClick="window.location.reload();"
-                            style="margin-top: auto">Registrati</button>
-                @else <!-- non sei loggato-->
-                    <!-- onsubmit usa JavaScript, andrebbe prima comunicata al server
-                          la registrazione dell'utente, poi il refresh che già c'è -->
-                    <form method="get" onsubmit="window.location.reload();" class="not-registered-user-info-form"
-                          style="margin-top: auto; margin-bottom: 8px; display: flex; flex-direction: column; width: 100%" >
-                        <input style="margin-left: 8px; margin-right: 8px;" name="cf-form" type="text"
-                               placeholder="Codice fiscale" required>
-                        <button style="margin-left: 8px; margin-right: 8px;">Registrati</button>
-
+                @else
+                    <form action="/registration" method="post">
+                        @csrf
+                        <button type="submit" name="event" value="{{ $event->id }}"
+                                style="margin-top: auto">Registrati
+                        </button>
                     </form>
-            @endauth
+
             @endif
-        @endif
-
-
-
+        @endauth
+        @guest
+            <!-- non sei loggato-->
+                <!-- onsubmit usa JavaScript, andrebbe prima comunicata al server
+                      la registrazione dell'utente, poi il refresh che già c'è -->
+                <form method="post" action="/registration" class="not-registered-user-info-form"
+                      style="margin-top: auto; margin-bottom: 8px; display: flex; flex-direction: column; width: 100%">
+                    @csrf
+                    <input style="margin-left: 8px; margin-right: 8px;" name="cf" type="text"
+                           placeholder="Codice fiscale" required>
+                    <button type="submit" name="event" value="{{ $event->id }}"
+                            style="margin-left: 8px; margin-right: 8px;">Registrati
+                    </button>
+                </form>
+        @endguest
+    @endif
 
     <!--<button>Aggiungi al calendario</button>-->
 
