@@ -26,7 +26,7 @@
         </div>
         <div style="width: auto; height: min-content; display: flex; flex-wrap: wrap; margin: 8px">
             @foreach($event->tags as $tag)
-            <div class="category-oval">{{ $tag->body }}</div>
+                <div class="category-oval">{{ $tag->body }}</div>
             @endforeach
         </div>
     </div>
@@ -36,21 +36,36 @@
         <div class="event-info-box">
 
         </div>
-        @if (Route::has('login'))
-            @auth
-                <button style="margin-top: auto">Registrati</button>
-            @else
-                <form method="get" action="/" class="not-registered-user-info-form"
-                      style="margin-top: auto; margin-bottom: 8px; display: flex; flex-direction: column; width: 100%"
-                >
-                    <input style="margin-left: 8px; margin-right: 8px;"  name="cf-form" type="text" placeholder="Codice fiscale" required>
-                    <button style="margin-left: 8px; margin-right: 8px;">Registrati</button>
 
-                </form>
+        @if (false) <!-- TODO if che controlla se l'utente è registrato all'evento -->
+            <!-- onClick usa JavaScript, andrebbe prima comunicata al server
+                  la registrazione dell'utente, poi il refresh che già c'è -->
+            <button onClick="window.location.reload();" style="margin-top: auto">Annulla registrazione</button>
+        @else
+            @if (Route::has('login'))
+                @auth <!-- sei loggato-->
+                                <!-- onClick usa JavaScript, andrebbe prima comunicata al server
+                                      la registrazione dell'utente, poi il refresh che già c'è -->
+                        <button onClick="window.location.reload();"
+                            style="margin-top: auto">Registrati</button>
+                @else <!-- non sei loggato-->
+                    <!-- onsubmit usa JavaScript, andrebbe prima comunicata al server
+                          la registrazione dell'utente, poi il refresh che già c'è -->
+                    <form method="get" onsubmit="window.location.reload();" class="not-registered-user-info-form"
+                          style="margin-top: auto; margin-bottom: 8px; display: flex; flex-direction: column; width: 100%" >
+                        <input style="margin-left: 8px; margin-right: 8px;" name="cf-form" type="text"
+                               placeholder="Codice fiscale" required>
+                        <button style="margin-left: 8px; margin-right: 8px;">Registrati</button>
+
+                    </form>
             @endauth
+            @endif
         @endif
 
-        <!--<button>Aggiungi al calendario</button>-->
+
+
+
+    <!--<button>Aggiungi al calendario</button>-->
 
     </div>
     </div>
