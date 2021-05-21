@@ -28,5 +28,4 @@ class EventExploreTest extends TestCase
         $this->assertGreaterThan(0, count($matches), 'Non vengono visualizzati eventi');
         // verifica che ci sia almeno un link a evento cliccabile
     }
-
 }
