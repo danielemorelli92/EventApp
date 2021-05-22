@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventRegistrationController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\{Event};
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +24,30 @@ Route::get('/', function () {
 */
 
 Route::get('/', function () {
-    return view('home');
+    if (Auth::check()) {
+        return redirect('/dashboard');
+    } else {
+        return redirect('/events-highlighted');
+    }
 });
-Route::get('/events', function () {
-    return view('events');
+
+Route::get('/events', [EventController::class, 'index']);
+
+Route::get('/events-highlighted', function () {
+    return view('events-highlighted', [
+        'events' => Event::all()
+    ]);
 });
-Route::get('/event', function () {
-    return view('event');
-});
+
+Route::get('/event/{event}', [EventController::class, 'show']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::post('/registration', [EventRegistrationController::class, 'create']);
+
+Route::post('/delete-registration', [EventRegistrationController::class, 'delete']);
+
+
+require __DIR__ . '/auth.php';
