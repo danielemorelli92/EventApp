@@ -17,7 +17,7 @@ class EventRegistrationController extends Controller
         } else {
             $registration = ExternalRegistration::create([
                 'event_id' => $event->id,
-                'CF' => request('cf')
+                'cf' => request('cf')
             ]);
 
         }
@@ -31,13 +31,5 @@ class EventRegistrationController extends Controller
             $event->users()->detach(Auth::user());
             return redirect('/event/' . request('event'));
         }
-    }
-
-    /**
-     * Registrazione ad un evento da parte di un utente NON registrato
-     */
-    public function guestRegistration()
-    {
-
     }
 }

@@ -16,7 +16,7 @@ class CreateExternalRegistrationsTable extends Migration
         Schema::create('external_registrations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
-            $table->string('CF');
+            $table->string('cf');
             $table->timestamps();
         });
     }
