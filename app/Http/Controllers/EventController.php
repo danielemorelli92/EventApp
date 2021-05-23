@@ -72,25 +72,25 @@ class EventController extends Controller
             'event' => $event
         ]);
     }
-    /**
-     * Optimized distance algorithm
-     *
-     * @param float $latitudeFrom
-     * @param float $longitudeFrom
-     * @param float $latitudeTo
-     * @param float $longitudeTo
-     *
-     * @return float [in km]
-     */
+
     protected function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo)
     {
         $rad = M_PI / 180;
         //Calculate distance from latitude and longitude
         $theta = $longitudeFrom - $longitudeTo;
         $dist = sin($latitudeFrom * $rad)
-            * sin($latitudeTo * $rad) +  cos($latitudeFrom * $rad)
+            * sin($latitudeTo * $rad) + cos($latitudeFrom * $rad)
             * cos($latitudeTo * $rad) * cos($theta * $rad);
 
-        return acos($dist) / $rad * 60 *  1.853;
+        return acos($dist) / $rad * 60 * 1.853;
+    }
+
+    public function getDistanceToMe($latitude, $longitude)
+    {
+        // Coordinate di Pescara
+        $myLatitude = 42.4612;
+        $myLongitude = 14.2111;
+
+        return getDistance($latitude, $longitude, $myLatitude, $myLongitude);
     }
 }
