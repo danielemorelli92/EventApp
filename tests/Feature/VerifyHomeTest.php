@@ -28,7 +28,11 @@ class VerifyHomeTest extends TestCase
 
 
         preg_match_all('/href="\/event\/\d+"/', $html_content, $matches);
-        dd($matches[0]);
-
+        $matches = array_map(function ($event) {
+            preg_match('/\d+/', $event, $id);
+            return $id[0];
+        }, $matches[0]);
+        // da qui in poi $matches conterrà la lista degli id degli eventi
+        // che compaiono nella pagina (in base all'ordine in cui compaiono)
     }
 }
