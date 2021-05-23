@@ -25,9 +25,12 @@ class VerifyHomeTest extends TestCase
         Event::factory(15)->create();
         $html_content = $this->get('/events-highlighted?')->content();  //estraggo la pagina html visualizzata dall'utente
         $count = 0; // contiene quanti eventi vengono visualizzati
-        foreach($event in $html_content ($this->count++))
-        $this->assertEquals(12, $count, 'non ci sono 12 eventi');
 
+        //$this->assertEquals(12, $count, 'non ci sono 12 eventi');
+        // pattern per <a name="event"...</a>
+        $matches = [];
+        preg_match('href="/event/\d+"', $html_content, $matches);
+        dd($matches);
 
     }
 }
