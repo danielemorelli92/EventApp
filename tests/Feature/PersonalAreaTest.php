@@ -49,14 +49,27 @@ class PersonalAreaTest extends TestCase
     public function test_a_user_can_view_his_selected_interests_on_his_page()
     {
         //<input type="checkbox" name="tags[]" value="{{ $tag->id }}" checked>{{ $tag->body }}</input>
-        // regex= "/\<input type="checkbox".+?value="\d+" (checked)?\>/"
+        // regex= '/\<input type="checkbox".+?value="\d+" (checked)?\>/'
         $user = User::factory()->create();
         $request = $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
         $html_page = $request->content();
+        preg_match_all('/\<input type="checkbox".+?value="\d+" checked\>/', $html_page, $matches);
+        $matches = $matches[0];
 
+        $actual = array_map(function ($elem) {
+            preg_match('/\d+/', $elem, $ids);
+            return $ids[0];
+        }, $matches);  // actual adesso contiene la lista di id delle checkbox selezionate
 
+        $expected = $user->tags->values()->pluck('id')->toArray();
+        foreach ($expected as $elem) {
+            $this->assertContains($elem, $actual);
+        }
+        foreach ($actual as $elem) {
+            $this->assertContains($elem, $expected);
+        }
     }
 }
