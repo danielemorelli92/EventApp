@@ -78,4 +78,12 @@ class PersonalAreaTest extends TestCase
     {
 
     }
+
+    // Un utente deve poter visualizzare nella propria area personale gli eventi suggeriti in base alle
+    // categorie selezionate precedentemente nella propria area personale.
+    public function test_a_user_can_view_suggested_events()
+    {
+
+    }
+
 }
