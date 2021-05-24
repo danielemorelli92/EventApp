@@ -33,8 +33,8 @@ class EventFactory extends Factory
             'address' => $this->faker->address(),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
-            'starting_time' => $this->faker->dateTime(),
-            'ending_time' => $this->faker->dateTime()
+            'starting_time' => $this->faker->dateTimeBetween('-1 year', '1 year'),
+            'ending_time' => $this->faker->dateTimeBetween('now', '1 year')
         ];
     }
 }
