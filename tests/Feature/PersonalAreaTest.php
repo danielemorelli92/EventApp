@@ -76,7 +76,14 @@ class PersonalAreaTest extends TestCase
     // Un utente deve poter selezionare le proprie categorie di interesse dall’area personale.
     public function test_a_user_can_select_his_interests_from_his_page()
     {
-
+        $user = User::factory()->hasTags(2)->create();
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $tag = Tag::factory()->create();
+        $this->post('attach_tag/' . $tag->id);
+        $this->assertTrue($user->tags->contains($tag),"La selezione del Tag è fallita");
     }
 
     // Un utente deve poter visualizzare nella propria area personale gli eventi suggeriti in base alle
