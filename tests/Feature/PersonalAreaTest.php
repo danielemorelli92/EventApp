@@ -100,20 +100,24 @@ class PersonalAreaTest extends TestCase
         $tag = Tag::factory()->create();
 
         $event_interesting = Event::factory()->create([
-            'title'=> 'interessante'
+            'title' => 'interessante'
         ]); // da mostrare
         $event_not_interesting = Event::factory()->create([
-            'title'=> 'non mostrare'
+            'title' => 'non mostrare'
         ]); // da non mostrare
         $event_registered_already = Event::factory()->create([
-            'title'=> 'gia registrato'
+            'title' => 'gia registrato'
+        ]); // da non mostrare
+        $passed_event = Event::factory()->create([ // evento con interessi associati ma già passato
+            'starting_time' => date(now()->setYear(2019))
         ]); // da non mostrare
 
         $this->post('attach_tag_to_user/' . $tag->id);
         $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_interesting->id);
         $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_registered_already->id);
-        $this->post('/registration' , [
-            'event'=> $event_registered_already->id
+        $this->post('attach_tag_to_event/' . $tag->id . '/' . $passed_event->id);
+        $this->post('/registration', [
+            'event' => $event_registered_already->id
         ]);
 
         $html_page = $this->get('/dashboard')
@@ -126,8 +130,6 @@ class PersonalAreaTest extends TestCase
         $this->assertStringContainsString($event_interesting->title, $matched, "non viene mostrato l'evento suggerito");
         $this->assertStringNotContainsString($event_not_interesting->title, $matched, "viene mostrato un evento non suggerito");
         $this->assertStringNotContainsString($event_registered_already->title, $matched, "viene mostrato un evento a cui sono registrato");
-
-        // TODO anche gli eventi passati non devono essere consigliati
+        $this->assertStringNotContainsString($passed_event->title, $matched, "viene mostrato un evento già passato");
     }
-
 }
