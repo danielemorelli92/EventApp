@@ -35,7 +35,7 @@ class PersonalAreaTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response = $this->post('/registration', [
+        $this->post('/registration', [
             'event' => $event->id
         ]);
 
@@ -45,19 +45,18 @@ class PersonalAreaTest extends TestCase
         $response->assertDontSeeText($event2->title);
     }
 
-    public function test_personal_area_events_of_interest()
+    // Un utente deve poter visualizzare le proprie categorie di interesse scelte dall’area personale.
+    public function test_a_user_can_view_his_selected_interests_on_his_page()
     {
-        $eventOfInterest = Event::factory()->create();
-        $categoryOfInterest = Tag::factory()->create();
-        //TODO assegnare categoryOfInterest a eventOfInterest, e come gusto dell'utente
-        $eventNotOfInterest = Event::factory()->create();
-        //TODO assegnare una categoria a caso all'eventNotOfInterest
+        //<input type="checkbox" name="tags[]" value="{{ $tag->id }}" checked>{{ $tag->body }}</input>
+        // regex= "/\<input type="checkbox".+?value="\d+" (checked)?\>/"
+        $user = User::factory()->create();
+        $request = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $html_page = $request->content();
 
-        $response = $this->get('/dashboard');
-        $response->assertSee($eventOfInterest->title);
-        $response->assertSee('/event/' . $eventOfInterest->id);
-        $response->assertDontSee($eventNotOfInterest->title);
+
     }
-
-    //TODO test sul calendario, sulla lista dei gusti e sulla modifica del profilo
 }
