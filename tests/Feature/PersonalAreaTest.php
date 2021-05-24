@@ -82,7 +82,7 @@ class PersonalAreaTest extends TestCase
             'password' => 'password',
         ]);
         $tag = Tag::factory()->create();
-        $this->post('attach_tag/' . $tag->id);
+        $this->post('attach_tag_to_user/' . $tag->id);
         $this->assertTrue($user->tags->contains($tag),"La selezione del Tag è fallita");
     }
 
@@ -90,7 +90,44 @@ class PersonalAreaTest extends TestCase
     // categorie selezionate precedentemente nella propria area personale.
     public function test_a_user_can_view_suggested_events()
     {
+        $user = User::factory()->create();
 
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $tag = Tag::factory()->create();
+
+        $event_interesting = Event::factory()->create([
+            'title'=> 'interessante'
+        ]); // da mostrare
+        $event_not_interesting = Event::factory()->create([
+            'title'=> 'non mostrare'
+        ]); // da non mostrare
+        $event_registered_already = Event::factory()->create([
+            'title'=> 'gia registrato'
+        ]); // da non mostrare
+
+        $this->post('attach_tag_to_user/' . $tag->id);
+        $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_interesting->id);
+        $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_registered_already->id);
+        $this->post('/registration' , [
+            'event'=> $event_registered_already->id
+        ]);
+
+        $html_page = $this->get('/dashboard')
+                          ->content();
+
+        // /<section name='suggested_events'.+?<\/section>/gms
+        preg_match('/<section name="suggested_events".+?<\/section>/gms' , $html_page , $matched);
+        $matched = $matched[0];
+
+        $this->assertStringContainsString($event_interesting->title, $matched, "non viene mostrato l'evento suggerito");
+        $this->assertStringNotContainsString($event_not_interesting->title, $matched, "viene mostrato un evento non suggerito");
+        $this->assertStringNotContainsString($event_registered_already->title, $matched, "viene mostrato un evento a cui sono registrato");
+
+        // TODO anche gli eventi passati non devono essere consigliati
     }
 
 }
