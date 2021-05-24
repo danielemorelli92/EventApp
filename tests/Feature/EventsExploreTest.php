@@ -119,7 +119,21 @@ class EventsExploreTest extends TestCase
     //Un utente può cercare in base data massima dell’evento.
     public function test_a_user_can_search_by_date_max()
     {
+        $today_event = Event::factory()->create([
+            'title' => 'si deve leggere questo',
+            'starting_time' => date(now()->addHours(5))  // un evento che inizia tra 5 ore
+        ]);
+        $next_year_event = Event::factory()->create([
+            'title' => 'ma non questo qui',
+            'starting_time' => date(now()->addYear(1))     // un evento che inizia l'anno prossimo
+        ]);
+        $response = $this->get('/events', [
+            'data-max' => date(now()                        // Mostra solo gli eventi di oggi
+            ->setHours(59)->setMinutes(59)->setSeconds(59)) // fino a mezzanotte
+        ]);
 
+        $response->assertSeeText($today_event->title, "non viene visualizzato l'evento vicino");
+        $response->assertDontSeeText($next_year_event->title, "viene visualizzato un evento lontano");
     }
 
     //Un utente può cercare in base a delle categorie.
