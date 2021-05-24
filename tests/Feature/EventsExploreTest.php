@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\{ExternalRegistration, User, Event};
+use App\Models\{ExternalRegistration, User, Event, Tag};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -139,6 +139,20 @@ class EventsExploreTest extends TestCase
     //Un utente può cercare in base a delle categorie.
     public function test_a_user_by_category()
     {
+        $event_with_tag1 = Event::factory()->hasTags(1)->create();
+        $event_with_tag2 = Event::factory()->hasTags(1)->create();
+        $event_without_tag = Event::factory()->create();
 
+
+        $request = $this->get('/events', [
+            'categories' => [
+                $event_with_tag1->tags->first,
+                $event_with_tag2->tags->first
+            ]
+        ]);
+
+        $request->assertSeeTest($event_with_tag1->title, 'non viene mostrato un evento cercato');
+        $request->assertSeeTest($event_with_tag2->title, 'non viene mostrato un evento cercato');
+        $request->assertDontSeeText($event_without_tag->title, 'viene mostrato un evento non cercato');
     }
 }
