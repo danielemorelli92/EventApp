@@ -93,4 +93,22 @@ class EventExploreTest extends TestCase
         $registeredUsers = $event->users;
         $registeredUsers->contains($user);
     }
+
+//Un utente può cercare in base a distanza massima.
+    public function test_a_user_can_search_by_distance()
+    {
+
+    }
+
+//Un utente può cercare in base data massima dell’evento.
+    public function test_a_user_can_search_by_date_max()
+    {
+
+    }
+
+//Un utente può cercare in base a delle categorie.
+    public function test_a_user_by_category()
+    {
+
+    }
 }
