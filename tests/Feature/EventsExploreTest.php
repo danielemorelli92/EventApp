@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class EventExploreTest extends TestCase
+class EventsExploreTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -94,19 +94,35 @@ class EventExploreTest extends TestCase
         $registeredUsers->contains($user);
     }
 
-//Un utente può cercare in base a distanza massima.
+    //Un utente può cercare in base a distanza massima.
     public function test_a_user_can_search_by_distance()
     {
+        $near_event = Event::factory()->create([
+            'title' => 'si deve leggere questo',
+            'latitude' => 42.5049, // coordinate vicine
+            'longitude' => 14.1389 // (Montesilvano, circa 7km di distanza)
+        ]);
+        $far_event = Event::factory()->create([
+            'title' => 'ma non questo qui',
+            'latitude' => -42.25573,  // coordinate lontane
+            'longitude' => 151.47322  // (in mezzo all'oceano vicino l'Australia,
+            //  circa 16500km di distanza. Perché sì.)
+        ]);
+        $response = $this->get('/events', [
+            'dist-max' => 50 // massimo 50km di distanza
+        ]);
 
+        $response->assertSeeText($near_event->title, "non viene visualizzato l'evento vicino");
+        $response->assertDontSeeText($far_event->title, "viene visualizzato un evento lontano");
     }
 
-//Un utente può cercare in base data massima dell’evento.
+    //Un utente può cercare in base data massima dell’evento.
     public function test_a_user_can_search_by_date_max()
     {
 
     }
 
-//Un utente può cercare in base a delle categorie.
+    //Un utente può cercare in base a delle categorie.
     public function test_a_user_by_category()
     {
 

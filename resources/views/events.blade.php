@@ -32,7 +32,7 @@
         <input
             name="search"
             class="modulo-ricerca-item"
-            type="text"
+            type="search"
             placeholder="Ricerca testuale"
             value="{{ request('search') }}"
         >
