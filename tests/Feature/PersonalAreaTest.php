@@ -14,7 +14,7 @@ class PersonalAreaTest extends TestCase
     public function test_personal_area_can_be_rendered()
     {
         $response = $this->get('/dashboard'); // richiesta get da parte di guest
-        $response->assertStatus(302);
+        $response->assertRedirect('/login'); // fixed
         $response = $this->actingAs(User::factory()->create())->get('/dashboard'); //richiesta get da utente autenticato
         $response->assertStatus(200);
     }
@@ -22,26 +22,27 @@ class PersonalAreaTest extends TestCase
     public function test_registered_user_sees_events_where_is_registered()
     {
         $user = User::factory()->create();
-        $event = Event::factory()->create();
-        $event2 = Event::factory()->create();
+        $event = Event::factory()->create([
+            'title' => 'evento a cui sei registrato'
+        ]);
+        $event2 = Event::factory()->create([
+            'title' => 'non deve essere visto'
+        ]);
 
         //  LOGGATO SI REGISTRA ALL'EVENTO
         $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
-        $response = $this->get('/event/' . $event->id);
-        $response->assertSee('Registrati');
+
         $response = $this->post('/registration', [
             'event' => $event->id
         ]);
-        $registeredUsers = $event->users;
-        $registeredUsers->contains($user);
+
         //SI SPOSTA ALL'AREA PERSONALE E CI SI ASPETTA CHE L'EVENTO APPAIA A SCHERMO
         $response = $this->get('/dashboard');
-        $response->assertSee($event->title);
-        $response->assertSee('/event/' . $event->id);
-        $response->assertDontSee($event2->title);
+        $response->assertSeeText($event->title);
+        $response->assertDontSeeText($event2->title);
     }
 
     public function test_personal_area_events_of_interest()
