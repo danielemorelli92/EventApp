@@ -72,4 +72,10 @@ class PersonalAreaTest extends TestCase
             $this->assertContains($elem, $expected);
         }
     }
+
+    // Un utente deve poter selezionare le proprie categorie di interesse dall’area personale.
+    public function test_a_user_can_select_his_interests_from_his_page()
+    {
+
+    }
 }
