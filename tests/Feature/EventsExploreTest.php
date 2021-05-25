@@ -40,15 +40,15 @@ class EventsExploreTest extends TestCase
             'description' => 'matched'
         ]);
         $eventNotSerched = Event::factory()->create([
-            'title' => 'do not show'
+            'title' => 'do not show',
+            'description' => 'do not show'
         ]);
 
-        $response = $this->get('/events', [
-            'search' => 'matched'
-        ]);
-        $response->assertSeeText('matched');
-        $response->assertSeeText('another');
-        $response->assertDontSeeText('do not show');
+        $response = $this->get('/events?search=matched');
+
+        $response->assertSee($event_title_matched->title);
+        $response->assertSee($event_description_matched->title);
+        $response->assertDontSee($eventNotSerched->title);
     }
 
     public function test_event_page_can_be_rendered()
@@ -110,9 +110,7 @@ class EventsExploreTest extends TestCase
             'longitude' => 151.47322  // (in mezzo all'oceano vicino l'Australia,
             //  circa 16500km di distanza. Perché sì.)
         ]);
-        $response = $this->get('/events', [
-            'dist-max' => 50 // massimo 50km di distanza
-        ]);
+        $response = $this->get('/events?dist-max=50');
 
         $response->assertSeeText($near_event->title);
         $response->assertDontSeeText($far_event->title);
@@ -129,10 +127,7 @@ class EventsExploreTest extends TestCase
             'title' => 'ma non questo qui',
             'starting_time' => date(now()->addYear(1))     // un evento che inizia l'anno prossimo
         ]);
-        $response = $this->get('/events', [
-            'data-max' => date(now()                        // Mostra solo gli eventi di oggi
-            ->setHours(59)->setMinutes(59)->setSeconds(59)) // fino a mezzanotte
-        ]);
+        $response = $this->get('/events?data-max=' . date(now()->setHours(59)->setMinutes(59)->setSeconds(59)));
 
         $response->assertSeeText($today_event->title);
         $response->assertDontSeeText($next_year_event->title);
@@ -146,12 +141,8 @@ class EventsExploreTest extends TestCase
         $event_without_tag = Event::factory()->create();
 
 
-        $request = $this->get('/events', [
-            'categories' => [
-                $event_with_tag1->tags->first,
-                $event_with_tag2->tags->first
-            ]
-        ]);
+        $request = $this->get('/events?categories%5B%5D=' . $event_with_tag1->tags->first->id .
+            '&categories%5B%5D=' . $event_with_tag2->tags->first->id);
 
         $request->assertSeeTest($event_with_tag1->title);
         $request->assertSeeTest($event_with_tag2->title);

@@ -27,7 +27,7 @@ class WelcomeTest extends TestCase
 
     public function test_a_user_can_visualize_12_events_sorted_by_data_and_distance()
     {
-        Event::factory(150)->create();
+        Event::factory(30)->create();
 
         $html_content = $this->get('/events-highlighted')->content();
         preg_match_all('/href="\/event\/\d+"/', $html_content, $matches);
