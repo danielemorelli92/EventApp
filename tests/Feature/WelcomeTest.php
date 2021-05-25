@@ -49,7 +49,7 @@ class WelcomeTest extends TestCase
         ->pluck('id') // select sull'ID
         ->splice(12); // solo i primi 12
 
-        $this->assertEquals($expected->toArray(), $actual);
+        $this->assertEquals($expected->toArray(), $actual, 'gli elementi non vengono visualizzati oppure non nel giusto ordine');
     }
 }
 
