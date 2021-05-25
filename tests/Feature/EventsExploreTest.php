@@ -124,7 +124,7 @@ class EventsExploreTest extends TestCase
         ]);
         $next_year_event = Event::factory()->create([
             'title' => 'ma non questo qui',
-            'starting_time' => date(now()->addYear(1))     // un evento che inizia l'anno prossimo
+            'starting_time' => date(now()->addYear())     // un evento che inizia l'anno prossimo
         ]);
         $response = $this->get('/events?data-max=' . date(now()->setHours(59)->setMinutes(59)->setSeconds(59)));
 
