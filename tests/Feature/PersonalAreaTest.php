@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\{ExternalRegistration, Tag, User, Event};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class PersonalAreaTest extends TestCase
@@ -46,7 +47,10 @@ class PersonalAreaTest extends TestCase
 
         // /<section name='registered_events'.+?<\/section>/gms
         preg_match('/<section id="registered_events"[\s\S]+?<\/section>/', $html_page, $matched);
-        $matched = $matched[0];
+        if ($this->count($matched) > 0)
+            $matched = $matched[0];
+        else
+            $matched = '';
         $this->assertStringContainsString($event->title, $matched);
         $this->assertStringNotContainsString($event2->title, $matched);
     }
@@ -129,7 +133,11 @@ class PersonalAreaTest extends TestCase
 
         // /<section name='suggested_events'.+?<\/section>/gms
         preg_match('/<section id="suggested_events"[\s\S]+?<\/section>/', $html_page, $matched);
-        $matched = $matched[0];
+
+        if ($this->count($matched) > 0)
+            $matched = $matched[0];
+        else
+            $matched = '';
 
         $this->assertStringContainsString($event_interesting->title, $matched, "non viene mostrato l'evento suggerito");
         $this->assertStringNotContainsString($event_not_interesting->title, $matched, "viene mostrato un evento non suggerito");
