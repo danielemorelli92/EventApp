@@ -127,7 +127,7 @@ class PersonalAreaTest extends TestCase
                           ->content();
 
         // /<section name='suggested_events'.+?<\/section>/gms
-        preg_match('/<section name="suggested_events".+?<\/section>/gms' , $html_page , $matched);
+        preg_match('/<section name="suggested_events".+?<\/section>/ms', $html_page, $matched);
         $matched = $matched[0];
 
         $this->assertStringContainsString($event_interesting->title, $matched, "non viene mostrato l'evento suggerito");
