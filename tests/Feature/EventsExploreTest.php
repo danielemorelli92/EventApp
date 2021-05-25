@@ -82,7 +82,6 @@ class EventsExploreTest extends TestCase
         $externalRegistration = $event->externalRegistrations->first();
         $this->assertEquals('codicefiscalefake', $externalRegistration->cf);
 
-        //  LOGGATO
         $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
