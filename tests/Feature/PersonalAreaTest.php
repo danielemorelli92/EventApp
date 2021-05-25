@@ -43,7 +43,7 @@ class PersonalAreaTest extends TestCase
         $html_page = $this->get('/dashboard')->content();
 
         // /<section name='registered_events'.+?<\/section>/gms
-        preg_match('/<section name="registered_events".+?<\/section>/gms', $html_page, $matched);
+        preg_match('/<section id="registered_events".+?<\/section>/gms', $html_page, $matched);
         $matched = $matched[0];
         $this->assertStringContainsString($event->title, $matched);
         $this->assertStringNotContainsString($event2->title, $matched);
@@ -126,7 +126,7 @@ class PersonalAreaTest extends TestCase
                           ->content();
 
         // /<section name='suggested_events'.+?<\/section>/gms
-        preg_match('/<section name="suggested_events".+?<\/section>/gms' , $html_page , $matched);
+        preg_match('/<section id="suggested_events".+?<\/section>/gms', $html_page, $matched);
         $matched = $matched[0];
 
         $this->assertStringContainsString($event_interesting->title, $matched, "non viene mostrato l'evento suggerito");
