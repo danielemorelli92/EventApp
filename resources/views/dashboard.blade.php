@@ -30,10 +30,8 @@
     </div>
 
     <div class="right-side-column">
+        <button style="margin-top: auto">Modifica account</button>
         <div class="section-title">I tuoi gusti</div>
         <div class="events-parameters-selection-box"></div>
-        <div class="section-title">Calendario</div>
-        <div class="categories-selection-box"></div>
-        <button style="margin-top: auto">Modifica account</button>
     </div>
 @endsection
