@@ -14,7 +14,7 @@ class PersonalAreaTest extends TestCase
     public function test_personal_area_can_be_rendered()
     {
         $response = $this->get('/dashboard'); // richiesta get da parte di guest
-        $response->assertRedirect('/login'); // fixed
+        $response->assertRedirect('/login');
         $response = $this->actingAs(User::factory()->create())->get('/dashboard'); //richiesta get da utente autenticato
         $response->assertStatus(200);
     }
@@ -40,16 +40,18 @@ class PersonalAreaTest extends TestCase
         ]);
 
         //SI SPOSTA ALL'AREA PERSONALE E CI SI ASPETTA CHE L'EVENTO APPAIA A SCHERMO
-        $response = $this->get('/dashboard');
-        $response->assertSeeText($event->title);
-        $response->assertDontSeeText($event2->title);
+        $html_page = $this->get('/dashboard')->content();
+
+        // /<section name='registered_events'.+?<\/section>/gms
+        preg_match('/<section name="registered_events".+?<\/section>/gms', $html_page, $matched);
+        $matched = $matched[0];
+        $this->assertStringContainsString($event->title, $matched);
+        $this->assertStringNotContainsString($event2->title, $matched);
     }
 
     // Un utente deve poter visualizzare le proprie categorie di interesse scelte dall’area personale.
     public function test_a_user_can_view_his_selected_interests_on_his_page()
     {
-        //<input type="checkbox" name="tags[]" value="{{ $tag->id }}" checked>{{ $tag->body }}</input>
-        // regex= '/\<input type="checkbox".+?value="\d+" (checked)?\>/'
         $user = User::factory()->create();
         $request = $this->post('/login', [
             'email' => $user->email,

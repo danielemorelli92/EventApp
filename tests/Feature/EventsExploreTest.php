@@ -26,16 +26,18 @@ class EventsExploreTest extends TestCase
     {
         Event::factory(10)->create();
         $html_content = $this->get('/events')->content(); //estraggo la pagina html visualizzata dall'utente
-        $matches = []; // conterrà eventuali match delle regex
-        preg_match('/<a.*?href="\/event\/\d+">/', $html_content, $matches); //c'è almeno un link agli eventi?
-        $this->assertGreaterThan(0, count($matches), 'Non vengono visualizzati eventi');
-        // verifica che ci sia almeno un link a evento cliccabile
+        preg_match_all('/<a.*?href="\/event\/\d+">/', $html_content, $matches); //c'è almeno un link agli eventi?
+        $this->assertCount(10, $matches[0], 'qualche evento non viene visualizzato');
     }
 
-    public function test_a_user_can_search_a_event_by_title()
+    public function test_a_user_can_search_a_event_by_title_or_description()
     {
-        $eventSearched = Event::factory()->create([
+        $event_title_matched = Event::factory()->create([
             'title' => 'matched'
+        ]);
+        $event_description_matched = Event::factory()->create([
+            'title' => 'another',
+            'description' => 'matched'
         ]);
         $eventNotSerched = Event::factory()->create([
             'title' => 'do not show'
@@ -44,8 +46,8 @@ class EventsExploreTest extends TestCase
         $response = $this->get('/events', [
             'search' => 'matched'
         ]);
-        $response->assertSee('matched');
-        //$response->assertDontSee('do not show');
+        $response->assertSeeText('matched');
+        $response->assertSeeText('another');
         $response->assertDontSeeText('do not show');
     }
 
@@ -112,8 +114,8 @@ class EventsExploreTest extends TestCase
             'dist-max' => 50 // massimo 50km di distanza
         ]);
 
-        $response->assertSeeText($near_event->title, "non viene visualizzato l'evento vicino");
-        $response->assertDontSeeText($far_event->title, "viene visualizzato un evento lontano");
+        $response->assertSeeText($near_event->title);
+        $response->assertDontSeeText($far_event->title);
     }
 
     //Un utente può cercare in base data massima dell’evento.
@@ -132,8 +134,8 @@ class EventsExploreTest extends TestCase
             ->setHours(59)->setMinutes(59)->setSeconds(59)) // fino a mezzanotte
         ]);
 
-        $response->assertSeeText($today_event->title, "non viene visualizzato l'evento vicino");
-        $response->assertDontSeeText($next_year_event->title, "viene visualizzato un evento lontano");
+        $response->assertSeeText($today_event->title);
+        $response->assertDontSeeText($next_year_event->title);
     }
 
     //Un utente può cercare in base a delle categorie.
@@ -151,8 +153,8 @@ class EventsExploreTest extends TestCase
             ]
         ]);
 
-        $request->assertSeeTest($event_with_tag1->title, 'non viene mostrato un evento cercato');
-        $request->assertSeeTest($event_with_tag2->title, 'non viene mostrato un evento cercato');
-        $request->assertDontSeeText($event_without_tag->title, 'viene mostrato un evento non cercato');
+        $request->assertSeeTest($event_with_tag1->title);
+        $request->assertSeeTest($event_with_tag2->title);
+        $request->assertDontSeeText($event_without_tag->title);
     }
 }
