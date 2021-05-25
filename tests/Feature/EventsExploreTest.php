@@ -143,8 +143,8 @@ class EventsExploreTest extends TestCase
         $request = $this->get('/events?categories%5B%5D=' . $event_with_tag1->tags->first->id .
             '&categories%5B%5D=' . $event_with_tag2->tags->first->id);
 
-        $request->assertSeeTest($event_with_tag1->title);
-        $request->assertSeeTest($event_with_tag2->title);
+        $request->assertSeeText($event_with_tag1->title);
+        $request->assertSeeText($event_with_tag2->title);
         $request->assertDontSeeText($event_without_tag->title);
     }
 }
