@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Event,Tag};
+use App\Models\{Event, Tag};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
@@ -13,7 +14,7 @@ class EventController extends Controller
     public function index()
     {
         $param = request()->request->all();
-        foreach($param as $key => $value) {
+        foreach ($param as $key => $value) {
             if (blank($value)) {
                 unset($param[$key]);
             }
@@ -24,8 +25,8 @@ class EventController extends Controller
         if (count($param) > 0) {
 
             if (array_key_exists('search', $param) and !blank($param['search'])) {
-                $query->where('title','like','%' . $param['search'] . '%');
-                $query->orWhere('description','like','%' . $param['search'] . '%');
+                $query->where('title', 'like', '%' . $param['search'] . '%');
+                $query->orWhere('description', 'like', '%' . $param['search'] . '%');
             }
             if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
                 //$query->where('address', 'like', $param['luogo']);
@@ -67,10 +68,32 @@ class EventController extends Controller
             'tags' => Tag::all()
         ]);
     }
-    public function show(Event $event) {
+
+    public function show(Event $event)
+    {
         return view('event', [
             'event' => $event
         ]);
+    }
+
+    public function dashboard()
+    {
+        $query = Event::query()->where('starting_time','>=',date(now()));
+        $events = $query->get();
+        $registered_events = [];
+
+        if (Auth::check()) {
+            foreach ($events as $event) {
+                if ($event->users->contains(Auth::user())) {
+                    $registered_events[] = $event;
+                }
+            }
+        }
+
+        return view('dashboard', [
+            'registered_events' => $registered_events
+        ]);
+
     }
 
     protected function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo)
