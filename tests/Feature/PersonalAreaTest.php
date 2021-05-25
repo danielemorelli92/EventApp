@@ -58,6 +58,7 @@ class PersonalAreaTest extends TestCase
     // Un utente deve poter visualizzare le proprie categorie di interesse scelte dall’area personale.
     public function test_a_user_can_view_his_selected_interests_on_his_page()
     {
+        self::markTestIncomplete('Questo test è ancora incompleto');
         $user = User::factory()->create();
         $request = $this->post('/login', [
             'email' => $user->email,
@@ -98,6 +99,9 @@ class PersonalAreaTest extends TestCase
     // categorie selezionate precedentemente nella propria area personale.
     public function test_a_user_can_view_suggested_events()
     {
+        self::markTestIncomplete('Questo test è ancora incompleto');
+
+
         $user = User::factory()->create();
 
         $this->post('/login', [
