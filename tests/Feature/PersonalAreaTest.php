@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\{ExternalRegistration, Tag, User, Event};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class PersonalAreaTest extends TestCase
@@ -24,10 +25,11 @@ class PersonalAreaTest extends TestCase
         $user = User::factory()->create();
         $event = Event::factory()->create([
             'title' => 'evento a cui sei registrato',
-            'starting_time' => date(now()->addDay(1))
+            'starting_time' => date(now()->addDay())
         ]);
         $event2 = Event::factory()->create([
-            'title' => 'non deve essere visto'
+            'title' => 'non deve essere visto',
+            'starting_time' => date(now()->addDay())
         ]);
 
         //  LOGGATO SI REGISTRA ALL'EVENTO
@@ -44,7 +46,7 @@ class PersonalAreaTest extends TestCase
         $html_page = $this->get('/dashboard')->content();
 
         // /<section name='registered_events'.+?<\/section>/gms
-        preg_match('/<section id="registered_events".+?<\/section>/gms', $html_page, $matched);
+        preg_match('/<section id="registered_events".+?<\/section>/s', $html_page, $matched);
         $matched = $matched[0];
         $this->assertStringContainsString($event->title, $matched);
         $this->assertStringNotContainsString($event2->title, $matched);
