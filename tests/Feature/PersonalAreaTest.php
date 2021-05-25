@@ -23,7 +23,8 @@ class PersonalAreaTest extends TestCase
     {
         $user = User::factory()->create();
         $event = Event::factory()->create([
-            'title' => 'evento a cui sei registrato'
+            'title' => 'evento a cui sei registrato',
+            'starting_time' => date(now()->addDay(1))
         ]);
         $event2 = Event::factory()->create([
             'title' => 'non deve essere visto'
