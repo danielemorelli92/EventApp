@@ -6,17 +6,8 @@
 
 @section('content')
     <div class="main-content-column">
-        <section id="registered_events_future">
-            <div class="section-title">Eventi a cui parteciperai</div>
-            <div class="events-list">
-                <!-- TODO foreach -->
-                <?php
-                include resource_path('views\components\event-square.blade.php');
-                ?>
-            </div>
-        </section>
-        <section id="registered_events_past">
-            <div class="section-title">Eventi a cui hai partecipato</div>
+        <section id="registered_events">
+            <div class="section-title">Eventi a cui sei registrato</div>
             <div class="events-list">
                 <!-- TODO foreach -->
                 <?php
