@@ -41,9 +41,7 @@ Route::get('/events-highlighted', function () {
 
 Route::get('/event/{event}', [EventController::class, 'show']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
 
 Route::post('/registration', [EventRegistrationController::class, 'create']);
 
