@@ -12,7 +12,7 @@ use Tests\TestCase;
 use function PHPUnit\Framework\isNull;
 
 
-class VerifyHomeTest extends TestCase
+class WelcomeTest extends TestCase
 {
 
     use RefreshDatabase;
