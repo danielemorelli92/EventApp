@@ -135,6 +135,8 @@ class EventsExploreTest extends TestCase
     //Un utente può cercare in base a delle categorie.
     public function test_a_user_by_category()
     {
+        self::markTestIncomplete('Questo test è ancora incompleto');
+
         $event_with_tag1 = Event::factory()->hasTags(1)->create();
         $event_with_tag2 = Event::factory()->hasTags(1)->create();
         $event_without_tag = Event::factory()->create();

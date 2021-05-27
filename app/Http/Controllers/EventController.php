@@ -14,7 +14,7 @@ class EventController extends Controller
     public function index()
     {
         $param = request()->request->all();
-        foreach ($param as $key => $value) {
+        foreach($param as $key => $value) {
             if (blank($value)) {
                 unset($param[$key]);
             }
@@ -76,22 +76,21 @@ class EventController extends Controller
         ]);
     }
 
-    public function dashboard()
+    public function indexHighlighted()
     {
-        $query = Event::query()->where('starting_time','>=',date(now()));
-        $events = $query->get();
-        $registered_events = [];
 
-        if (Auth::check()) {
-            foreach ($events as $event) {
-                if ($event->users->contains(Auth::user())) {
-                    $registered_events[] = $event;
-                }
+        $query = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time');
+        $events = $query->get();
+        $events_highlighted = [];
+
+        foreach ($events as $event) {
+            if ($event->getDistanceToMe() <= 25) {
+                $events_highlighted[] = $event;
             }
         }
 
-        return view('dashboard', [
-            'registered_events' => $registered_events
+        return view('events-highlighted', [
+            'events' => $events_highlighted,
         ]);
 
     }

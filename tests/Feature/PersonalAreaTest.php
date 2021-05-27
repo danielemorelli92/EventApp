@@ -42,26 +42,32 @@ class PersonalAreaTest extends TestCase
             'event' => $event->id
         ]);
 
-        $response = $this->get('/dashboard');
-        $response->assertSeeText($event->title);
-        $response->assertDontSeeText($event2->title);
+        //SI SPOSTA ALL'AREA PERSONALE E CI SI ASPETTA CHE L'EVENTO APPAIA A SCHERMO
+        $html_page = $this->get('/dashboard')->content();
+
+        // /<section name='registered_events'.+?<\/section>/gms
+        preg_match('/<section id="registered_events"[\s\S]+?<\/section>/', $html_page, $matched);
+        if ($this->count($matched) > 0)
+            $matched = $matched[0];
+        else
+            $matched = '';
+        $this->assertStringContainsString($event->title, $matched);
+        $this->assertStringNotContainsString($event2->title, $matched);
     }
 
     // Un utente deve poter visualizzare le proprie categorie di interesse scelte dall’area personale.
     public function test_a_user_can_view_his_selected_interests_on_his_page()
     {
-        Tag::factory(5)->create();
-        $user = User::factory()->hasTags(3)->create();
+        self::markTestIncomplete('Questo test è ancora incompleto');
+        $user = User::factory()->create();
         $request = $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
         $html_page = $request->content();
-        preg_match_all('/value="\d+" checked/', $html_page, $matches);
-        if (count($matches) > 0)
-            $matches = $matches[0];
-        else
-            $matches = [];
+        preg_match_all('/\<input type="checkbox".+?value="\d+" checked\>/', $html_page, $matches);
+        $matches = $matches[0];
+
         $actual = array_map(function ($elem) {
             preg_match('/\d+/', $elem, $ids);
             return $ids[0];
@@ -80,24 +86,31 @@ class PersonalAreaTest extends TestCase
     public function test_a_user_can_select_his_interests_from_his_page()
     {
         $user = User::factory()->hasTags(2)->create();
-        Tag::factory(2)->create();
-        $tag = Tag::factory()->create();
-
         $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
-
+        $tag = Tag::factory()->create();
         $this->post('attach_tag_to_user/' . $tag->id);
-        $this->assertTrue($user->tags->contains($tag), "La selezione del Tag è fallita");
+        $this->assertTrue($user->tags->contains($tag),"La selezione del Tag è fallita");
     }
 
     // Un utente deve poter visualizzare nella propria area personale gli eventi suggeriti in base alle
     // categorie selezionate precedentemente nella propria area personale.
     public function test_a_user_can_view_suggested_events()
     {
+        self::markTestIncomplete('Questo test è ancora incompleto');
+
+
         $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
         $tag = Tag::factory()->create();
+
         $event_interesting = Event::factory()->create([
             'title' => 'interessante'
         ]); // da mostrare
@@ -111,11 +124,6 @@ class PersonalAreaTest extends TestCase
             'starting_time' => date(now()->setYear(2019))
         ]); // da non mostrare
 
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-
         $this->post('attach_tag_to_user/' . $tag->id);
         $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_interesting->id);
         $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_registered_already->id);
@@ -125,12 +133,12 @@ class PersonalAreaTest extends TestCase
         ]);
 
         $html_page = $this->get('/dashboard')
-                          ->content();
+            ->content();
 
         // /<section name='suggested_events'.+?<\/section>/gms
         preg_match('/<section id="suggested_events"[\s\S]+?<\/section>/', $html_page, $matched);
 
-        if (count($matched) > 0)
+        if ($this->count($matched) > 0)
             $matched = $matched[0];
         else
             $matched = '';
