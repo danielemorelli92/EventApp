@@ -20,11 +20,11 @@ class EventController extends Controller
             }
         }
 
-        $query = Event::query();
+
         $events = collect();
 
         if (count($param) > 0) {
-
+            $query = Event::query();
             if (array_key_exists('search', $param) and !blank($param['search'])) {
                 $query = $query->where('title', 'like', '%' . $param['search'] . '%');
                 $query = $query->orWhere('description', 'like', '%' . $param['search'] . '%');
