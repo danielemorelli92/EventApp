@@ -27,13 +27,27 @@
                 @endforeach
             </div>
         </section>
-        <div class="section-title">Eventi suggeriti in base ai tuoi gusti</div>
-        <div class="events-list">
-            <!-- TODO foreach -->
-            <?php
-            include resource_path('views\components\event-square.blade.php');
-            ?>
-        </div>
+        <section id="suggested_events">
+            <div class="section-title">Eventi suggeriti in base ai tuoi gusti</div>
+            <div class="events-list">
+                @foreach($interesting_events as $interesting_event)
+                    <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
+                        <div class="event-square-image-container">
+                            <img class="image-small" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                        </div>
+                        <div class="event-square-title">{{ $interesting_event->title }}</div>
+                        <div class="event-square-attributes-group">
+                            <div class="event-square-attribute">
+                                {{ $interesting_event->address }}
+                            </div>
+                            <div class="event-square-attribute">
+                                {{ $interesting_event->starting_time }}
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </section>
     </div>
 
     <div class="right-side-column">

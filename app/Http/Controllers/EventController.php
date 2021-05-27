@@ -14,7 +14,7 @@ class EventController extends Controller
     public function index()
     {
         $param = request()->request->all();
-        foreach($param as $key => $value) {
+        foreach ($param as $key => $value) {
             if (blank($value)) {
                 unset($param[$key]);
             }
@@ -53,10 +53,10 @@ class EventController extends Controller
             }
 
 
-            if(array_key_exists('data-max', $param) and !blank($param['data-max'])) {
+            if (array_key_exists('data-max', $param) and !blank($param['data-max'])) {
                 $query = Event::query();
 
-                switch($param['data-max']) {
+                switch ($param['data-max']) {
                     case 'today':
                         $dateMax = date(now()->setHour(23)->setMinute(59)->setSecond(59));
                         $query = $query->where('starting_time', '<=', $dateMax);
@@ -93,26 +93,42 @@ class EventController extends Controller
         ]);
     }
 
-public function dashboard()
-    {
-        $query = Event::query()->where('starting_time', '>=', date(now()));
-        $events = $query->get();
-        $registered_events = [];
 
+    public function dashboard()
+    {
+        $events_query = Event::query()->where('starting_time', '>=', date(now()));
+        $events = $events_query->get();
+        $registered_events = collect();
+
+        $tags_query = Tag::all();
+        $interesting_tags = collect();
+        $interesting_events = collect();
         if (Auth::check()) {
             foreach ($events as $event) {
                 if ($event->users->contains(Auth::user())) {
-                    $registered_events[] = $event;
+                    $registered_events->push($event);
+                }
+            }
+            foreach ($tags_query as $tag) {
+                if ($tag->users->contains(Auth::user())) {
+                    $interesting_tags->push($tag);
+                }
+            }
+            foreach ($interesting_tags as $tag) {
+                foreach ($tag->events as $tag_event) {
+                    if ($tag_event->starting_time >= date(now())) {
+                        $interesting_events = $interesting_events->union($tag->events);
+                    }
                 }
             }
         }
-
         return view('dashboard', [
-            'registered_events' => $registered_events
+            'registered_events' => $registered_events->unique('id'),
+            'interesting_events' => $interesting_events->unique('id')
         ]);
 
     }
-  
+
     public function indexHighlighted()
     {
 
