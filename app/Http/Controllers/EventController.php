@@ -35,7 +35,8 @@ class EventController extends Controller
             }*/
             if (array_key_exists('categories', $param)) {
                 foreach ($param['categories'] as $cat_id) {
-                    $events = $events->merge(Tag::query()->find($cat_id)->first()->events);
+                    $tag = Tag::query()->where('id', '=', $cat_id)->firstOrFail();
+                    $events = $events->merge($tag->events);
                 }
             }
             /*if (!blank($param['dist-max'])) {
