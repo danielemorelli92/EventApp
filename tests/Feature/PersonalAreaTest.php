@@ -38,9 +38,7 @@ class PersonalAreaTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('/registration', [
-            'event' => $event->id
-        ]);
+        $event->users()->attach(Auth::user());
 
         $response = $this->get('/dashboard');
         $response->assertSee($event->title);
@@ -88,7 +86,8 @@ class PersonalAreaTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('attach_tag_to_user/' . $tag->id);
+        Auth::user()->tags()->attach($tag);
+
         $this->assertTrue($user->tags->contains($tag), "La selezione del Tag è fallita");
     }
 
