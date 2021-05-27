@@ -21,7 +21,7 @@ class EventController extends Controller
         }
 
 
-        $events = Event::all();
+        $events = Event::all()->where('starting_time', '>=', date(now()));
 
         if (count($param) > 0) {
             $query = Event::query();
