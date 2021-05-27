@@ -93,7 +93,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function dashboard()
+public function dashboard()
     {
         $query = Event::query()->where('starting_time', '>=', date(now()));
         $events = $query->get();

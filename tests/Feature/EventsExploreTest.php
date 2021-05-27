@@ -89,7 +89,6 @@ class EventsExploreTest extends TestCase
         $externalRegistration = $event->externalRegistrations->first();
         $this->assertEquals('codicefiscalefake', $externalRegistration->cf);
 
-        //  LOGGATO
         $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
@@ -145,6 +144,7 @@ class EventsExploreTest extends TestCase
     //Un utente può cercare in base a delle categorie.
     public function test_a_user_can_search_by_category()
     {
+
         $event_with_tag = Event::factory()->create([
             'starting_time' => date(now()->addYear())
         ]);
@@ -153,6 +153,7 @@ class EventsExploreTest extends TestCase
         $event_without_tag = Event::factory()->create([
             'starting_time' => date(now()->addYear())
         ]);
+
 
         $request = $this->get('/events?search=&categories%5B%5D=' . $tag->id . '+');
 
