@@ -21,7 +21,7 @@ class EventController extends Controller
         }
 
 
-        $events = collect();
+        $events = Event::all();
         $events_distance = array();
 
         if (count($param) > 0) {
@@ -29,7 +29,7 @@ class EventController extends Controller
             if (array_key_exists('search', $param) and !blank($param['search'])) {
                 $query = $query->where('title', 'like', '%' . $param['search'] . '%');
                 $query = $query->orWhere('description', 'like', '%' . $param['search'] . '%');
-                $events = $events->merge($query->get());
+                $events = $events->intersect($query->get());
             }
             /*if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
                 //$query->where('address', 'like', $param['luogo']);
@@ -37,10 +37,10 @@ class EventController extends Controller
             if (array_key_exists('categories', $param)) {
                 foreach ($param['categories'] as $cat_id) {
                     $tag = Tag::query()->where('id', '=', $cat_id)->firstOrFail();
-                    $events = $events->merge($tag->events);
+                    $events = $events->intersect($tag->events);
                 }
             }
-
+            /*
             if (array_key_exists('dist-max', $param) && !blank($param['dist-max'])) {
                 $query_distance = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time');
                 $events_1 = $query_distance->get();
@@ -50,7 +50,7 @@ class EventController extends Controller
                         $events_distance[] = $event;
                     }
                 }
-            }
+            }*/
 
             /*if (!blank($param['dist-max'])) {
                 $filters[] = ['']
@@ -79,12 +79,10 @@ class EventController extends Controller
                         break;
                 }
             }*/
-        } else {
-            $events = Event::all();
         }
 
         return view('events', [
-            'events' => $events_distance, //$query->get()
+            'events' => $events->unique('id'), //$query->get()
             'tags' => Tag::all()
         ]);
     }
