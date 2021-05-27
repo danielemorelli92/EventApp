@@ -99,8 +99,7 @@ class EventController extends Controller
         $param = request()->request->all();
 
         if (array_key_exists('categories', $param)) {
-            $tags = collect($param['categories'])->union(Auth::user()->tags->pluck('id'));
-            $tags = $tags->unique('id');
+            $tags = collect($param['categories']);
             Auth::user()->tags()->sync($tags);
         }
         $events_query = Event::query()->where('starting_time', '>=', date(now()));

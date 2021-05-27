@@ -54,15 +54,21 @@
         <button style="">Modifica account</button>
         <label class="section-title">I tuoi gusti</label>
         <div>
-            @foreach($tags as $tag)
-                <form id="preferences" action="/dashboard" method="post">
-                    @csrf
+
+            <form id="preferences" action="/dashboard" method="post">
+                @csrf
+                @foreach(Auth::user()->tags as $tag)
                     <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}"
-                           {{Auth::user()->tags->contains($tag->id) ? 'checked' : ''}}
+                           onchange="document.getElementById('preferences').submit()" checked>
+                    <label for="categories[]">{{ $tag->body }}</label><br>
+                @endforeach
+                @foreach($tags->diff(Auth::user()->tags) as $tag)
+                    <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}"
                            onchange="document.getElementById('preferences').submit()">
-                    <label for="category">{{ $tag->body }}</label><br>
-                </form>
-            @endforeach
+                    <label for="categories[]">{{ $tag->body }}</label><br>
+                @endforeach
+            </form>
+
         </div>
     </div>
 @endsection
