@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $events = Event::factory()->hasImages(4)->count(15)->create();
         $events->push(Event::factory()->hasImages(4)->create([
             'latitude' => 42.529336,
@@ -40,6 +41,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 14.290663,
             'starting_time' => date(now()->addDays(rand(1, 120)))
         ]));
+
         $tags = Tag::factory()->count(16)->create();
         $users = User::factory()->count(100)->create();
 
