@@ -57,9 +57,11 @@
 
             <form id="preferences" action="/dashboard" method="post">
                 @csrf
+
                 @foreach(Auth::user()->tags as $tag)
                     <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}"
-                           onchange="document.getElementById('preferences').submit()" checked>
+                           checked
+                           onchange="document.getElementById('preferences').submit()">
                     <label for="categories[]">{{ $tag->body }}</label><br>
                 @endforeach
                 @foreach($tags->diff(Auth::user()->tags) as $tag)

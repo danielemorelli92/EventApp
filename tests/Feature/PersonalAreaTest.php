@@ -45,35 +45,6 @@ class PersonalAreaTest extends TestCase
         $response->assertDontSee($event2->title);
     }
 
-    // Un utente deve poter visualizzare le proprie categorie di interesse scelte dall’area personale.
-    public function test_a_user_can_view_his_selected_interests_on_his_page()
-    {
-        Tag::factory(5)->create();
-        $user = User::factory()->hasTags(3)->create();
-        $request = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-        $html_page = $request->content();
-        preg_match_all('/value="\d+" checked/', $html_page, $matches);
-        if (count($matches) > 0)
-            $matches = $matches[0];
-        else
-            $matches = [];
-        $actual = array_map(function ($elem) {
-            preg_match('/\d+/', $elem, $ids);
-            return $ids[0];
-        }, $matches);  // actual adesso contiene la lista di id delle checkbox selezionate
-
-        $expected = $user->tags->values()->pluck('id')->toArray();
-        foreach ($expected as $elem) {
-            $this->assertContains($elem, $actual);
-        }
-        foreach ($actual as $elem) {
-            $this->assertContains($elem, $expected);
-        }
-    }
-
     // Un utente deve poter selezionare le proprie categorie di interesse dall’area personale.
     public function test_a_user_can_select_his_interests_from_his_page()
     {
