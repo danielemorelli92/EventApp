@@ -60,8 +60,7 @@
 
                 @foreach(Auth::user()->tags as $tag)
                     <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}"
-                           checked
-                           onchange="document.getElementById('preferences').submit()">
+                           checked onchange="document.getElementById('preferences').submit()">
                     <label for="categories[]">{{ $tag->body }}</label><br>
                 @endforeach
                 @foreach($tags->diff(Auth::user()->tags) as $tag)
