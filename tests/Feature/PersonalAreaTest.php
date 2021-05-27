@@ -99,13 +99,16 @@ class PersonalAreaTest extends TestCase
         $user = User::factory()->create();
         $tag = Tag::factory()->create();
         $event_interesting = Event::factory()->create([
-            'title' => 'interessante'
+            'title' => 'interessante',
+            'starting_time' => date(now()->addWeek())
         ]); // da mostrare
         $event_not_interesting = Event::factory()->create([
-            'title' => 'non mostrare'
+            'title' => 'non mostrare',
+            'starting_time' => date(now()->addWeek())
         ]); // da non mostrare
         $event_registered_already = Event::factory()->create([
-            'title' => 'gia registrato'
+            'title' => 'gia registrato',
+            'starting_time' => date(now()->addWeek())
         ]); // da non mostrare
         $passed_event = Event::factory()->create([ // evento con interessi associati ma già passato
             'starting_time' => date(now()->setYear(2019))
@@ -116,16 +119,14 @@ class PersonalAreaTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('attach_tag_to_user/' . $tag->id);
-        $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_interesting->id);
-        $this->post('attach_tag_to_event/' . $tag->id . '/' . $event_registered_already->id);
-        $this->post('attach_tag_to_event/' . $tag->id . '/' . $passed_event->id);
-        $this->post('/registration', [
-            'event' => $event_registered_already->id
-        ]);
+        Auth::user()->tags()->attach($tag);
+        $event_interesting->tags()->attach($tag);
+        $event_registered_already->tags()->attach($tag);
+        $passed_event->tags()->attach($tag);
+        $event_registered_already->users()->attach(Auth::user());
 
         $html_page = $this->get('/dashboard')
-                          ->content();
+            ->content();
 
         // /<section name='suggested_events'.+?<\/section>/gms
         preg_match('/<section id="suggested_events"[\s\S]+?<\/section>/', $html_page, $matched);
