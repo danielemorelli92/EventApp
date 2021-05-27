@@ -35,10 +35,12 @@ class EventController extends Controller
                 //$query->where('address', 'like', $param['luogo']);
             }*/
             if (array_key_exists('categories', $param)) {
+                $events_with_tags = collect();
                 foreach ($param['categories'] as $cat_id) {
                     $tag = Tag::query()->where('id', '=', $cat_id)->firstOrFail();
-                    $events = $events->intersect($tag->events);
+                    $events_with_tags = $events_with_tags->union($tag->events);
                 }
+                $events = $events->intersect($events_with_tags);
             }
             /*
             if (array_key_exists('dist-max', $param) && !blank($param['dist-max'])) {
