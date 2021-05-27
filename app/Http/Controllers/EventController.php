@@ -22,6 +22,7 @@ class EventController extends Controller
 
 
         $events = collect();
+        $events_distance = array();
 
         if (count($param) > 0) {
             $query = Event::query();
@@ -39,6 +40,18 @@ class EventController extends Controller
                     $events = $events->merge($tag->events);
                 }
             }
+
+            if (array_key_exists('dist-max', $param) && !blank($param['dist-max'])) {
+                $query_distance = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time');
+                $events_1 = $query_distance->get();
+                $events_distance = [];
+                foreach ($events_1 as $event) {
+                    if ($event->getDistanceToMe() <= $param['dist-max']) {
+                        $events_distance[] = $event;
+                    }
+                }
+            }
+
             /*if (!blank($param['dist-max'])) {
                 $filters[] = ['']
             }
@@ -71,7 +84,7 @@ class EventController extends Controller
         }
 
         return view('events', [
-            'events' => $events->unique('id'), //$query->get()
+            'events' => $events_distance, //$query->get()
             'tags' => Tag::all()
         ]);
     }
