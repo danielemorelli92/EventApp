@@ -35,7 +35,7 @@ class EventController extends Controller
             }*/
             if (array_key_exists('categories', $param)) {
                 foreach ($param['categories'] as $cat_id) {
-                    $events = $events->merge(Tag::find($cat_id)->events);
+                    $events = $events->merge(Tag::query()->find($cat_id)->first()->events);
                 }
             }
             /*if (!blank($param['dist-max'])) {
@@ -70,7 +70,7 @@ class EventController extends Controller
         }
 
         return view('events', [
-            'events' => $events->unique(), //$query->get()
+            'events' => $events->unique('id'), //$query->get()
             'tags' => Tag::all()
         ]);
     }
@@ -100,26 +100,5 @@ class EventController extends Controller
             'registered_events' => $registered_events
         ]);
 
-    }
-
-    protected function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo)
-    {
-        $rad = M_PI / 180;
-        //Calculate distance from latitude and longitude
-        $theta = $longitudeFrom - $longitudeTo;
-        $dist = sin($latitudeFrom * $rad)
-            * sin($latitudeTo * $rad) + cos($latitudeFrom * $rad)
-            * cos($latitudeTo * $rad) * cos($theta * $rad);
-
-        return acos($dist) / $rad * 60 * 1.853;
-    }
-
-    public function getDistanceToMe($latitude, $longitude)
-    {
-        // Coordinate di Pescara
-        $myLatitude = 42.4612;
-        $myLongitude = 14.2111;
-
-        return getDistance($latitude, $longitude, $myLatitude, $myLongitude);
     }
 }

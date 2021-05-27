@@ -125,7 +125,7 @@ class EventsExploreTest extends TestCase
         ]);
         $next_year_event = Event::factory()->create([
             'title' => 'ma non questo qui',
-            'starting_time' => date(now()->addYear(1))     // un evento che inizia l'anno prossimo
+            'starting_time' => date(now()->addYear())     // un evento che inizia l'anno prossimo
         ]);
         $response = $this->get('/events?data-max=' . date(now()->setHours(59)->setMinutes(59)->setSeconds(59)));
 
@@ -136,16 +136,18 @@ class EventsExploreTest extends TestCase
     //Un utente può cercare in base a delle categorie.
     public function test_a_user_by_category()
     {
-        $event_with_tag1 = Event::factory()->hasTags(1)->create();
-        $event_with_tag2 = Event::factory()->hasTags(1)->create();
+        $events_with_tag = Event::factory(2)->create();
+        $tags = Tag::factory(2)->create();
+        $events_with_tag[0]->tags()->attach($tags[0]);
+        $events_with_tag[1]->tags()->attach($tags[1]);
         $event_without_tag = Event::factory()->create();
 
 
-        $request = $this->get('/events?categories%5B%5D=' . $event_with_tag1->tags->first->id .
-            '&categories%5B%5D=' . $event_with_tag2->tags->first->id);
+        $request = $this->get('/events?categories%5B%5D=' . $tags[0]->id .
+            '+&categories%5B%5D=' . $tags[1]->id . '+');
 
-        $request->assertSeeText($event_with_tag1->title);
-        $request->assertSeeText($event_with_tag2->title);
-        $request->assertDontSeeText($event_without_tag->title);
+        $request->assertSee($events_with_tag[0]->title);
+        $request->assertSee($events_with_tag[1]->title);
+        $request->assertDontSee($event_without_tag->title);
     }
 }
