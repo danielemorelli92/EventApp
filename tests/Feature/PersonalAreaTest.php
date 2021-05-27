@@ -43,8 +43,8 @@ class PersonalAreaTest extends TestCase
         ]);
 
         $response = $this->get('/dashboard');
-        $response->assertSeeText($event->title);
-        $response->assertDontSeeText($event2->title);
+        $response->assertSee($event->title);
+        $response->assertDontSee($event2->title);
     }
 
     // Un utente deve poter visualizzare le proprie categorie di interesse scelte dall’area personale.
