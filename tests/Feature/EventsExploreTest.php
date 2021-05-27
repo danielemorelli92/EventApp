@@ -136,16 +136,19 @@ class EventsExploreTest extends TestCase
     //Un utente può cercare in base a delle categorie.
     public function test_a_user_can_search_by_category()
     {
-        $events_with_tag = Event::factory(2)->create();
-        $tags = Tag::factory(2)->create();
-        $events_with_tag[0]->tags()->attach($tags[0]);
-        $events_with_tag[1]->tags()->attach($tags[1]);
-        $event_without_tag = Event::factory()->create();
+        $event_with_tag = Event::factory()->create([
+            'starting_time' => date(now()->addYear())
+        ]);
+        $tag = Tag::factory()->create();
+        $event_with_tag->tags()->attach($tag);
+        $event_without_tag = Event::factory()->create([
+            'starting_time' => date(now()->addYear())
+        ]);
 
-        $request = $this->get('/events?categories[]=' . $tags[0]->id . '+&categories[]=' . $tags[1]->id . '+');
+        $request = $this->get('/events?search=&categories%5B%5D=' . $tag->id . '+');
 
-        $request->assertSee($events_with_tag[0]->title);
-        $request->assertSee($events_with_tag[1]->title);
+
+        $request->assertSee($event_with_tag->title);
         $request->assertDontSee($event_without_tag->title);
     }
 }
