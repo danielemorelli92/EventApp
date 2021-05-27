@@ -37,7 +37,7 @@
             value="{{ request('search') }}"
         >
         <label class="section-title">Filtro distanza</label>
-        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo">
+        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo" value="Pescara">
         <input class="modulo-ricerca-item" type="text" name="dist-max" placeholder="Distanza max">
         <label class="section-title">Filtro data</label>
         <div>
