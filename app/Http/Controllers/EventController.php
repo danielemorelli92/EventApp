@@ -52,31 +52,32 @@ class EventController extends Controller
                 $events = $events->intersect($events_future_in_distance);
             }
 
-            /*
-            if(array_key_exists('data-max', $param) and !blank($param['data-max'])) {
 
+            if(array_key_exists('data-max', $param) and !blank($param['data-max'])) {
+                $query = Event::query();
 
                 switch($param['data-max']) {
                     case 'today':
-                        $now = date(now());
-                        $tomorrow = date(now()->setHour(23)->setMinute(59)->setSecond(59));
-                        $query->whereDate('starting_time', '>=', $now);
-                        //$query->whereDate('starting_time', '<=', $tomorrow);
-                        dd($query->get()->push($now));
+                        $dateMax = date(now()->setHour(23)->setMinute(59)->setSecond(59));
+                        $query = $query->where('starting_time', '<=', $dateMax);
                         break;
                     case 'tomorrow':
-                        $filters[] = ['starting_time', '>=', 'CONCAT(DATE(DATE_ADD(NOW(), INTERVAL 1 DAY), \'23:59:59)\''];
+                        $dateMax = date(now()->addDay()->setHour(23)->setMinute(59)->setSecond(59));
+                        $query = $query->where('starting_time', '<=', $dateMax);
                         break;
                     case 'week':
-                        $filters[] = ['starting_time', '<=', 'DATE_ADD(NOW(), INTERVAL 1 WEEK'];
+                        $dateMax = date(now()->addWeek()->setHour(23)->setMinute(59)->setSecond(59));
+                        $query = $query->where('starting_time', '<=', $dateMax);
                         break;
                     case 'month':
-                        $filters[] = ['starting_time', '<=', 'DATE_ADD(NOW(), INTERVAL 1 MONTH'];
+                        $dateMax = date(now()->addMonth()->setHour(23)->setMinute(59)->setSecond(59));
+                        $query = $query->where('starting_time', '<=', $dateMax);
                         break;
                     default:
                         break;
                 }
-            }*/
+                $events = $events->intersect($query->get());
+            }
         }
 
         return view('events', [

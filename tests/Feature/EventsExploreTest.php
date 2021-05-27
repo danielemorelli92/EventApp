@@ -136,7 +136,7 @@ class EventsExploreTest extends TestCase
             'title' => 'ma non questo qui',
             'starting_time' => date(now()->addYear())     // un evento che inizia l'anno prossimo
         ]);
-        $response = $this->get('/events?data-max=' . date(now()->setHours(59)->setMinutes(59)->setSeconds(59)));
+        $response = $this->get('/events?data-max=tomorrow');
 
         $response->assertSee($today_event->title);
         $response->assertDontSee($next_year_event->title);
