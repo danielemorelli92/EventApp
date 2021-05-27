@@ -37,7 +37,7 @@
             value="{{ request('search') }}"
         >
         <label class="section-title">Filtro distanza</label>
-        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo">
+        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo" value="Pescara">
         <input class="modulo-ricerca-item" type="text" name="dist-max" placeholder="Distanza max">
         <label class="section-title">Filtro data</label>
         <div>
@@ -60,7 +60,7 @@
         <label class="section-title">Filtra per interesse</label>
         <div>
             @foreach($tags as $tag)
-                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}">
+                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }} ">
                 <label for="category">{{ $tag->body }}<br></label>
             @endforeach
         </div>
