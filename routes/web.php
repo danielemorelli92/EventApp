@@ -33,11 +33,7 @@ Route::get('/', function () {
 
 Route::get('/events', [EventController::class, 'index']);
 
-Route::get('/events-highlighted', function () {
-    return view('events-highlighted', [
-        'events' => Event::all()
-    ]);
-});
+Route::get('/events-highlighted', [EventController::class, 'indexHighlighted']);
 
 Route::get('/event/{event}', [EventController::class, 'show']);
 

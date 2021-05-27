@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Event,Tag};
+use App\Models\{Event, Tag};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class EventController extends Controller
     public function index()
     {
         $param = request()->request->all();
-        foreach($param as $key => $value) {
+        foreach ($param as $key => $value) {
             if (blank($value)) {
                 unset($param[$key]);
             }
@@ -24,8 +24,8 @@ class EventController extends Controller
         if (count($param) > 0) {
 
             if (array_key_exists('search', $param) and !blank($param['search'])) {
-                $query->where('title','like','%' . $param['search'] . '%');
-                $query->orWhere('description','like','%' . $param['search'] . '%');
+                $query->where('title', 'like', '%' . $param['search'] . '%');
+                $query->orWhere('description', 'like', '%' . $param['search'] . '%');
             }
             if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
                 //$query->where('address', 'like', $param['luogo']);
@@ -67,10 +67,31 @@ class EventController extends Controller
             'tags' => Tag::all()
         ]);
     }
-    public function show(Event $event) {
+
+    public function show(Event $event)
+    {
         return view('event', [
             'event' => $event
         ]);
+    }
+
+    public function indexHighlighted()
+    {
+
+        $query = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time');
+        $events = $query->get();
+        $events_highlighted = [];
+
+        foreach ($events as $event) {
+            if ($event->getDistanceToMe() <= 25) {
+                $events_highlighted[] = $event;
+            }
+        }
+
+        return view('events-highlighted', [
+            'events' => $events_highlighted,
+        ]);
+
     }
 
     protected function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo)
