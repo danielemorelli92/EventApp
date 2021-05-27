@@ -124,7 +124,8 @@ class EventController extends Controller
         }
         return view('dashboard', [
             'registered_events' => $registered_events->unique('id'),
-            'interesting_events' => $interesting_events->unique('id')
+            'interesting_events' => $interesting_events->unique('id'),
+            'tags' => Tag::all()
         ]);
 
     }

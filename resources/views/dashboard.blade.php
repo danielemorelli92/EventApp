@@ -52,7 +52,12 @@
 
     <div class="right-side-column">
         <button style="">Modifica account</button>
-        <div class="section-title">I tuoi gusti</div>
-        <div class="events-parameters-selection-box"></div>
+        <label class="section-title">I tuoi gusti</label>
+        <div>
+            @foreach($tags as $tag)
+                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }} ">
+                <label for="category">{{ $tag->body }}<br></label>
+            @endforeach
+        </div>
     </div>
 @endsection
