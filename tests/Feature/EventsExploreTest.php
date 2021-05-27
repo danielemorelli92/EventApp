@@ -24,7 +24,9 @@ class EventsExploreTest extends TestCase
 
     public function test_a_user_can_select_a_event()
     {
-        Event::factory(10)->create();
+        Event::factory(10)->create([
+            'starting_time' => date(now()->addYear())
+        ]);
         $html_content = $this->get('/events')->content(); //estraggo la pagina html visualizzata dall'utente
         preg_match_all('/<a.*?href="\/event\/\d+">/', $html_content, $matches); //c'è almeno un link agli eventi?
         $this->assertCount(10, $matches[0], 'qualche evento non viene visualizzato');
@@ -33,15 +35,18 @@ class EventsExploreTest extends TestCase
     public function test_a_user_can_search_a_event_by_title_or_description()
     {
         $event_title_matched = Event::factory()->create([
-            'title' => 'matched'
+            'title' => 'matched',
+            'starting_time' => date(now()->addYear())
         ]);
         $event_description_matched = Event::factory()->create([
             'title' => 'another',
-            'description' => 'matched'
+            'description' => 'matched',
+            'starting_time' => date(now()->addYear())
         ]);
         $eventNotSerched = Event::factory()->create([
             'title' => 'do not show',
-            'description' => 'do not show'
+            'description' => 'do not show',
+            'starting_time' => date(now()->addYear())
         ]);
 
         $response = $this->get('/events?search=matched');
@@ -60,7 +65,9 @@ class EventsExploreTest extends TestCase
 
     public function test_a_user_can_access_the_event_page_from_the_events_list_in_explore_events_page()
     {
-        $event = Event::factory()->create();
+        $event = Event::factory()->create([
+            'starting_time' => date(now()->addYear())
+        ]);
         $response = $this->get('/events');
         $response->assertSee($event->title);
         $response->assertSee('/event/' . $event->id);
@@ -102,18 +109,20 @@ class EventsExploreTest extends TestCase
         $near_event = Event::factory()->create([
             'title' => 'si deve leggere questo',
             'latitude' => 42.5049, // coordinate vicine
-            'longitude' => 14.1389 // (Montesilvano, circa 7km di distanza)
+            'longitude' => 14.1389, // (Montesilvano, circa 7km di distanza),
+            'starting_time' => date(now()->addYear())
         ]);
         $far_event = Event::factory()->create([
             'title' => 'ma non questo qui',
             'latitude' => -42.25573,  // coordinate lontane
-            'longitude' => 151.47322  // (in mezzo all'oceano vicino l'Australia,
+            'longitude' => 151.47322,  // (in mezzo all'oceano vicino l'Australia,
             //  circa 16500km di distanza. Perché sì.)
+            'starting_time' => date(now()->addYear())
         ]);
         $response = $this->get('/events?dist-max=50');
 
-        $response->assertSeeText($near_event->title);
-        $response->assertDontSeeText($far_event->title);
+        $response->assertSee($near_event->title);
+        $response->assertDontSee($far_event->title);
     }
 
     //Un utente può cercare in base data massima dell’evento.
@@ -129,8 +138,8 @@ class EventsExploreTest extends TestCase
         ]);
         $response = $this->get('/events?data-max=' . date(now()->setHours(59)->setMinutes(59)->setSeconds(59)));
 
-        $response->assertSeeText($today_event->title);
-        $response->assertDontSeeText($next_year_event->title);
+        $response->assertSee($today_event->title);
+        $response->assertDontSee($next_year_event->title);
     }
 
     //Un utente può cercare in base a delle categorie.
