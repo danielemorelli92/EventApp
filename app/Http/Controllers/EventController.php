@@ -93,7 +93,46 @@ class EventController extends Controller
         ]);
     }
 
-    public function dashboard()
+public function dashboard()
+    {
+        $query = Event::query()->where('starting_time', '>=', date(now()));
+        $events = $query->get();
+        $registered_events = [];
+
+        if (Auth::check()) {
+            foreach ($events as $event) {
+                if ($event->users->contains(Auth::user())) {
+                    $registered_events[] = $event;
+                }
+            }
+        }
+
+        return view('dashboard', [
+            'registered_events' => $registered_events
+        ]);
+
+    }
+  
+    public function indexHighlighted()
+    {
+
+        $query = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time');
+        $events = $query->get();
+        $events_highlighted = [];
+
+        foreach ($events as $event) {
+            if ($event->getDistanceToMe() <= 25) {
+                $events_highlighted[] = $event;
+            }
+        }
+
+        return view('events-highlighted', [
+            'events' => $events_highlighted,
+        ]);
+
+    }
+
+    protected function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo)
     {
         $query = Event::query()->where('starting_time', '>=', date(now()));
         $events = $query->get();

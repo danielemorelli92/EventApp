@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\{ExternalRegistration, Tag, User, Event};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class PersonalAreaTest extends TestCase
@@ -24,10 +25,11 @@ class PersonalAreaTest extends TestCase
         $user = User::factory()->create();
         $event = Event::factory()->create([
             'title' => 'evento a cui sei registrato',
-            'starting_time' => date(now()->addDay(1))
+            'starting_time' => date(now()->addDay())
         ]);
         $event2 = Event::factory()->create([
-            'title' => 'non deve essere visto'
+            'title' => 'non deve essere visto',
+            'starting_time' => date(now()->addDay())
         ]);
 
         //  LOGGATO SI REGISTRA ALL'EVENTO
@@ -44,8 +46,11 @@ class PersonalAreaTest extends TestCase
         $html_page = $this->get('/dashboard')->content();
 
         // /<section name='registered_events'.+?<\/section>/gms
-        preg_match('/<section name="registered_events".+?<\/section>/ms', $html_page, $matched);
-        $matched = $matched[0];
+        preg_match('/<section id="registered_events"[\s\S]+?<\/section>/', $html_page, $matched);
+        if ($this->count($matched) > 0)
+            $matched = $matched[0];
+        else
+            $matched = '';
         $this->assertStringContainsString($event->title, $matched);
         $this->assertStringNotContainsString($event2->title, $matched);
     }
@@ -53,6 +58,7 @@ class PersonalAreaTest extends TestCase
     // Un utente deve poter visualizzare le proprie categorie di interesse scelte dall’area personale.
     public function test_a_user_can_view_his_selected_interests_on_his_page()
     {
+        self::markTestIncomplete('Questo test è ancora incompleto');
         $user = User::factory()->create();
         $request = $this->post('/login', [
             'email' => $user->email,
@@ -93,6 +99,9 @@ class PersonalAreaTest extends TestCase
     // categorie selezionate precedentemente nella propria area personale.
     public function test_a_user_can_view_suggested_events()
     {
+        self::markTestIncomplete('Questo test è ancora incompleto');
+
+
         $user = User::factory()->create();
 
         $this->post('/login', [
@@ -124,11 +133,15 @@ class PersonalAreaTest extends TestCase
         ]);
 
         $html_page = $this->get('/dashboard')
-                          ->content();
+            ->content();
 
         // /<section name='suggested_events'.+?<\/section>/gms
-        preg_match('/<section name="suggested_events".+?<\/section>/ms', $html_page, $matched);
-        $matched = $matched[0];
+        preg_match('/<section id="suggested_events"[\s\S]+?<\/section>/', $html_page, $matched);
+
+        if ($this->count($matched) > 0)
+            $matched = $matched[0];
+        else
+            $matched = '';
 
         $this->assertStringContainsString($event_interesting->title, $matched, "non viene mostrato l'evento suggerito");
         $this->assertStringNotContainsString($event_not_interesting->title, $matched, "viene mostrato un evento non suggerito");
