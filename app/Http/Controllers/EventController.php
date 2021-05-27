@@ -21,23 +21,21 @@ class EventController extends Controller
         }
 
         $query = Event::query();
-        $category_events = collect();
+        $events = collect();
 
         if (count($param) > 0) {
 
             if (array_key_exists('search', $param) and !blank($param['search'])) {
-                $query->where('title', 'like', '%' . $param['search'] . '%');
-                $query->orWhere('description', 'like', '%' . $param['search'] . '%');
+                $query = $query->where('title', 'like', '%' . $param['search'] . '%');
+                $query = $query->orWhere('description', 'like', '%' . $param['search'] . '%');
+                $events = $events->merge($query->get());
             }
-            if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
+            /*if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
                 //$query->where('address', 'like', $param['luogo']);
-            }
+            }*/
             if (array_key_exists('categories', $param)) {
-                foreach ($param['categories'] as $category) {
-                    $this_tag = Tag::query()->where('id', '=', $category)->get()[0];
-                    foreach ($this_tag->events as $item) {
-                        $category_events->push($item);
-                    }
+                foreach ($param['categories'] as $cat_id) {
+                    $events = $events->merge(Tag::find($cat_id)->events);
                 }
             }
             /*if (!blank($param['dist-max'])) {
@@ -67,10 +65,13 @@ class EventController extends Controller
                         break;
                 }
             }*/
+        } else {
+            $events = Event::all();
         }
 
-        return view('events', [
-            'events' => $category_events, //$query->get()
+        
+        return view(request(request()->getRequestUri()), [
+            'events' => $events, //$query->get()
             'tags' => Tag::all()
         ]);
     }

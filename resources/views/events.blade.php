@@ -59,8 +59,9 @@
 
         <label class="section-title">Filtra per interesse</label>
         <div>
+
             @foreach($tags as $tag)
-                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}">
+                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }} ">
                 <label for="category">{{ $tag->body }}<br></label>
             @endforeach
         </div>
