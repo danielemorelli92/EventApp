@@ -69,8 +69,7 @@ class EventController extends Controller
             $events = Event::all();
         }
 
-        
-        return view(request(request()->getRequestUri()), [
+        return view('events', [
             'events' => $events, //$query->get()
             'tags' => Tag::all()
         ]);
