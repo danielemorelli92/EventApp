@@ -70,7 +70,7 @@ class EventController extends Controller
         }
 
         return view('events', [
-            'events' => $events, //$query->get()
+            'events' => $events->unique(), //$query->get()
             'tags' => Tag::all()
         ]);
     }
