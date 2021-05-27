@@ -10,7 +10,7 @@
             <div class="section-title">Eventi a cui sei registrato (futuri)</div>
             <div class="events-list">
                 @foreach($registered_events as $registered_event)
-                    <a name="event" class="event-square" href="/event/{{ $registered_event->id }}">
+                    <a class="event-square" href="/event/{{ $registered_event->id }}">
                         <div class="event-square-image-container">
                             <img class="image-small" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
                         </div>
@@ -55,8 +55,13 @@
         <label class="section-title">I tuoi gusti</label>
         <div>
             @foreach($tags as $tag)
-                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }} ">
-                <label for="category">{{ $tag->body }}<br></label>
+                <form id="preferences" action="/dashboard" method="post">
+                    @csrf
+                    <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}"
+                           {{Auth::user()->tags->contains($tag->id) ? 'checked' : ''}}
+                           onchange="document.getElementById('preferences').submit()">
+                    <label for="category">{{ $tag->body }}</label><br>
+                </form>
             @endforeach
         </div>
     </div>
