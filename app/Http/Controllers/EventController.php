@@ -96,12 +96,17 @@ class EventController extends Controller
 
     public function dashboard()
     {
-        $param = request()->request->all();
+        if (request()->method() == 'POST') {
+            $param = request()->request->all();
 
-        if (array_key_exists('categories', $param)) {
-            $tags = collect($param['categories']);
-            Auth::user()->tags()->sync($tags);
+            if (array_key_exists('categories', $param)) {
+                $tags = collect($param['categories']);
+                Auth::user()->tags()->sync($tags);
+            } else {
+                Auth::user()->tags()->sync(collect());
+            }
         }
+
         $events_query = Event::query()->where('starting_time', '>=', date(now()));
         $events = $events_query->get();
         $registered_events = collect();

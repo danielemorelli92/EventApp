@@ -67,6 +67,7 @@
                            onchange="document.getElementById('preferences').submit()">
                     <label for="categories[]">{{ $tag->body }}</label><br>
                 @endforeach
+
             </form>
 
         </div>
