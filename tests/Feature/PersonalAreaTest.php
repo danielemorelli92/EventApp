@@ -111,4 +111,9 @@ class PersonalAreaTest extends TestCase
         $this->assertStringNotContainsString($event_registered_already->title, $matched, "viene mostrato un evento a cui sono registrato");
         $this->assertStringNotContainsString($passed_event->title, $matched, "viene mostrato un evento già passato");
     }
+
+    public function test_a_user_can_view_his_events_history()
+    {
+        $this->assertTrue(false);
+    }
 }
