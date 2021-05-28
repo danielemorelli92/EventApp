@@ -14,7 +14,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $events = Event::factory()->hasImages(4)->count(20)->create();
+
+        $events = Event::factory()->hasImages(4)->count(15)->create();
+        $events->push(Event::factory()->hasImages(4)->create([
+            'latitude' => 42.529336,
+            'longitude' => 14.1420603,
+            'starting_time' => date(now()->addDays(rand(1, 120)))
+        ]));
+        $events->push(Event::factory()->hasImages(4)->create([
+            'latitude' => 42.473373,
+            'longitude' => 14.079042,
+            'starting_time' => date(now()->addDays(rand(1, 120)))
+        ]));
+        $events->push(Event::factory()->hasImages(4)->create([
+            'latitude' => 42.362286,
+            'longitude' => 14.152149,
+            'starting_time' => date(now()->addDays(rand(1, 120)))
+        ]));
+        $events->push(Event::factory()->hasImages(4)->create([
+            'latitude' => 42.394787,
+            'longitude' => 14.296755,
+            'starting_time' => date(now()->addDays(rand(1, 120)))
+        ]));
+        $events->push(Event::factory()->hasImages(4)->create([
+            'latitude' => 42.405689,
+            'longitude' => 14.290663,
+            'starting_time' => date(now()->addDays(rand(1, 120)))
+        ]));
+
         $tags = Tag::factory()->count(16)->create();
         $users = User::factory()->count(100)->create();
 

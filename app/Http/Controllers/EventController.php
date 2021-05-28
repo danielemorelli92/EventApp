@@ -53,10 +53,10 @@ class EventController extends Controller
             }
 
 
-            if(array_key_exists('data-max', $param) and !blank($param['data-max'])) {
+            if (array_key_exists('data-max', $param) and !blank($param['data-max'])) {
                 $query = Event::query();
 
-                switch($param['data-max']) {
+                switch ($param['data-max']) {
                     case 'today':
                         $dateMax = date(now()->setHour(23)->setMinute(59)->setSecond(59));
                         $query = $query->where('starting_time', '<=', $dateMax);
@@ -93,29 +93,56 @@ class EventController extends Controller
         ]);
     }
 
+
     public function dashboard()
     {
-        $query = Event::query()->where('starting_time', '>=', date(now()));
-        $events = $query->get();
-        $registered_events = [];
+        if (request()->method() == 'POST') {
+            $param = request()->request->all();
 
-        if (Auth::check()) {
-            foreach ($events as $event) {
-                if ($event->users->contains(Auth::user())) {
-                    $registered_events[] = $event;
-                }
+            if (array_key_exists('categories', $param)) {
+                $tags = collect($param['categories']);
+                Auth::user()->tags()->sync($tags);
+            } else {
+                Auth::user()->tags()->sync(collect());
             }
         }
 
+        $events_query = Event::query()->where('starting_time', '>=', date(now()));
+        $events = $events_query->get();
+        $registered_events = collect();
+
+        $tags_query = Tag::all();
+        $interesting_tags = collect();
+        $interesting_events = collect();
+        if (Auth::check()) {
+            foreach ($events as $event) {
+                if ($event->users->contains(Auth::user())) {
+                    $registered_events->push($event);
+                }
+            }
+            foreach ($tags_query as $tag) {
+                if ($tag->users->contains(Auth::user())) {
+                    $interesting_tags->push($tag);
+                }
+            }
+            foreach ($interesting_tags as $tag) {
+                foreach ($tag->events as $tag_event) {
+                    if (! $tag_event->users->contains(Auth::user()) && $tag_event->starting_time >= date(now())) {
+                        $interesting_events = $interesting_events->push($tag_event);
+                    }
+                }
+            }
+        }
         return view('dashboard', [
-            'registered_events' => $registered_events
+            'registered_events' => $registered_events->unique('id'),
+            'interesting_events' => $interesting_events->unique('id'),
+            'tags' => Tag::all()
         ]);
 
     }
 
     public function indexHighlighted()
     {
-
         $query = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time');
         $events = $query->get();
         $events_highlighted = [];
@@ -129,26 +156,5 @@ class EventController extends Controller
         return view('events-highlighted', [
             'events' => $events_highlighted,
         ]);
-
-    }
-
-    protected function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo)
-    {
-        $query = Event::query()->where('starting_time', '>=', date(now()));
-        $events = $query->get();
-        $registered_events = [];
-
-        if (Auth::check()) {
-            foreach ($events as $event) {
-                if ($event->users->contains(Auth::user())) {
-                    $registered_events[] = $event;
-                }
-            }
-        }
-
-        return view('dashboard', [
-            'registered_events' => $registered_events
-        ]);
-
     }
 }
