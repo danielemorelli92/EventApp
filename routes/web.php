@@ -17,12 +17,6 @@ use App\Models\{Event};
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
@@ -33,17 +27,12 @@ Route::get('/', function () {
 
 Route::get('/events', [EventController::class, 'index']);
 
-Route::get('/events-highlighted', function () {
-    return view('events-highlighted', [
-        'events' => Event::all()
-    ]);
-});
+Route::get('/events-highlighted', [EventController::class, 'indexHighlighted']);
 
 Route::get('/event/{event}', [EventController::class, 'show']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
+Route::post('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth']);
 
 Route::post('/registration', [EventRegistrationController::class, 'create']);
 

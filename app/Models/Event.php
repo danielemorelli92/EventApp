@@ -30,4 +30,25 @@ class Event extends Model
     { //registrazioni esterne per l'evento
         return $this->hasMany(ExternalRegistration::class);
     }
+
+    public function getDistanceToMe(): float
+    {
+        // Coordinate di Pescara
+        $myLatitude = 42.4612;
+        $myLongitude = 14.2111;
+
+        return Event::getDistance($this->latitude, $this->longitude, $myLatitude, $myLongitude);
+    }
+
+    public static function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo): float
+    {
+        $rad = M_PI / 180;
+        //Calculate distance from latitude and longitude
+        $theta = $longitudeFrom - $longitudeTo;
+        $dist = sin($latitudeFrom * $rad)
+            * sin($latitudeTo * $rad) + cos($latitudeFrom * $rad)
+            * cos($latitudeTo * $rad) * cos($theta * $rad);
+
+        return acos($dist) / $rad * 60 * 1.853;
+    }
 }
