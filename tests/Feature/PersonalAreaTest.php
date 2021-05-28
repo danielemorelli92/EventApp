@@ -118,12 +118,7 @@ class PersonalAreaTest extends TestCase
 
         $event1 = Event::factory()->create([
             'title' => 'evento1 a cui sei registrato',
-           // 'ending_time' => ????? non so se serve roba simile per il "partecipato"
-        ]);
-
-        $event2 = Event::factory()->create([
-            'title' => 'evento2 a cui sei registrato',
-            // 'ending_time' => ?????
+            'starting_time' => date(now()->subDay())
         ]);
 
         $this->post('/login', [
@@ -132,10 +127,8 @@ class PersonalAreaTest extends TestCase
         ]);
 
         $event1->users()->attach(Auth::user());
-        $event2->users()->attach(Auth::user());
 
         $response = $this->get('/dashboard');
         $response->assertSee($event1->title);
-        $response->assertSee($event2->title);
     }
 }
