@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEventRequest;
 use App\Models\{Event, Tag};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
@@ -93,6 +95,35 @@ class EventController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        if (Gate::denies('create-event')) {
+            abort(401);
+        }
+
+        return view('event.create');
+    }
+
+    public function store(StoreEventRequest $request)
+    {
+        $request->validated();
+
+        $event = Event::factory()->create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'author_id' => Auth::id(),
+            'type' => $request->input('type'),
+            'max_partecipants' => $request->input('max_partecipants', 0),
+            'price' => $request->input('price', 0.00),
+            'ticket_office' => $request->input('ticket_office', null),
+            'website' => $request->input('website', null),
+            'address' => $request->input('address'),
+            'starting_time' => $request->input('starting_time'),
+            'ending_time' => $request->input('ending_time', null)
+        ]);
+
+        return redirect('/', 201);
+    }
 
     public function dashboard()
     {
@@ -141,20 +172,4 @@ class EventController extends Controller
 
     }
 
-    public function indexHighlighted()
-    {
-        $query = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time');
-        $events = $query->get();
-        $events_highlighted = [];
-
-        foreach ($events as $event) {
-            if ($event->getDistanceToMe() <= 25) {
-                $events_highlighted[] = $event;
-            }
-        }
-
-        return view('events-highlighted', [
-            'events' => $events_highlighted,
-        ]);
-    }
 }

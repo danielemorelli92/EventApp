@@ -25,8 +25,6 @@ Route::get('/', function () {
     }
 });
 
-Route::get('/events', [EventController::class, 'index']);
-
 Route::get('/welcome', function () {
     $events = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time')->get();
     $events = $events->filter(function ($event) {
@@ -38,12 +36,17 @@ Route::get('/welcome', function () {
     ]);
 });
 
-Route::get('/event/{event}', [EventController::class, 'show'])->where('event', '[0-9]+');
-
-Route::get('/events/create', [EventController::class, 'create']);
-
 Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
+
 Route::post('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth']);
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
+
+Route::get('/event/{event}', [EventController::class, 'show'])->where('event', '[0-9]+');
 
 Route::post('/registration', [EventRegistrationController::class, 'create']);
 

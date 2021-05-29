@@ -27,9 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        /*Gate::define('create-event', function () {
+        Gate::define('create-event', function () {
             return Auth::user()->type === 'organizzatore' || Auth::user()->type === 'admin';
-        });*/
+        });
 
 
     }
