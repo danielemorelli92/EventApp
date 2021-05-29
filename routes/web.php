@@ -21,17 +21,26 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
     } else {
-        return redirect('/events-highlighted');
+        return redirect('/welcome');
     }
 });
 
 Route::get('/events', [EventController::class, 'index']);
 
-Route::get('/events-highlighted', [EventController::class, 'indexHighlighted']);
+Route::get('/welcome', function () {
+    $events = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time')->get();
+    $events = $events->filter(function ($event) {
+        return $event->getDistanceToMe() <= 25;
+    });
 
+    return view('events-highlighted', [
+        'events' => $events
+    ]);
+});
 
-Route::get('/event/{event}', [EventController::class, 'show']);
+Route::get('/event/{event}', [EventController::class, 'show'])->where('event', '[0-9]+');
 
+Route::get('/events/create', [EventController::class, 'create']);
 
 Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
 Route::post('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth']);
