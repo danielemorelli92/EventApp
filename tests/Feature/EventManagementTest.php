@@ -6,15 +6,23 @@ use App\Http\Controllers\EventController;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class EventManagementTest extends TestCase
 {
     public function test_a_organizer_can_see_the_create_event_form()
     {
-        $user = User::factory()->create();
-        $request = $this->get('/event/create');
-        //$re
+        $user = User::factory()->create(); // crea l'utente
+
+        $user->type = 'organizzatore';
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']); // upgrade a organizzatore
+
+        $request = $this->actingAs($user)->get('/event/create'); // richiesta form per la creazione eventi
+
+        $request->assertOk();  // controlla se è stata ricevuta
     }
 
     public function test_a_normal_user_cannot_see_the_create_event_form()
