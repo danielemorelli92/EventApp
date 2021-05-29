@@ -48,7 +48,7 @@ class EventManagementTest extends TestCase
 
         $event = Event::factory()->make(); // crea un evento locale
 
-        $request = $this->actingAs($user)->post('/events', $event);
+        $request = $this->actingAs($user)->post('/events', $event->toArray());
 
         $request->assertSuccessful();
 
@@ -60,7 +60,7 @@ class EventManagementTest extends TestCase
 
         $event = Event::factory()->make(); // crea un evento locale
 
-        $request = $this->actingAs($user)->post('/events', $event);
+        $request = $this->actingAs($user)->post('/events', $event->toArray());
 
         $request->assertStatus(401);
     }
@@ -97,7 +97,7 @@ class EventManagementTest extends TestCase
 
         $event->title = 'new title';
 
-        $request = $this->actingAs($user)->put('/events/' . $event->id, $event);
+        $request = $this->actingAs($user)->put('/events/' . $event->id, $event->toArray());
 
         $request->assertSuccessful();
     }
@@ -110,7 +110,7 @@ class EventManagementTest extends TestCase
 
         $event->title = 'new title';
 
-        $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, $event);
+        $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, $event->toArray());
 
         $request->assertStatus(401);
     }

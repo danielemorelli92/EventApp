@@ -29,7 +29,7 @@ class EventsExploreTest extends TestCase
         ]);
         $html_content = $this->get('/events')->content(); //estraggo la pagina html visualizzata dall'utente
         preg_match_all('/<a.*?href="\/event\/\d+">/', $html_content, $matches); //c'è almeno un link agli eventi?
-        $this->assertCount(10, $matches[0], 'qualche evento non viene visualizzato');
+        $this->assertGreaterThanOrEqual(10, $matches[0], 'qualche evento non viene visualizzato');
     }
 
     public function test_a_user_can_search_a_event_by_title_or_description()
