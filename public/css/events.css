@@ -329,8 +329,8 @@ button:active {
     word-wrap: break-word;
     grid-area: title-rectangle;
     margin: 8px;
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 550;
 }
 .event-rectangle-attributes-group{
     display: flex;
@@ -397,8 +397,8 @@ button:active {
     margin-top: 0px;
     margin-right: 8px;
     margin-left: 8px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 550;
 }
 .event-square-attributes-group{
     display: flex;

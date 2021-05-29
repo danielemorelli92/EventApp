@@ -49,7 +49,18 @@
                     </a>
                 @endif
 
-                <x-button style="background-color: #0090E1" class="ml-3">
+                <x-button style="
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    white-space:nowrap;
+    background-color: white;
+    color: #0090E1;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;" class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
             </div>
