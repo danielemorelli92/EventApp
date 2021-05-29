@@ -31,37 +31,39 @@
         <button type="submit" value="CERCA">Cerca</button>
         <input
             name="search"
-            class="modulo-ricerca-item"
+            class="filters-item"
             type="search"
             placeholder="Ricerca testuale"
             value="{{ request('search') }}"
         >
         <label class="section-title">Filtro distanza</label>
-        <input class="modulo-ricerca-item" type="text" name="luogo" placeholder="Luogo" value="Pescara">
-        <input class="modulo-ricerca-item" type="text" name="dist-max" placeholder="Distanza max">
+        <input class="filters-item" type="text" name="luogo" placeholder="Luogo" value="Pescara">
+        <input class="filters-item" type="text" name="dist-max" placeholder="Distanza max">
         <label class="section-title">Filtro data</label>
-        <div>
-            <input type="radio" class="radio-filter-item" name="data-max" value="today" default>
-            <label for="data-max">Oggi</label>
+        <div class="radio-selection-item">
+            <input type="radio" class="radio-selection-item-radio" name="data-max" value="today" default>
+            <label for="data-max" class="radio-selection-item-label" >Oggi</label>
         </div>
-        <div>
-            <input type="radio" class="radio-filter-item" name="data-max" value="tomorrow">
-            <label for="data-max">Domani</label>
+        <div class="radio-selection-item">
+            <input type="radio" class="radio-selection-item-radio" name="data-max" value="tomorrow">
+            <label for="data-max" class="radio-selection-item-label" >Domani</label>
         </div>
-        <div>
-            <input type="radio" class="radio-filter-item" name="data-max" value="week">
-            <label for="data-max">Questa settimana</label>
+        <div class="radio-selection-item">
+            <input type="radio" class="radio-selection-item-radio" name="data-max" value="week">
+            <label for="data-max" class="radio-selection-item-label">Questa settimana</label>
         </div>
-        <div>
-            <input type="radio" class="radio-filter-item" name="data-max" value="month">
-            <label for="data-max">Questo mese</label>
+        <div class="radio-selection-item">
+            <input type="radio" class="radio-selection-item-radio" name="data-max" value="month">
+            <label for="data-max" class="radio-selection-item-label">Questo mese</label>
         </div>
 
         <label class="section-title">Filtra per interesse</label>
         <div>
             @foreach($tags as $tag)
-                <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }} ">
-                <label for="category">{{ $tag->body }}<br></label>
+                <div class="checkbox-selection-item">
+                    <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]" value="{{ $tag->id }} ">
+                    <label for="category" class="checkbox-selection-item-label" >{{ $tag->body }}<br></label>
+                </div>
             @endforeach
         </div>
     </form>

@@ -8,6 +8,56 @@ a{
     text-decoration: inherit;
     color: inherit;
 }
+input[type="radio"] {
+    filter: hue-rotate(-14deg) brightness(1.05);
+}
+input[type="checkbox"] {
+    filter: hue-rotate(-14deg) brightness(1.05);
+}
+input[type="text"] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    height: 36px;
+}
+input[type="number"] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    height: 36px;
+}
+input[type="search"] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    height: 36px;
+}
+.filters-item {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width: auto;
+}
 button {
     -webkit-border-radius: 0px 0px 12px 0px;
     -moz-border-radius: 0px 0px 12px 0px;
@@ -201,6 +251,7 @@ button:active {
     word-wrap: break-word;
     margin-top: 18px;
     margin-bottom: 4px;
+    margin-left: 2px;
     font-size: 20px;
     font-weight: bold;
 }
@@ -382,32 +433,36 @@ button:active {
     margin-left: 8px;
 }
 
-.modulo-ricerca-item {
-    border: 1px solid #DDD;
-    -webkit-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #FFF;
-    -moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #FFF;
-    box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #FFF;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    float: left;
-    font: 16px Lucida Sans, Trebuchet MS, Tahoma, sans-serif;
-    box-sizing: border-box;
-    height: 30px;
-    width: auto;
+
+.checkbox-selection-item {
+    display: flex;
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.checkbox-selection-item-checkbox {
+    margin-left: 2px;
+    zoom: 1.3;
+}
+.checkbox-selection-item-label {
+    margin-left: 4px;
+    font-size: 19px;
 }
 
-.categories-selection-box{
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    background-color:#aaa;
-    width: auto;
-    height: fit-content;
+.radio-selection-item {
+    display: flex;
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.radio-selection-item-radio {
+    margin-left: 2px;
+    zoom: 1.3;
+}
+.radio-selection-item-label {
+    margin-top: 1px;
+    margin-left: 4px;
+    font-size: 19px;
 }
 
 .category-oval{
