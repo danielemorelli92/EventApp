@@ -114,21 +114,21 @@ class PersonalAreaTest extends TestCase
 
     public function test_a_user_can_view_his_events_history()
     {
-        $user1 = User::factory()->create();
+        $user = User::factory()->create();
 
-        $event1 = Event::factory()->create([
+        $event = Event::factory()->create([
             'title' => 'evento1 a cui sei registrato',
             'starting_time' => date(now()->subDay())
         ]);
 
         $this->post('/login', [
-            'email' => $user1->email,
+            'email' => $user->email,
             'password' => 'password',
         ]);
 
-        $event1->users()->attach(Auth::user());
+        $event->users()->attach(Auth::user());
 
         $response = $this->get('/dashboard');
-        $response->assertSee($event1->title);
+        $response->assertSee($event->title);
     }
 }
