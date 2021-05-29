@@ -116,7 +116,7 @@ class EventController extends Controller
         $interesting_events = collect();
         if (Auth::check()) {
             foreach ($events as $event) {
-                if ($event->users->contains(Auth::user())) {
+                if ($event->registeredUsers->contains(Auth::user())) {
                     $registered_events->push($event);
                 }
             }
@@ -127,7 +127,7 @@ class EventController extends Controller
             }
             foreach ($interesting_tags as $tag) {
                 foreach ($tag->events as $tag_event) {
-                    if (! $tag_event->users->contains(Auth::user()) && $tag_event->starting_time >= date(now())) {
+                    if (!$tag_event->registeredUsers->contains(Auth::user()) && $tag_event->starting_time >= date(now())) {
                         $interesting_events = $interesting_events->push($tag_event);
                     }
                 }

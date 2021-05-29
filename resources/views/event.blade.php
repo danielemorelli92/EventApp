@@ -38,7 +38,7 @@
         </div>
     @if (Route::has('login'))
         @auth
-            @if($event->users->contains(Auth::user())) <!-- Controlla se l'utente collegato è registrato all'evento -->
+            @if($event->registeredUsers->contains(Auth::user())) <!-- Controlla se l'utente collegato è registrato all'evento -->
                 <!-- onClick usa JavaScript, andrebbe prima comunicata al server
                       la registrazione dell'utente, poi il refresh che già c'è -->
                 <form action="/delete-registration" method="post">

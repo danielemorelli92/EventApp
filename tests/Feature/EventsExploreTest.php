@@ -98,7 +98,7 @@ class EventsExploreTest extends TestCase
         $response = $this->post('/registration', [
             'event' => $event->id
         ]);
-        $registeredUsers = $event->users;
+        $registeredUsers = $event->registeredUsers;
         $registeredUsers->contains($user);
     }
 

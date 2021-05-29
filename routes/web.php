@@ -29,7 +29,9 @@ Route::get('/events', [EventController::class, 'index']);
 
 Route::get('/events-highlighted', [EventController::class, 'indexHighlighted']);
 
+
 Route::get('/event/{event}', [EventController::class, 'show']);
+
 
 Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
 Route::post('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth']);
