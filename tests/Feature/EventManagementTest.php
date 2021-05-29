@@ -20,7 +20,7 @@ class EventManagementTest extends TestCase
             ->where('email', $user->email)
             ->update(['type' => 'organizzatore']); // upgrade a organizzatore
 
-        $request = $this->actingAs($user)->get('/event/create'); // richiesta form per la creazione eventi
+        $request = $this->actingAs($user)->get('/events/create'); // richiesta form per la creazione eventi
 
         $request->assertOk();  // controlla se è stata ricevuta
     }
@@ -29,28 +29,60 @@ class EventManagementTest extends TestCase
     {
         $user = User::factory()->create();  // utente non organizzatore
 
-        $request = $this->actingAs($user)->get('/event/create'); // tenta di accedere alla pagina di creazione eventi
+        // tenta di accedere alla pagina di creazione eventi con un utente
+        // non abilitato a farlo
+        $request = $this->actingAs($user)->get('/events/create');
 
         $request->assertStatus(401);  // riceve l'errore: "401 - Unauthorized; Access denied"
     }
 
+
     public function test_a_user_can_delete_a_own_event()
     {
-        $this->assertTrue(false);
+        $user = User::factory()->hasCreatedEvents(1)->create(); // crea un utente con un evento già creato
+
+        $event = $user->createdEvents->first(); // l'evento creato precedentemente
+
+        $request = $this->actingAs($user)->delete('/events/' . $event->id); // richiede la cancellazione dell'evento
+
+        $request->assertSuccessful(); // cancellazione avvenuta con successo
     }
 
     public function test_a_user_cannot_delete_a_event_of_someone_else()
     {
-        $this->assertTrue(false);
+        $user_without_events = User::factory()->create(); // crea un utente
+        $user_with_event = User::factory()->hasCreatedEvents(1)->create(); // un altro utente con un evento
+
+        $event = $user_with_event->createdEvents->first(); // l'evento di un altro utente
+
+        // richiede la cancellazione di un evento non suo
+        $request = $this->actingAs($user_without_events)->delete('/events/' . $event->id);
+
+        $request->assertStatus(401);  // riceve l'errore: "401 - Unauthorized; Access denied"
     }
 
     public function test_a_user_can_modify_a_own_event()
     {
-        $this->assertTrue(false);
+        $user = User::factory()->hasCreatedEvents(1)->create();
+        $event = $user->createdEvents->first();
+
+        $event->title = 'new title';
+
+        $request = $this->put('/events/' . $event->id, $event);
+
+        $request->assertSuccessful();
     }
 
     public function test_a_user_cannot_modify_a_event_of_someone_else()
     {
-        $this->assertTrue(false);
+        $user_without_events = User::factory()->create();
+        $user_with_event = User::factory()->hasCreatedEvents(1)->create();
+        $event = $user_with_event->createdEvents->first();
+
+        $event->title = 'new title';
+
+        $request = $this->put('/events/' . $event->id, $event);
+
+        $request->assertStatus(401);
     }
 }

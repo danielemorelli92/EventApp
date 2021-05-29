@@ -30,5 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('create-event', function () {
             return Auth::user()->type === 'organizzatore' || Auth::user()->type === 'admin';
         });
+
+
     }
 }
