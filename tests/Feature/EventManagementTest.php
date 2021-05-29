@@ -27,7 +27,11 @@ class EventManagementTest extends TestCase
 
     public function test_a_normal_user_cannot_see_the_create_event_form()
     {
-        $this->assertTrue(false);
+        $user = User::factory()->create();  // utente non organizzatore
+
+        $request = $this->actingAs($user)->get('/event/create'); // tenta di accedere alla pagina di creazione eventi
+
+        $request->assertStatus(401);  // riceve l'errore: "401 - Unauthorized; Access denied"
     }
 
     public function test_a_user_can_delete_a_own_event()
