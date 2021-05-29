@@ -8,15 +8,8 @@ use Tests\TestCase;
 
 class EventManagementTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    public function test_a_organizator()
     {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
     }
 }
