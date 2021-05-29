@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\EventController;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -34,6 +35,34 @@ class EventManagementTest extends TestCase
         $request = $this->actingAs($user)->get('/events/create');
 
         $request->assertStatus(401);  // riceve l'errore: "401 - Unauthorized; Access denied"
+    }
+
+    public function test_a_organizer_can_create_an_event()
+    {
+        $user = User::factory()->create(); // crea l'utente
+
+        $user->type = 'organizzatore'; // upgrade locale a organizzatore
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']); // upgrade sul database a organizzatore
+
+        $event = Event::factory()->make(); // crea un evento locale
+
+        $request = $this->actingAs($user)->post('/events', $event);
+
+        $request->assertSuccessful();
+
+    }
+
+    public function test_a_normal_user_cannot_create_an_event()
+    {
+        $user = User::factory()->create(); // crea l'utente
+
+        $event = Event::factory()->make(); // crea un evento locale
+
+        $request = $this->actingAs($user)->post('/events', $event);
+
+        $request->assertStatus(401);
     }
 
 
@@ -68,7 +97,7 @@ class EventManagementTest extends TestCase
 
         $event->title = 'new title';
 
-        $request = $this->put('/events/' . $event->id, $event);
+        $request = $this->actingAs($user)->put('/events/' . $event->id, $event);
 
         $request->assertSuccessful();
     }
@@ -81,7 +110,7 @@ class EventManagementTest extends TestCase
 
         $event->title = 'new title';
 
-        $request = $this->put('/events/' . $event->id, $event);
+        $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, $event);
 
         $request->assertStatus(401);
     }
