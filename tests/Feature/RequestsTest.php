@@ -4,9 +4,12 @@ namespace Tests\Feature;
 
 use App\Models\Request;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\TextUI\XmlConfiguration\PHPUnit;
 use Tests\TestCase;
 
 class RequestsTest extends TestCase
@@ -27,7 +30,7 @@ class RequestsTest extends TestCase
             'nome' => 'Nome',
             'cognome' => 'Cognome',
             'data_nascita' => '1992-09-19',
-            'codice_documento' => $this->faker->bothify('##??????????'),
+            'codice_documento' => $this->faker->bothify('??########'),
             'tipo_documento' => $this->faker->randomElement(['driving license', 'identity card', 'passport'])
         ]);
 
@@ -36,12 +39,11 @@ class RequestsTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('/request', $expected);
+        $this->post('/request', $expected->toArray());
 
-        $actual = Request::find($expected->id);
+        $actual = Request::all()->first();
 
-        $this->assertEquals($expected, $actual, 'la richiesta non è stata inviata correttamente');
+        $this->assertObjectEquals($expected, $actual);
     }
-
 
 }

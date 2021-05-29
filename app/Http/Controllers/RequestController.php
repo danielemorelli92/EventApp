@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RequestController extends Controller
 {
