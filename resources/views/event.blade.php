@@ -8,10 +8,10 @@
 
 
     <div class="left-side-column">
-        <div style="display: flex; align-items: center; flex-direction: row">
+        <a href="javascript:history.back()" style="display: flex; align-items: center; flex-direction: row">
             <div style="margin-left: 8px; background-color: green; width: 16px; height: 16px"></div>
             <div class="section-title">chiudi</div> <!-- TODO cambiare stile -->
-        </div>
+        </a>
         <div class="section-title">Immagini</div>
         <div class="event-images-list">
             <div class="event-images-item"></div>
