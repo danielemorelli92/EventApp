@@ -8,11 +8,11 @@
 
 
     <div class="left-side-column">
-        <a href="javascript:history.back()" style="display: flex; align-items: center; flex-direction: row">
+        <a href="javascript:history.back()" style="display: flex; align-items: center; height: 32px; flex-direction: row">
             <div style="width: 18px; height: 18px; margin: 4px">
                 <img class="image-preview" src="{{ url('/images/close-icon.svg') }}" alt="close-icon">
             </div>
-            <div class="section-title">chiudi</div> <!-- TODO cambiare stile -->
+            <div style="height: 32px; margin-top: 12px" class="section-title">chiudi</div>
         </a>
         <div class="section-title">Immagini</div>
         <div class="event-images-list">
