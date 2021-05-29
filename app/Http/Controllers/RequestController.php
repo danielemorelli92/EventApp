@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Request;
 
 class RequestController extends Controller
 {
@@ -13,13 +13,13 @@ class RequestController extends Controller
 
     public function save()
     {
-        \App\Models\Request::create([
+        Request::create([
             'user_id' => Auth::user()->id,
-            'nome'=> request('nome'),
-            'cognome'=>request('cognome'),
-            'data_nascita'=>request('data_nascita'),
-            'codice_documento'=>request('codice_documento'),
-            'tipo_documento'=>request('tipo_documento')
+            'nome' => request('nome'),
+            'cognome' => request('cognome'),
+            'data_nascita' => request('data_nascita'),
+            'codice_documento' => request('codice_documento'),
+            'tipo_documento' => request('tipo_documento')
         ]);
     }
 
