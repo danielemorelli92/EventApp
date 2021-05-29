@@ -244,6 +244,12 @@ button:active {
     background: #ffffff;
     margin: 8px;
 }
+.event-rectangle:hover {
+    background: rgb(248, 248, 248);
+}
+.event-rectangle:active {
+    background: rgb(236, 236, 236);
+}
 .event-images-list{
     display: flex;
     flex-direction: column;
@@ -278,7 +284,6 @@ button:active {
 .event-rectangle-attributes-group{
     display: flex;
     width: auto;
-    background-color:#fff;
     grid-area: attributes-rectangle;
     margin: 8px;
 }
@@ -310,6 +315,12 @@ button:active {
     background: #ffffff;
     margin: 8px;
 }
+.event-square:hover {
+    background: rgb(248, 248, 248);
+}
+.event-square:active {
+    background: rgb(236, 236, 236);
+}
 .event-square-image-container{
     overflow: hidden;
     -webkit-border-radius: 8px;
@@ -330,7 +341,6 @@ button:active {
     -webkit-box-orient: vertical;
 
     word-wrap: break-word;
-    background-color:#fff;
     min-height: 54px;
     margin-bottom: 8px;
     margin-top: 0px;
@@ -342,7 +352,6 @@ button:active {
 .event-square-attributes-group{
     display: flex;
     width: auto;
-    background-color:#fff;
     margin-bottom: 8px;
     margin-top: 0px;
     margin-right: 8px;
