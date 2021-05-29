@@ -51,7 +51,22 @@
     </div>
 
     <div class="right-side-column">
+
         <button style="">Modifica account</button>
+
+        @if (Route::has('permesso'))
+            @auth
+                <form action="{{ route('creation_event') }}">    <!-- da creare -->
+                    <input type="submit" value="Crea evento" />
+                </form>
+            @else
+                <form action="{{ route('abilitation-request') }}">
+                    <input type="submit" value="Richiedi abilitazione" />
+                </form>
+            @endauth
+        @endif
+
+
         <label class="section-title">I tuoi gusti</label>
         <div>
 
