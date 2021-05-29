@@ -7,20 +7,17 @@
 @section('content')
     <div class="main-content-column">
         <section id="registered_events">
-            <div class="section-title">Eventi a cui sei registrato (futuri)</div>
+            <div class="section-title" style="margin-left: 12px">Eventi a cui sei registrato (futuri)</div>
             <div class="events-list">
                 @foreach($registered_events as $registered_event)
                     <a class="event-square" href="/event/{{ $registered_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $registered_event->address }}
-                            </div>
-                            <div class="event-square-attribute">
-                                {{ $registered_event->starting_time }}
+                                {{ substr($registered_event->starting_time, 0, -3) }}
                             </div>
                         </div>
                     </a>
@@ -28,20 +25,17 @@
             </div>
         </section>
         <section id="suggested_events">
-            <div class="section-title">Eventi suggeriti in base ai tuoi gusti</div>
+            <div class="section-title" style="margin-left: 12px">Eventi suggeriti in base ai tuoi gusti</div>
             <div class="events-list">
                 @foreach($interesting_events as $interesting_event)
                     <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $interesting_event->address }}
-                            </div>
-                            <div class="event-square-attribute">
-                                {{ $interesting_event->starting_time }}
+                                {{ substr($interesting_event->starting_time, 0, -3) }}
                             </div>
                         </div>
                     </a>
