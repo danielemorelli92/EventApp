@@ -9,32 +9,37 @@
     <div class="container-request">
         <form class="" method="post" action="/request" style="">
             @csrf
-            <h1>Inviaci la richiesta</h1>
 
-            <div class="form-group">
-                <label>Codice documento</label>
-                <input type="text" class="form-control" placeholder="Codice fiscale" name="nric">
-            </div>
+            <h2>Inviaci la richiesta</h2>
 
             <div class="form-group">
                 <label>Nome</label>
-                <input type="text" class="form-control" placeholder="Tempo totale" name="tempo" value="">
+                <input type="text" class="form-control" placeholder="" name="nome">
             </div>
 
-            <div class="form-group" id="inggroup">
-                <label>Cognome</label>  <button class="btn-a btn-custom" type="button">+</button>  <button class="btn-b btn-custom" type="button">-</button><br>
-                <input type="text" class="form-control" placeholder="Ingrediente" name="ingr1" id="ingr1"><br>
+            <div class="form-group">
+                <label>Cognome</label>
+                <input type="text" class="form-control" placeholder="" name="cognome">
             </div>
 
-            <div class="form-group" id="stepgroup">
-                <label>Data di nascita</label>  <button class="btn-a btn-custom" type="button">+</button>  <button class="btn-b btn-custom" type="button">-</button><br>
-                <input type="text" class="form-control" placeholder="Step" name="step1" id="step1"><br>
+            <div class="form-group">
+                <label>Data di nascita</label>
+                <input type="date" class="form-control" placeholder="" name="data di nascita">
             </div>
 
-            <div class="">
+            <div class="form-group">
+                <label>Codice documento</label>
+                <input type="text" class="form-control" placeholder="" name="codice documento">
+            </div>
+
+            <div class="form-group">
+                <label>Tipo documento</label>  <!-- non deve essere scritto dall'utente -->
+                <input type="text" class="form-control" placeholder="" name="tipo documento">
+            </div>
+
+            <div class="...">
                 <button type="submit">Invia</button>
             </div>
-
 
         </form>
 
