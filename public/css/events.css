@@ -104,6 +104,60 @@ button:active {
     display: inline-block;
     font-size: 16px;
 }
+.icon-button-42 {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border: 0px solid #0090E1;
+    z-index: 1;
+
+    background-color: transparent;
+    color: #0090E1;
+    padding: 0px 0px;
+    text-align: center;
+    font-weight: normal;
+    display: inline-block;
+    font-size: 0px;
+
+    height: 42px;
+    width: 42px;
+}
+.icon-button-42:hover {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border: 0px solid #0090E1;
+    z-index: 1;
+
+    background-color: rgba(0, 0, 0, 0.07);
+    color: #0090E1;
+    padding: 0px 0px;
+    text-align: center;
+    font-weight: normal;
+    display: inline-block;
+    font-size: 0px;
+
+    height: 42px;
+    width: 42px;
+}
+.icon-button-42:active {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border: 0px solid #0090E1;
+    z-index: 1;
+
+    background-color: rgba(0, 0, 0, 0.15);
+    color: #0090E1;
+    padding: 0px 0px;
+    text-align: center;
+    font-weight: normal;
+    display: inline-block;
+    font-size: 0px;
+
+    height: 42px;
+    width: 42px;
+}
 .header-button {
     -webkit-border-radius: 0px 12px 0px 0px;
     -moz-border-radius: 0px 12px 0px 0px;
@@ -336,7 +390,9 @@ button:active {
     display: flex;
     width: auto;
     grid-area: attributes-rectangle;
-    margin: 8px;
+    align-items: center;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 .event-rectangle-attribute{
     overflow: hidden;
