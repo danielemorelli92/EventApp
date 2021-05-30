@@ -17,6 +17,8 @@ use App\Models\{Event};
 |
 */
 
+Route::redirect('/events-highlighted', '/');
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
