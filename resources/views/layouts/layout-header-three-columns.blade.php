@@ -22,14 +22,14 @@
             @else
             @endauth
         @endif
-        <form action="/events-highlighted">
-            <button class="header-button" type="submit" value="In evidenza" >In evidenza</button>
+        <form action="/welcome">
+            <button class="header-button" type="submit" value="In evidenza">In evidenza</button>
         </form>
         <form action="/events">
-            <button class="header-button" type="submit" value="Esplora" >Esplora</button>
+            <button class="header-button" type="submit" value="Esplora">Esplora</button>
         </form>
         <form action="#">
-            <button class="header-button" type="submit" value="Forum" >Forum</button>
+            <button class="header-button" type="submit" value="Forum">Forum</button>
         </form>
 
 

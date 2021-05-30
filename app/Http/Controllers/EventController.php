@@ -122,7 +122,7 @@ class EventController extends Controller
             'ending_time' => $request->input('ending_time', null)
         ]);
 
-        return redirect('/', 201);
+        return redirect('/events/manage', 201);
     }
 
     public function manage()

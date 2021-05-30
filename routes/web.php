@@ -17,7 +17,7 @@ use App\Models\{Event};
 |
 */
 
-Route::redirect('/events-highlighted', '/');
+Route::redirect('/events-highlighted', '/welcome');
 
 Route::get('/', function () {
     if (Auth::check()) {
