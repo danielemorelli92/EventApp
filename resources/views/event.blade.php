@@ -8,10 +8,12 @@
 
 
     <div class="left-side-column">
-        <div style="display: flex; align-items: center; flex-direction: row">
-            <div style="margin-left: 8px; background-color: green; width: 16px; height: 16px"></div>
-            <div class="section-title">chiudi</div> <!-- TODO cambiare stile -->
-        </div>
+        <a href="javascript:history.back()" style="display: flex; align-items: center; height: 32px; flex-direction: row">
+            <div style="width: 18px; height: 18px; margin: 4px">
+                <img class="image-preview" src="{{ url('/images/close-icon.svg') }}" alt="close-icon">
+            </div>
+            <div style="height: 32px; margin-top: 12px" class="section-title">chiudi</div>
+        </a>
         <div class="section-title">Immagini</div>
         <div class="event-images-list">
             <div class="event-images-item"></div>
@@ -20,7 +22,7 @@
 
     <div class="main-content-column">
         <div class="title">{{ $event->title }}</div>
-        <div class="section-title">Descrizione</div>
+        <div class="section-title" style="margin-left: 8px; margin-top: 8px">Descrizione</div>
         <div class="text-area">
             {{ $event->description }}
         </div>
@@ -44,7 +46,7 @@
                 <form action="/delete-registration" method="post">
                     @csrf
                     <button type="submit" name="event" value="{{ $event->id }}"
-                            style="margin-top: auto">Annulla registrazione
+                            style="width: 100%">Annulla registrazione
                     </button>
                 </form>
 
@@ -52,7 +54,7 @@
                     <form action="/registration" method="post">
                         @csrf
                         <button type="submit" name="event" value="{{ $event->id }}"
-                                style="margin-top: auto">Registrati
+                                style="width: 100%">Registrati
                         </button>
                     </form>
 
@@ -65,10 +67,10 @@
                 <form method="post" action="/registration" class="not-registered-user-info-form"
                       style="margin-top: auto; margin-bottom: 8px; display: flex; flex-direction: column; width: 100%">
                     @csrf
-                    <input style="margin-left: 8px; margin-right: 8px;" name="cf" type="text"
+                    <input style="width: 100%" name="cf" type="text"
                            placeholder="Codice fiscale" required>
                     <button type="submit" name="event" value="{{ $event->id }}"
-                            style="margin-left: 8px; margin-right: 8px;">Registrati
+                            style="width: 100%">Registrati
                     </button>
                 </form>
         @endguest

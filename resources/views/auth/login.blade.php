@@ -2,7 +2,9 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <div class="header-logo-container">
+                    <img src="{{ url('/images/logo-square-with-text-blue.svg') }}" style="width: 180px; height: 200px;" alt="logo-square-with-text-blue">
+                </div>
             </a>
         </x-slot>
 
@@ -47,7 +49,18 @@
                     </a>
                 @endif
 
-                <x-button class="ml-3">
+                <x-button style="
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    white-space:nowrap;
+    background-color: white;
+    color: #0090E1;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;" class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
             </div>
