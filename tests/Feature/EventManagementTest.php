@@ -114,4 +114,27 @@ class EventManagementTest extends TestCase
 
         $request->assertStatus(401);
     }
+
+    public function test_a_organizer_can_view_the_events_management_page()
+    {
+        $user = User::factory()->create(); // crea l'utente
+
+        $user->type = 'organizzatore'; // upgrade locale a organizzatore
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']); // upgrade sul database a organizzatore
+
+        $request = $this->actingAs($user)->get('/events/manage');
+
+        $request->assertOk();
+    }
+
+    public function test_a_normal_user_cannot_view_the_events_management_page()
+    {
+        $user = User::factory()->create(); // crea l'utente
+
+        $request = $this->actingAs($user)->get('/events/manage');
+
+        $request->assertStatus(401);
+    }
 }
