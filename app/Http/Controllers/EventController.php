@@ -106,6 +106,10 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
+        /*if (Gate::denies('create-event')) {
+            abort(401);
+        }*/
+
         $request->validated();
 
         $event = Event::factory()->create([

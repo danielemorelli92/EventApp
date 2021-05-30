@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -46,12 +47,23 @@ class EventManagementTest extends TestCase
             ->where('email', $user->email)
             ->update(['type' => 'organizzatore']); // upgrade sul database a organizzatore
 
-        $event = Event::factory()->make(); // crea un evento locale
+        $event = Event::factory()->make([
+            'title' => 'A fake event!',
+            'description' => 'A very very very fake event...',
+            'author_id' => $user->id,
+            'type' => 'Concert',
+            'max_partecipants' => '250',
+            'price' => 100,
+            'ticket_office' => 'http://www.ticket-office.com/',
+            'website' => 'http://www.best-website-ever.com/',
+            'address' => 'Via di casa mia, 77',
+            'starting_time' => '2021-09-11 12:30',
+            'ending_time' => null
+        ]); // crea un evento locale
 
         $request = $this->actingAs($user)->post('/events', $event->toArray());
 
         $request->assertSuccessful();
-
     }
 
     public function test_a_normal_user_cannot_create_an_event()
