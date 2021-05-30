@@ -139,10 +139,10 @@ class EventController extends Controller
         $selected_date_filter = 'any';
 
         if (count($param) > 0) {
-            if (array_key_exists('data-max', $param) and !blank($param['data-max'])) {
-                if ($param['data-max'] != 'any') {
+            if (array_key_exists('date-filter-selection', $param) and !blank($param['date-filter-selection'])) {
+                if ($param['date-filter-selection'] != 'any') {
                     $query = Event::query();
-                    switch ($param['data-max']) {
+                    switch ($param['date-filter-selection']) {
                         case 'past':
                             $selected_date_filter='past';
                             $dateMax = date(now());

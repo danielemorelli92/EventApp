@@ -32,51 +32,51 @@
         <label class="section-title">Filtro data</label>
         <div class="radio-selection-item">
             @if($selected_date_filter == '' || $selected_date_filter == 'any')
-                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="any">
+                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="any">
             @else
-                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="any">
+                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="any">
             @endif
-            <label for="data-max" class="radio-selection-item-label" >Qualunque</label>
+            <label for="date-filter-selection" class="radio-selection-item-label" >Qualunque</label>
         </div>
         <div class="radio-selection-item">
             @if($selected_date_filter == 'past')
-                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="past">
+                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="past">
             @else
-                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="past">
+                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="past">
             @endif
-            <label for="data-max" class="radio-selection-item-label" >Passato</label>
+            <label for="date-filter-selection" class="radio-selection-item-label" >Passato</label>
         </div>
         <div class="radio-selection-item">
             @if($selected_date_filter == 'today')
-                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="today">
+                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="today">
             @else
-                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="today">
+                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="today">
             @endif
-            <label for="data-max" class="radio-selection-item-label" >Oggi</label>
+            <label for="date-filter-selection" class="radio-selection-item-label" >Oggi</label>
         </div>
         <div class="radio-selection-item">
             @if($selected_date_filter == 'tomorrow')
-                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="tomorrow">
+                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="tomorrow">
             @else
-                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="tomorrow">
+                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="tomorrow">
             @endif
-            <label for="data-max" class="radio-selection-item-label" >Domani</label>
+            <label for="date-filter-selection" class="radio-selection-item-label" >Domani</label>
         </div>
         <div class="radio-selection-item">
             @if($selected_date_filter == 'week')
-                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="week">
+                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="week">
             @else
-                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="week">
+                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="week">
             @endif
-            <label for="data-max" class="radio-selection-item-label">Questa settimana</label>
+            <label for="date-filter-selection" class="radio-selection-item-label">Questa settimana</label>
         </div>
         <div class="radio-selection-item">
             @if($selected_date_filter == 'month')
-                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="month">
+                <input type="radio" checked onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="month">
             @else
-                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="data-max" value="month">
+                <input type="radio" onchange="document.getElementById('preferences').submit()" class="radio-selection-item-radio" name="date-filter-selection" value="month">
             @endif
-            <label for="data-max" class="radio-selection-item-label">Questo mese</label>
+            <label for="date-filter-selection" class="radio-selection-item-label">Questo mese</label>
         </div>
     </form>
 
