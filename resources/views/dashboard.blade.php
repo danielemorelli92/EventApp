@@ -54,9 +54,14 @@
 
         <button style="">Modifica account</button>
 
-        <button style="">Richiedi abilitazione</button>
+        @if (Gate::allows('create-request'))
+                <form action="/request" method="post">
+                    <button style="">Richiedi abilitazione</button>
+                </form>
 
+            @else
 
+          @endif
 
         <label class="section-title">I tuoi gusti</label>
         <div>

@@ -33,8 +33,12 @@
             </div>
 
             <div class="form-group">
-                <label>Tipo documento</label>  <!-- non deve essere scritto dall'utente -->
-                <input type="text" class="form-control" placeholder="" name="tipo documento">
+                <label>Tipo documento</label>
+                <select name="tipo documento" >
+                    <option value="" selected="selected">carta d'identita </option>
+                    <option value="">patente</option>
+                    <option value="">passaporto</option>
+                </select>
             </div>
 
             <div class="...">

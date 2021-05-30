@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->date('birthday')->nullable();
+            $table->enum('type', ['normale', 'organizzatore', 'admin'])->default('normale');
             $table->rememberToken();
             $table->timestamps();
         });
