@@ -125,6 +125,69 @@ class EventController extends Controller
         return redirect('/', 201);
     }
 
+    public function manage()
+    {
+        $param = request()->request->all();
+        foreach ($param as $key => $value) {
+            if (blank($value)) {
+                unset($param[$key]);
+            }
+        }
+
+
+        $my_events = Event::all()->where('author_id', '==', Auth::user()->getAuthIdentifier());
+        $selected_date_filter = 'any';
+
+        if (count($param) > 0) {
+            if (array_key_exists('data-max', $param) and !blank($param['data-max'])) {
+                if ($param['data-max'] != 'any') {
+                    $query = Event::query();
+                    switch ($param['data-max']) {
+                        case 'past':
+                            $selected_date_filter='past';
+                            $dateMax = date(now());
+                            $query = $query->where('starting_time', '<', $dateMax);
+                            break;
+                        case 'today':
+                            $selected_date_filter='today';
+                            $dateMin = date(now()->setHour(0)->setMinute(0)->setSecond(0));
+                            $dateMax = date(now()->setHour(23)->setMinute(59)->setSecond(59));
+                            $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
+                            break;
+                        case 'tomorrow':
+                            $selected_date_filter='tomorrow';
+                            $dateMin = date(now()->addDay()->setHour(0)->setMinute(0)->setSecond(0));
+                            $dateMax = date(now()->addDay()->setHour(23)->setMinute(59)->setSecond(59));
+                            $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
+                            break;
+                        case 'week':
+                            $selected_date_filter='week';
+                            $dateMin = date(now()->setHour(0)->setMinute(0)->setSecond(0));
+                            $dateMax = date(now()->addWeek()->setHour(23)->setMinute(59)->setSecond(59));
+                            $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
+                            break;
+                        case 'month':
+                            $selected_date_filter='month';
+                            $dateMin = date(now()->setHour(0)->setMinute(0)->setSecond(0));
+                            $dateMax = date(now()->addMonth()->setHour(23)->setMinute(59)->setSecond(59));
+                            $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
+                            break;
+                        default:
+                            break;
+                    }
+                    $my_events = $my_events->intersect($query->get());
+                } else {
+                    $selected_date_filter='any';
+                }
+            }
+        }
+
+        return view('events-management', [
+            'my_events' => $my_events->unique('id'),
+            'selected_date_filter' => $selected_date_filter
+        ]);
+    }
+
     public function dashboard()
     {
         if (request()->method() == 'POST') {
