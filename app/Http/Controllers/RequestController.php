@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Request;
-use Illuminate\Auth\Access\Gate;
+
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Request;
 
 class RequestController extends Controller
 {
@@ -14,25 +16,17 @@ class RequestController extends Controller
             abort(401);
         }
 
-        return view('request');
+        return view('request.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required',
-            'nome' => 'required',
-            'cognome' => 'required',
-            'data_nascita' => 'required',
-            'codice_documento' => 'required',
-            'tipo_documento' => 'required'
-        ]);
 
         if (! Gate::allows('create-request')){
             abort(401);
         }
 
-        Request::create([
+        $var = \App\Models\Request::create([
             'user_id' => Auth::user()->id,
             'nome' => request('nome'),
             'cognome' => request('cognome'),
@@ -40,6 +34,8 @@ class RequestController extends Controller
             'codice_documento' => request('codice_documento'),
             'tipo_documento' => request('tipo_documento')
         ]);
+
+        return redirect('/');
     }
 
 }

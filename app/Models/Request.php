@@ -9,7 +9,7 @@ class Request extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['accettazione'];
+    protected $guarded = ['type'];
 
     public function user()
     {

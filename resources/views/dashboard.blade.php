@@ -55,7 +55,8 @@
         <button style="">Modifica account</button>
 
         @if (Gate::allows('create-request'))
-                <form action="/request" method="post">
+                <form action="/request" method="get">
+                    @csrf
                     <button style="">Richiedi abilitazione</button>
                 </form>
 

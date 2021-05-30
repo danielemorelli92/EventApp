@@ -24,20 +24,20 @@
 
             <div class="form-group">
                 <label>Data di nascita</label>
-                <input type="date" class="form-control" placeholder="" name="data di nascita">
+                <input type="date" class="form-control" placeholder="" name="data_nascita">
             </div>
 
             <div class="form-group">
                 <label>Codice documento</label>
-                <input type="text" class="form-control" placeholder="" name="codice documento">
+                <input type="text" class="form-control" placeholder="" name="codice_documento">
             </div>
 
             <div class="form-group">
                 <label>Tipo documento</label>
-                <select name="tipo documento" >
-                    <option value="" selected="selected">carta d'identita </option>
-                    <option value="">patente</option>
-                    <option value="">passaporto</option>
+                <select name="tipo_documento">
+                    <option name="tipo_documento" value="identity card" selected="selected">carta d'identita </option>
+                    <option name="tipo_documento" value="driving license">patente</option>
+                    <option name="tipo_documento" value="passport">passaporto</option>
                 </select>
             </div>
 
