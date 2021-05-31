@@ -28,9 +28,11 @@
     <label for="address">Indirizzo</label>
     <input type="text" name="address" value="{{ $event->address }}" required>
     <label for="starting_time">Data inizio evento</label>
-    <input type="datetime-local" name="starting_time" value="{{ $event->starting_time }}" required>
+    <input type="datetime-local" name="starting_time"
+           value="{{ date('Y-m-d\TH:i:s', strtotime($event->starting_time)) }}" required>
     <label for="ending_time">Data fine evento</label>
-    <input type="datetime-local" name="ending_time" value="{{ $event->ending_time }}">
+    <input type="datetime-local" name="ending_time"
+           value="{{ $event->ending_time != null ? date('Y-m-d\TH:i:s', strtotime($event->ending_time)) : null }}">
 
     <input type="submit" value="Modifica evento!">
 </form>

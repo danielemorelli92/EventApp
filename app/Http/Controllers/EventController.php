@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEventRequest;
 use App\Models\{Event, Tag};
 
 use Illuminate\Database\Query\Builder;
@@ -123,6 +122,8 @@ class EventController extends Controller
             'website' => 'nullable'
         ]);
 
+        $validatedData['author_id'] = Auth::id();
+
         $event = Event::factory()->create($validatedData);
 
         return redirect('/events/manage', 201);
@@ -142,7 +143,8 @@ class EventController extends Controller
         }
 
 
-        $my_events = Event::all()->where('author_id', '==', Auth::user()->getAuthIdentifier());
+        $my_events = Auth::user()->createdEvents;
+
         $selected_date_filter = 'any';
 
         if (count($param) > 0) {
@@ -151,7 +153,7 @@ class EventController extends Controller
                     $query = Event::query();
                     switch ($param['date-filter-selection']) {
                         case 'past':
-                            $selected_date_filter='past';
+                            $selected_date_filter = 'past';
                             $dateMax = date(now());
                             $query = $query->where('starting_time', '<', $dateMax);
                             break;

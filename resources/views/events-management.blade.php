@@ -18,12 +18,16 @@
                         <div class="event-rectangle-attribute">
                             {{ $event->address }}
                         </div>
-                        <form action="/event/delete/{{ $event->id }}">
+                        <form action="/events/{{ $event->id }}" method="POST">
+                            @csrf
+                            @method('DELETE')
                             <button type="submit" class="icon-button-42">
                                 <img class="image-preview" src="{{ url('/images/trash-icon.svg') }}" alt="trash-icon">
                             </button>
                         </form>
-                        <form action="/event/edit/{{ $event->id }}">
+                        <form action="/events/{{ $event->id }}" method="POST">
+                            @csrf
+                            @method('PUT')
                             <button class="icon-button-42">
                                 <img class="image-preview" src="{{ url('/images/pen-icon.svg') }}" alt="pen-icon">
                             </button>
