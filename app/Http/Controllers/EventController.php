@@ -97,7 +97,7 @@ class EventController extends Controller
 
     public function create()
     {
-        if (!Gate::allows('create-event')) {
+        if (Gate::denies('create-event')) {
             abort(401);
         }
 
@@ -106,7 +106,7 @@ class EventController extends Controller
 
     public function store()
     {
-        if (!Gate::allows('create-event')) {
+        if (Gate::denies('create-event')) {
             abort(401);
         }
 
@@ -130,7 +130,9 @@ class EventController extends Controller
 
     public function manage()
     {
-
+        if (!Gate::any(['has-a-event', 'create-event'])) {
+            abort(401);
+        }
 
         $param = request()->request->all();
         foreach ($param as $key => $value) {

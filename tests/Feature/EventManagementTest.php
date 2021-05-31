@@ -70,8 +70,6 @@ class EventManagementTest extends TestCase
 
     public function test_a_normal_user_cannot_create_an_event()
     {
-        $this->withoutExceptionHandling();
-
         $user = User::factory()->create(); // crea l'utente
 
         $event = [
