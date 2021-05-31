@@ -38,5 +38,8 @@ Route::post('/registration', [EventRegistrationController::class, 'create']);
 
 Route::post('/delete-registration', [EventRegistrationController::class, 'delete']);
 
+Route::get('/request', [\App\Http\Controllers\RequestController::class, 'create']);
+
+Route::post('/request', [\App\Http\Controllers\RequestController::class, 'store']);
 
 require __DIR__ . '/auth.php';

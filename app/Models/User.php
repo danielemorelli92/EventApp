@@ -37,4 +37,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function request()
+    {
+        return $this->belongsTo(Request::class);
+    }
+
+    public function createdEvents()
+    {
+        return $this->hasMany(Event::class, 'author_id');
+    }
 }

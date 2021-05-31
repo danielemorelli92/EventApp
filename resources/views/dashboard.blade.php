@@ -51,7 +51,19 @@
     </div>
 
     <div class="right-side-column">
+
         <button style="">Modifica account</button>
+
+        @if (Gate::allows('create-request'))
+                <form action="/request" method="get">
+                    @csrf
+                    <button style="">Richiedi abilitazione</button>
+                </form>
+
+            @else
+
+          @endif
+
         <label class="section-title">I tuoi gusti</label>
         <div>
 
