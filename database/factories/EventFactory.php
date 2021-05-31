@@ -25,7 +25,6 @@ class EventFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'description' => $this->faker->text(),
-            'host' => $this->faker->name(),
             'type' => $this->faker->word(),
             'author_id' => User::factory(),
             'max_partecipants' => $this->faker->numberBetween(10, 10000),

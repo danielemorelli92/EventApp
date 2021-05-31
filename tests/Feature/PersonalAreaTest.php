@@ -38,7 +38,7 @@ class PersonalAreaTest extends TestCase
             'password' => 'password',
         ]);
 
-        $event->users()->attach(Auth::user());
+        $event->registeredUsers()->attach(Auth::user());
 
         $response = $this->get('/dashboard');
         $response->assertSee($event->title);
@@ -93,7 +93,7 @@ class PersonalAreaTest extends TestCase
         $event_interesting->tags()->attach($tag);
         $event_registered_already->tags()->attach($tag);
         $passed_event->tags()->attach($tag);
-        $event_registered_already->users()->attach(Auth::user());
+        $event_registered_already->registeredUsers()->attach(Auth::user());
 
         $html_page = $this->get('/dashboard')
             ->content();
