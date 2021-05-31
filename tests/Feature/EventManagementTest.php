@@ -68,6 +68,7 @@ class EventManagementTest extends TestCase
 
     public function test_a_normal_user_cannot_create_an_event()
     {
+        $this->withoutExceptionHandling();
         $user = User::factory()->create(); // crea l'utente
 
         $event = Event::factory()->make(); // crea un evento locale
@@ -80,6 +81,8 @@ class EventManagementTest extends TestCase
 
     public function test_a_user_can_delete_a_own_event()
     {
+        $this->withoutExceptionHandling();
+
         $user = User::factory()->hasCreatedEvents(1)->create(); // crea un utente con un evento già creato
 
         $event = $user->createdEvents->first(); // l'evento creato precedentemente

@@ -97,7 +97,7 @@ class EventController extends Controller
 
     public function create()
     {
-        if (Gate::denies('create-event')) {
+        if (!Gate::allows('create-event')) {
             abort(401);
         }
 
@@ -106,7 +106,7 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
-        if (Gate::denies('create-event')) {
+        if (!Gate::allows('create-event')) {
             abort(401);
         }
 
@@ -237,6 +237,17 @@ class EventController extends Controller
             'tags' => Tag::all()
         ]);
 
+    }
+
+    public function destroy(Event $event)
+    {
+        if (!Gate::allows('delete-event', $event)) {
+            abort(401);
+        }
+
+        $event->delete();
+
+        return self::manage();
     }
 
 }

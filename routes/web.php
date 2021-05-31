@@ -46,15 +46,16 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
 Route::get('/events/manage', [EventController::class, 'manage'])->middleware(['auth'])->name('events.manage');
 
-Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::get('/events/create', [EventController::class, 'create'])->middleware(['auth'])->name('events.create');
 
-Route::post('/events', [EventController::class, 'store'])->name('events.store');
+Route::post('/events', [EventController::class, 'store'])->middleware(['auth'])->name('events.store');
 
 Route::get('/event/{event}', [EventController::class, 'show'])->where('event', '[0-9]+');
+
+Route::delete('/events/{event}', [EventController::class, 'destroy'])->where('event', '[0-9]+')->name('events.destroy');
 
 Route::post('/registration', [EventRegistrationController::class, 'create']);
 
 Route::post('/delete-registration', [EventRegistrationController::class, 'delete']);
-
 
 require __DIR__ . '/auth.php';
