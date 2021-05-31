@@ -137,7 +137,6 @@ class EventManagementTest extends TestCase
 
     public function test_a_user_can_edit_a_own_event()
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
 
         $event = Event::factory()->create([
