@@ -47,21 +47,23 @@ class EventManagementTest extends TestCase
             ->where('email', $user->email)
             ->update(['type' => 'organizzatore']); // upgrade sul database a organizzatore
 
-        $event = Event::factory()->make([
+        $event = [
             'title' => 'A fake event!',
             'description' => 'A very very very fake event...',
             'author_id' => $user->id,
             'type' => 'Concert',
             'max_partecipants' => '250',
             'price' => 100,
+            'latitude' => 56.72932400,
+            'longitude' => -20.48122800,
             'ticket_office' => 'http://www.ticket-office.com/',
             'website' => 'http://www.best-website-ever.com/',
             'address' => 'Via di casa mia, 77',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
-        ]); // crea un evento locale
+        ]; // crea un evento locale
 
-        $request = $this->actingAs($user)->post('/events', $event->toArray());
+        $request = $this->actingAs($user)->post('/events', $event);
 
         $request->assertSuccessful();
     }
@@ -69,11 +71,26 @@ class EventManagementTest extends TestCase
     public function test_a_normal_user_cannot_create_an_event()
     {
         $this->withoutExceptionHandling();
+
         $user = User::factory()->create(); // crea l'utente
 
-        $event = Event::factory()->make(); // crea un evento locale
+        $event = [
+            'title' => 'A fake event!',
+            'description' => 'A very very very fake event...',
+            'author_id' => $user->id,
+            'type' => 'Concert',
+            'max_partecipants' => '250',
+            'price' => 100,
+            'latitude' => 56.72932400,
+            'longitude' => -20.48122800,
+            'ticket_office' => 'http://www.ticket-office.com/',
+            'website' => 'http://www.best-website-ever.com/',
+            'address' => 'Via di casa mia, 77',
+            'starting_time' => '2021-09-11 12:30',
+            'ending_time' => null
+        ];
 
-        $request = $this->actingAs($user)->post('/events', $event->toArray());
+        $request = $this->actingAs($user)->post('/events', $event);
 
         $request->assertStatus(401);
     }

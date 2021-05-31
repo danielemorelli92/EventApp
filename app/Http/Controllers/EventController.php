@@ -104,33 +104,34 @@ class EventController extends Controller
         return view('event.create');
     }
 
-    public function store(StoreEventRequest $request)
+    public function store()
     {
         if (!Gate::allows('create-event')) {
             abort(401);
         }
 
-        $request->validated();
-
-        $event = Event::factory()->create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'author_id' => Auth::id(),
-            'type' => $request->input('type'),
-            'max_partecipants' => $request->input('max_partecipants', 0),
-            'price' => $request->input('price', 0.00),
-            'ticket_office' => $request->input('ticket_office', null),
-            'website' => $request->input('website', null),
-            'address' => $request->input('address'),
-            'starting_time' => $request->input('starting_time'),
-            'ending_time' => $request->input('ending_time', null)
+        $validatedData = request()->validate([
+            'title' => 'required|string|min:4|max:255',
+            'description' => 'required',
+            'address' => 'required|string',
+            'type' => 'required|string|min:4|max:255',
+            'starting_time' => 'required|date',
+            'ending_time' => 'nullable|date',
+            'max_partecipants' => 'nullable|min:0|max:999999999',
+            'price' => 'nullable|min:0|max:9999999',
+            'ticket_office' => 'nullable',
+            'website' => 'nullable'
         ]);
+
+        $event = Event::factory()->create($validatedData);
 
         return redirect('/events/manage', 201);
     }
 
     public function manage()
     {
+
+
         $param = request()->request->all();
         foreach ($param as $key => $value) {
             if (blank($value)) {
