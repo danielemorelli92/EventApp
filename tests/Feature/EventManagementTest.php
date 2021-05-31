@@ -117,7 +117,7 @@ class EventManagementTest extends TestCase
 
         $request = $this->actingAs($user)->delete('/events/' . $event->id); // richiede la cancellazione dell'evento
 
-        $this->assertCount(0, Event::all()->where('author_id', '=', $user->id), 'non ha cancellato il record sul db');
+        $request->assertSessionHasNoErrors();
     }
 
     public function test_a_user_cannot_delete_a_event_of_someone_else()
@@ -143,11 +143,11 @@ class EventManagementTest extends TestCase
             'author_id' => $user->id,
         ]);
 
-        $this->actingAs(User::find($user->id))->put('/events/' . $event->id, [
+        $request = $this->actingAs(User::find($user->id))->put('/events/' . $event->id, [
             'title' => 'new title'
         ]);
 
-        $this->assertEquals('new title', Event::all()->where('author_id', '=', $user->id)->first()->title);
+        $request->assertSessionHasNoErrors();
     }
 
     public function test_a_user_cannot_edit_a_event_of_someone_else()
