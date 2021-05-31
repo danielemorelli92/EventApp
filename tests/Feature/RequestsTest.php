@@ -18,7 +18,9 @@ class RequestsTest extends TestCase
 
     public function test_request_form_can_be_rendered()
     {
-        $request = $this->get('/request');
+        $user = User::factory()->create();
+
+        $request = $this->actingAs($user)->get('/request');
 
         $request->assertOk();
     }
