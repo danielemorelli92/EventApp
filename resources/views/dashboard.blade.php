@@ -6,26 +6,8 @@
 
 @section('content')
     <div class="main-content-column">
-        <section id="registered_events">
-            <div class="section-title" style="margin-left: 12px">Eventi a cui sei registrato (futuri)</div>
-            <div class="events-list">
-                @foreach($registered_events as $registered_event)
-                    <a class="event-square" href="/event/{{ $registered_event->id }}">
-                        <div class="event-square-image-container">
-                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
-                        </div>
-                        <div class="event-square-title">{{ $registered_event->title }}</div>
-                        <div class="event-square-attributes-group">
-                            <div class="event-square-attribute">
-                                {{ substr($registered_event->starting_time, 0, -3) }}
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-        </section>
         <section id="suggested_events">
-            <div class="section-title" style="margin-left: 12px">Eventi suggeriti in base ai tuoi gusti</div>
+            <div class="section-title">Eventi suggeriti in base ai tuoi gusti</div>
             <div class="events-list">
                 @foreach($interesting_events as $interesting_event)
                     <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
@@ -35,7 +17,54 @@
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
+                                {{ $interesting_event->address }}
+                            </div>
+                            <div class="event-square-attribute">
                                 {{ substr($interesting_event->starting_time, 0, -3) }}
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </section>
+        <section id="registered_events_future">
+            <div class="section-title">Eventi a cui sei registrato</div>
+
+            <div class="events-list">
+                @foreach($registered_events_future as $registered_event_future)
+                    <a class="event-square" href="/event/{{ $registered_event_future->id }}">
+                        <div class="event-square-image-container">
+                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                        </div>
+                        <div class="event-square-title">{{ $registered_event_future->title }}</div>
+                        <div class="event-square-attributes-group">
+                            <div class="event-square-attribute">
+                                {{ $registered_event_future->address }}
+                            </div>
+                            <div class="event-square-attribute">
+                                {{ substr($registered_event_future->starting_time, 0, -3) }}
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </section>
+        <section id="registered_events_past">
+            <div class="section-title">Eventi a cui hai partecipato</div>
+            <div class="events-list">
+                @foreach($registered_events_past as $registered_event_past)
+                    <a class="event-square" href="/event/{{ $registered_event_past->id }}">
+                        <div class="event-square-image-container">
+                            <img class="image-small" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                        </div>
+                        <div class="event-square-title">{{ $registered_event_past->title }}</div>
+                        <div class="event-square-attributes-group">
+                            <div class="event-square-attribute">
+                                {{ $registered_event_past->address }}
+                            </div>
+                            <div class="event-square-attribute">
+                                {{ substr($registered_event_past->starting_time, 0, -3) }}
+
                             </div>
                         </div>
                     </a>

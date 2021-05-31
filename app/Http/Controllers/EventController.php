@@ -210,17 +210,21 @@ class EventController extends Controller
             }
         }
 
-        $events_query = Event::query()->where('starting_time', '>=', date(now()));
-        $events = $events_query->get();
-        $registered_events = collect();
+        $events = Event::all();
+        $registered_events_future = collect();
+        $registered_events_past = collect();
 
         $tags_query = Tag::all();
         $interesting_tags = collect();
         $interesting_events = collect();
         if (Auth::check()) {
             foreach ($events as $event) {
-                if ($event->registeredUsers->contains(Auth::user())) {
-                    $registered_events->push($event);
+        if ($event->registeredUsers->contains(Auth::user())) {
+                    if ($event->starting_time > date(now())) {
+                        $registered_events_future->push($event);
+                    } else {
+                        $registered_events_past->push($event);
+                    }
                 }
             }
             foreach ($tags_query as $tag) {
@@ -230,6 +234,7 @@ class EventController extends Controller
             }
             foreach ($interesting_tags as $tag) {
                 foreach ($tag->events as $tag_event) {
+
                     if (!$tag_event->registeredUsers->contains(Auth::user()) && $tag_event->starting_time >= date(now())) {
                         $interesting_events = $interesting_events->push($tag_event);
                     }
@@ -237,7 +242,8 @@ class EventController extends Controller
             }
         }
         return view('dashboard', [
-            'registered_events' => $registered_events->unique('id'),
+            'registered_events_future' => $registered_events_future->unique('id'),
+            'registered_events_past' => $registered_events_past->unique('id'),
             'interesting_events' => $interesting_events->unique('id'),
             'tags' => Tag::all()
         ]);

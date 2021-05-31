@@ -111,4 +111,24 @@ class PersonalAreaTest extends TestCase
         $this->assertStringNotContainsString($event_registered_already->title, $matched, "viene mostrato un evento a cui sono registrato");
         $this->assertStringNotContainsString($passed_event->title, $matched, "viene mostrato un evento già passato");
     }
+
+    public function test_a_user_can_view_his_events_history()
+    {
+        $user = User::factory()->create();
+
+        $event = Event::factory()->create([
+            'title' => 'evento1 a cui sei registrato',
+            'starting_time' => date(now()->subDay())
+        ]);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $event->users()->attach(Auth::user());
+
+        $response = $this->get('/dashboard');
+        $response->assertSee($event->title);
+    }
 }
