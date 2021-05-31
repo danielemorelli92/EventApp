@@ -109,7 +109,6 @@ class EventManagementTest extends TestCase
 
     public function test_a_user_can_delete_a_own_event()
     {
-        $this->assertCount(0, Event::all());
         $user = User::factory()->hasCreatedEvents(1)->create(); // crea un utente con un evento già creato
 
         $event = $user->createdEvents->first(); // l'evento creato precedentemente
@@ -145,7 +144,7 @@ class EventManagementTest extends TestCase
 
         $request = $this->actingAs($user)->put('/events/' . $event->id, $event->toArray());
 
-        $this->assertEquals($event->title, Event::all()->first()->title);
+        $this->assertEquals($event->title, Event::all()->where('author_id', '=', $user->id)->first()->title);
     }
 
     public function test_a_user_cannot_edit_a_event_of_someone_else()
