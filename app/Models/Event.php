@@ -31,6 +31,11 @@ class Event extends Model
         return $this->hasMany(ExternalRegistration::class);
     }
 
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
     public function getDistanceToMe(): float
     {
         // Coordinate di Pescara

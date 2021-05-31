@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EventFactory extends Factory
@@ -26,6 +27,7 @@ class EventFactory extends Factory
             'description' => $this->faker->text(),
             'host' => $this->faker->name(),
             'type' => $this->faker->word(),
+            'author_id' => User::factory(),
             'max_partecipants' => $this->faker->numberBetween(10, 10000),
             'price' => $this->faker->numberBetween(0, 50000),
             'ticket_office' => $this->faker->url(),

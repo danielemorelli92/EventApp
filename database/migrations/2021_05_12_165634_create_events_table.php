@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('host');
+            $table->foreignId('author_id');
             $table->string('type'); //probabilmente questo campo si espanderà nell'entità Category
             $table->unsignedInteger('max_partecipants')->nullable();
             $table->decimal('price')->nullable();
