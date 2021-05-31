@@ -117,6 +117,8 @@ class EventManagementTest extends TestCase
 
         $request = $this->actingAs($user)->delete('/events/' . $event->id); // richiede la cancellazione dell'evento
 
+        $request->assertSessionHasNoErrors();
+
         $this->assertCount(0, Event::all()->where('author_id', '=', $user->id));
     }
 
