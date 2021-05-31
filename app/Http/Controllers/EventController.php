@@ -253,4 +253,15 @@ class EventController extends Controller
         return self::manage();
     }
 
+    public function edit(Event $event)
+    {
+        if (Gate::denies('edit-event', $event)) {
+            abort(401);
+        }
+
+        return view('event.edit', [
+            'event' => $event
+        ]);
+    }
+
 }

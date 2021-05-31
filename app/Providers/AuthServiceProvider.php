@@ -37,6 +37,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('has-a-event', function (User $user) {
             return $user->createdEvents->count() > 0;
         });
+        Gate::define('edit-event', function (User $user, Event $event) {
+            return $user->id === $event->author_id;
+        });
 
     }
 

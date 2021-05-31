@@ -17,19 +17,19 @@
     <label for="type">Tipo evento</label>
     <input type="text" name="type" required>
     <label for="max_partecipants">Numero partecipanti</label>
-    <input type="number" name="max_partecipants" value="0" placeholder="">
+    <input type="number" name="max_partecipants" placeholder="">
     <label for="price">Prezzo</label>
-    <input type="number" name="price" value="0" placeholder="">
+    <input type="number" name="price" placeholder="">
     <label for="ticket_office">Biglietteria</label>
-    <input type="url" name="ticket_office" value="">
+    <input type="text" name="ticket_office">
     <label for="website">Sito web</label>
-    <input type="url" name="website" value="">
+    <input type="text" name="website">
     <label for="address">Indirizzo</label>
     <input type="text" name="address" required>
     <label for="starting_time">Data inizio evento</label>
     <input type="datetime-local" name="starting_time" required>
     <label for="ending_time">Data fine evento</label>
-    <input type="datetime-local" name="ending_time" value="1900-01-01 00:00">
+    <input type="datetime-local" name="ending_time">
 
     <input type="submit" value="Crea evento!">
 </form>

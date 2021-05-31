@@ -96,8 +96,6 @@ class EventManagementTest extends TestCase
 
     public function test_a_user_can_delete_a_own_event()
     {
-        $this->withoutExceptionHandling();
-
         $user = User::factory()->hasCreatedEvents(1)->create(); // crea un utente con un evento già creato
 
         $event = $user->createdEvents->first(); // l'evento creato precedentemente
@@ -120,7 +118,7 @@ class EventManagementTest extends TestCase
         $request->assertStatus(401);  // riceve l'errore: "401 - Unauthorized; Access denied"
     }
 
-    public function test_a_user_can_modify_a_own_event()
+    public function test_a_user_can_edit_a_own_event()
     {
         $user = User::factory()->hasCreatedEvents(1)->create();
         $event = $user->createdEvents->first();
@@ -132,7 +130,7 @@ class EventManagementTest extends TestCase
         $request->assertSuccessful();
     }
 
-    public function test_a_user_cannot_modify_a_event_of_someone_else()
+    public function test_a_user_cannot_edit_a_event_of_someone_else()
     {
         $user_without_events = User::factory()->create();
         $user_with_event = User::factory()->hasCreatedEvents(1)->create();
