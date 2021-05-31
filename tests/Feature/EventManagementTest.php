@@ -137,14 +137,18 @@ class EventManagementTest extends TestCase
 
     public function test_a_user_can_edit_a_own_event()
     {
-        $user = User::factory()->hasCreatedEvents(1)->create();
-        $event = $user->createdEvents->first();
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
 
-        $event->title = 'new title';
+        $event = Event::factory()->create([
+            'author_id' => $user->id,
+        ]);
 
-        $request = $this->actingAs($user)->put('/events/' . $event->id, $event->toArray());
+        $this->actingAs(User::find($user->id))->put('/events/' . $event->id, [
+            'title' => 'new title'
+        ]);
 
-        $this->assertEquals($event->title, Event::all()->where('author_id', '=', $user->id)->first()->title);
+        $this->assertEquals('new title', Event::all()->where('author_id', '=', $user->id)->first()->title);
     }
 
     public function test_a_user_cannot_edit_a_event_of_someone_else()
@@ -155,9 +159,9 @@ class EventManagementTest extends TestCase
 
         $old_title = $event->title;
 
-        $event->title = 'new title';
-
-        $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, $event->toArray());
+        $request = $this->actingAs(User::find($user_without_events->id))->put('/events/' . $event->id, [
+            'title' => 'new title'
+        ]);
 
         $this->assertEquals($old_title, Event::all()->first()->title);
     }
