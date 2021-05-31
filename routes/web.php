@@ -62,4 +62,9 @@ Route::get('/events/edit/{event}', [EventController::class, 'edit'])->where('eve
 
 Route::put('/events/{event}', [EventController::class, 'update'])->where('event', '[0-9]+')->name('events.edit');
 
+Route::get('/request', [\App\Http\Controllers\RequestController::class, 'create']);
+
+Route::post('/request', [\App\Http\Controllers\RequestController::class, 'store']);
+
+
 require __DIR__ . '/auth.php';

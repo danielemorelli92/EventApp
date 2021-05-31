@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -27,6 +28,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        Gate::define('create-request', function (User $user){
+            return $user != null && $user->type === 'normale';
+        });
 
         Gate::define('create-event', function (User $user) {
             return $user->type === 'organizzatore' || $user->type === 'admin';
