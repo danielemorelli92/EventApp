@@ -25,9 +25,8 @@
                                 <img class="image-preview" src="{{ url('/images/trash-icon.svg') }}" alt="trash-icon">
                             </button>
                         </form>
-                        <form action="/events/{{ $event->id }}" method="POST">
+                        <form action="/events/edit/{{ $event->id }}" method="GET">
                             @csrf
-                            @method('PUT')
                             <button class="icon-button-42">
                                 <img class="image-preview" src="{{ url('/images/pen-icon.svg') }}" alt="pen-icon">
                             </button>

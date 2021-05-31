@@ -58,6 +58,8 @@ Route::post('/registration', [EventRegistrationController::class, 'create']);
 
 Route::post('/delete-registration', [EventRegistrationController::class, 'delete']);
 
-Route::put('/events/{event}', [EventController::class, 'edit'])->name('events.edit');
+Route::get('/events/edit/{event}', [EventController::class, 'edit'])->where('event', '[0-9]+');
+
+Route::put('/events/{event}', [EventController::class, 'update'])->where('event', '[0-9]+')->name('events.edit');
 
 require __DIR__ . '/auth.php';

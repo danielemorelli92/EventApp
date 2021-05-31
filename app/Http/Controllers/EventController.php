@@ -252,7 +252,7 @@ class EventController extends Controller
 
         $event->delete();
 
-        return self::manage();
+        return redirect('/events/manage');
     }
 
     public function edit(Event $event)
@@ -266,4 +266,27 @@ class EventController extends Controller
         ]);
     }
 
+    public function update(Event $event)
+    {
+        if (Gate::denies('edit-event', $event)) {
+            abort(401);
+        }
+
+        $validatedData = request()->validate([
+            'title' => 'required|string|min:4|max:255',
+            'description' => 'required',
+            'address' => 'required|string',
+            'type' => 'required|string|min:4|max:255',
+            'starting_time' => 'required|date',
+            'ending_time' => 'nullable|date',
+            'max_partecipants' => 'nullable|min:0|max:999999999',
+            'price' => 'nullable|min:0|max:9999999',
+            'ticket_office' => 'nullable',
+            'website' => 'nullable'
+        ]);
+
+        $event->update($validatedData);
+
+        return redirect('/events/manage');
+    }
 }

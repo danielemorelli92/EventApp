@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Modifica evento</h1>
-<form style="display: flex; flex-direction: column" action="/events" method="post">
+<form style="display: flex; flex-direction: column" action="/events/{{ $event->id }}" method="POST">
     @csrf
     @method('PUT')
     <label for="title">Titolo</label>

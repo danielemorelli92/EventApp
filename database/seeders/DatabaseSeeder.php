@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        $events = Event::factory()->hasImages(4)->count(15)->hasAuthor()->create();
+        $events = Event::factory()->hasImages(4)->count(15)->hasAuthor(User::factory()->create())->create();
         $events->push(Event::factory()->hasImages(4)->create([
             'latitude' => 42.529336,
             'longitude' => 14.1420603,
