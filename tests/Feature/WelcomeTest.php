@@ -20,7 +20,7 @@ class WelcomeTest extends TestCase
     public function test_in_evidenza_event_page_can_be_rendered()
     {
 
-        $response = $this->get('/events-highlighted?'); // richiesta get da parte di guest
+        $response = $this->get('/welcome'); // richiesta get da parte di guest
 
         $response->assertStatus(200);
     }
@@ -29,7 +29,7 @@ class WelcomeTest extends TestCase
     {
         Event::factory(30)->create();
 
-        $html_content = $this->get('/events-highlighted')->content();
+        $html_content = $this->get('/welcome')->content();
         preg_match_all('/href="\/event\/\d+"/', $html_content, $matches);
         $actual = array_map(function ($event) {
             preg_match('/\d+/', $event, $id);

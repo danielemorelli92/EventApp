@@ -17,8 +17,8 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('host');
-            $table->string('type'); //probabilmente questo campo si espanderà nell'entità Category
+            $table->foreignId('author_id');
+            $table->string('type');
             $table->unsignedInteger('max_partecipants')->nullable();
             $table->decimal('price')->nullable();
             $table->string('ticket_office', 2083)->nullable();
@@ -32,7 +32,7 @@ class CreateEventsTable extends Migration
         });
 
         //registrazioni all'evento
-        Schema::create('event_user', function (Blueprint $table) {
+        Schema::create('registrations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('event_id');
@@ -53,7 +53,7 @@ class CreateEventsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('events');
-        Schema::dropIfExists('event_user');
+        Schema::dropIfExists('registrations');
         Schema::dropIfExists('event_tag');
     }
 }

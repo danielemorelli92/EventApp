@@ -11,9 +11,9 @@ class Event extends Model
 
     protected $guarded = [];
 
-    public function users()
+    public function registeredUsers()
     {  //utenti registrati all'evento
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'registrations', 'event_id', 'user_id');
     }
 
     public function images()
@@ -29,6 +29,11 @@ class Event extends Model
     public function externalRegistrations()
     { //registrazioni esterne per l'evento
         return $this->hasMany(ExternalRegistration::class);
+    }
+
+    public function author()
+    {   // creatore dell'evento
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     public function getDistanceToMe(): float

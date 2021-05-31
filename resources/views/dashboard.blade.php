@@ -12,7 +12,7 @@
                 @foreach($interesting_events as $interesting_event)
                     <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
@@ -20,7 +20,7 @@
                                 {{ $interesting_event->address }}
                             </div>
                             <div class="event-square-attribute">
-                                {{ $interesting_event->starting_time }}
+                                {{ substr($interesting_event->starting_time, 0, -3) }}
                             </div>
                         </div>
                     </a>
@@ -29,11 +29,12 @@
         </section>
         <section id="registered_events_future">
             <div class="section-title">Eventi a cui sei registrato</div>
+
             <div class="events-list">
                 @foreach($registered_events_future as $registered_event_future)
                     <a class="event-square" href="/event/{{ $registered_event_future->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event_future->title }}</div>
                         <div class="event-square-attributes-group">
@@ -41,7 +42,7 @@
                                 {{ $registered_event_future->address }}
                             </div>
                             <div class="event-square-attribute">
-                                {{ $registered_event_future->starting_time }}
+                                {{ substr($registered_event_future->starting_time, 0, -3) }}
                             </div>
                         </div>
                     </a>
@@ -62,7 +63,8 @@
                                 {{ $registered_event_past->address }}
                             </div>
                             <div class="event-square-attribute">
-                                {{ $registered_event_past->starting_time }}
+                                {{ substr($registered_event_past->starting_time, 0, -3) }}
+
                             </div>
                         </div>
                     </a>
@@ -72,7 +74,19 @@
     </div>
 
     <div class="right-side-column">
+
         <button style="">Modifica account</button>
+
+        @if (Gate::allows('create-request'))
+                <form action="/request" method="get">
+                    @csrf
+                    <button style="">Richiedi abilitazione</button>
+                </form>
+
+            @else
+
+          @endif
+
         <label class="section-title">I tuoi gusti</label>
         <div>
 
@@ -80,14 +94,18 @@
                 @csrf
 
                 @foreach(Auth::user()->tags as $tag)
-                    <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}"
-                           checked onchange="document.getElementById('preferences').submit()">
-                    <label for="categories[]">{{ $tag->body }}</label><br>
+                    <div style="display: flex; flex-direction: row" class="checkbox-selection-item">
+                        <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]" value="{{ $tag->id }}"
+                               checked onchange="document.getElementById('preferences').submit()">
+                        <label class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label>
+                    </div>
                 @endforeach
                 @foreach($tags->diff(Auth::user()->tags) as $tag)
-                    <input type="checkbox" class="checkbox-filter-item" name="categories[]" value="{{ $tag->id }}"
-                           onchange="document.getElementById('preferences').submit()">
-                    <label for="categories[]">{{ $tag->body }}</label><br>
+                    <div class="checkbox-selection-item">
+                        <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]" value="{{ $tag->id }}"
+                               onchange="document.getElementById('preferences').submit()">
+                        <label class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label><br>
+                    </div>
                 @endforeach
 
             </form>

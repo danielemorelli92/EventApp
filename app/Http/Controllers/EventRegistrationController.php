@@ -13,7 +13,7 @@ class EventRegistrationController extends Controller
     {
         $event = Event::query()->where('id', request('event'))->get()->first();
         if (Auth::check()) {
-            $event->users()->attach(Auth::user());
+            $event->registeredUsers()->attach(Auth::user());
         } else {
             $registration = ExternalRegistration::create([
                 'event_id' => $event->id,
@@ -28,7 +28,7 @@ class EventRegistrationController extends Controller
     {
         $event = Event::query()->where('id', request('event'))->get()->first();
         if (Auth::check()) {
-            $event->users()->detach(Auth::user());
+            $event->registeredUsers()->detach(Auth::user());
             return redirect('/event/' . request('event'));
         }
     }
