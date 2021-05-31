@@ -117,8 +117,8 @@ class PersonalAreaTest extends TestCase
         $user = User::factory()->create();
 
         $event = Event::factory()->create([
-            'title' => 'evento1 a cui sei registrato',
-            'starting_time' => date(now()->subDay())
+            'title' => 'evento a cui sei registrato',
+            'starting_time' => date(now()->subWeek())
         ]);
 
         $this->post('/login', [
@@ -126,7 +126,7 @@ class PersonalAreaTest extends TestCase
             'password' => 'password',
         ]);
 
-        $event->users()->attach(Auth::user());
+        $event->registeredUsers()->attach(Auth::user());
 
         $response = $this->get('/dashboard');
         $response->assertSee($event->title);
