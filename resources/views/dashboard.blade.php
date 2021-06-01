@@ -78,12 +78,12 @@
 
     <div class="right-side-column">
 
-        <button style="">Modifica account</button>
+        <button style="width: 100%; margin-bottom: 4px;">Modifica account</button>
 
         @if (Gate::allows('create-request'))
                 <form action="/request" method="get">
                     @csrf
-                    <button style="">Richiedi abilitazione</button>
+                    <button style="width: 100%">Richiedi abilitazione</button>
                 </form>
 
             @else

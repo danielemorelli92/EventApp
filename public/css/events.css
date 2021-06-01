@@ -14,6 +14,32 @@ input[type="radio"] {
 input[type="checkbox"] {
     filter: hue-rotate(-14deg) brightness(1.05);
 }
+select {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    height: 36px;
+}
+input[type="date"] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    height: 36px;
+}
 input[type="text"] {
     padding-left: 8px;
     padding-right: 8px;
@@ -285,6 +311,30 @@ button:active {
     grid-area: right-bar;
     background: white;
     /*bloccare scrolling*/
+}
+.request-events-administration-form-container{
+    max-width: 800px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    /*bloccare scrolling*/
+}
+.form-group {
+    padding: 12px; display: flex; flex-direction: column;
+    overflow: hidden;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    background-color: #fbfbfb;
+    border-radius: 18px;
+    border: 1.5px solid #aaa;
+}
+.form-row {
+    max-width: 800px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
 }
 .main-content-column{
     grid-area: main;
