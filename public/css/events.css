@@ -637,10 +637,24 @@ button:disabled {
     margin-top: 8px;
 }
 
-.event-info-box{
+.info-box{
+    display: flex;
+    flex-direction: column;
     margin-bottom: 8px;
-    background-color:#aaa;
     width: auto;
-    height: 400px;
+    height: fit-content;
+}
+.info-item-title{
+    width: 100%;
+    padding-top: 7px;
+    padding-bottom: 6px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    font-size: 12px;
+}
+.info-item-label {
+    width: 100%;
+    padding-bottom: 4px;
+    font-size: 18px;
 }
 
