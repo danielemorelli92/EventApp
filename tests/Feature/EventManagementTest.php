@@ -188,10 +188,28 @@ class EventManagementTest extends TestCase
         $request->assertStatus(401);
     }
 
+    public function test_a_logged_user_cannot_register_to_a_event() //raggiunto numero max di iscritti
+    {
+        $event = Event::factory()->create([
+            'max_partecipants' => 10
+        ]);
+        $user = User::factory()->create();
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee('Registrati');
+
+    }
+
     public function test_a_user_cannot_register_to_a_event() //raggiunto numero max di iscritti
     {
-        $event = Event::factory()->create();
-        $user = User::factory()->create();
+        $event = Event::factory()->create([
+            'max_partecipants' => 15
+        ]);
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee('Registrati');
 
     }
 }
