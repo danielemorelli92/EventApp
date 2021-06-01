@@ -12,7 +12,8 @@
                 @foreach($interesting_events as $interesting_event)
                     <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                            <img class="image-preview" src="{!! $event->images->first()->url . '?' . $event->id !!}"
+                                 alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
@@ -34,7 +35,8 @@
                 @foreach($registered_events_future as $registered_event_future)
                     <a class="event-square" href="/event/{{ $registered_event_future->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                            <img class="image-preview" src="{!! $event->images->first()->url . '?' . $event->id !!}"
+                                 alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event_future->title }}</div>
                         <div class="event-square-attributes-group">
