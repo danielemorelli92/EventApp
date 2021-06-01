@@ -327,14 +327,14 @@ button:disabled {
     background: white;
     /*bloccare scrolling*/
 }
-.request-events-administration-form-container{
+.big-form-container{
     max-width: 800px;
     width: auto;
     display: flex;
     flex-direction: column;
     /*bloccare scrolling*/
 }
-.form-group {
+.big-form-group {
     padding: 12px; display: flex; flex-direction: column;
     overflow: hidden;
     -webkit-border-radius: 18px;
@@ -343,7 +343,7 @@ button:disabled {
     border-radius: 18px;
     border: 1.5px solid #aaa;
 }
-.form-row {
+.big-form-row {
     max-width: 800px;
     margin-bottom: 8px;
     display: flex;
