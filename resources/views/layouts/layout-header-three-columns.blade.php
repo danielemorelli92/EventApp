@@ -16,8 +16,15 @@
 
         @if (Route::has('login'))
             @auth
+                @if (!Gate::allows('create-request') || count(Auth::user()->createdEvents) > 0)
+                    @auth
+                        <form action="/events/manage">
+                            <button class="header-button" type="submit" value="Gestione eventi">Gestione eventi</button>
+                        </form>
+                    @endauth
+                @endif
                 <form action="{{ route('dashboard') }}">
-                    <button class="header-button" type="submit" value="Area personale" >Area personale</button>
+                    <button class="header-button" type="submit" value="Area personale">Area personale</button>
                 </form>
             @else
             @endauth

@@ -39,9 +39,16 @@
     </div>
 
     <div class="right-side-column">
-        <form action="/events/create">
-            <button type="submit" style="width: 100%" value="Crea evento">Crea evento</button>
-        </form>
+        @auth
+            @if (!Gate::allows('create-request'))
+                <form action="/events/create">
+                    <button type="submit" style="width: 100%" value="Crea evento">Crea evento</button>
+                </form>
+            @else
+                    <button type="submit" style="width: 100%" value="Non puoi creare eventi" disabled>Non puoi creare eventi</button>
+
+            @endif
+        @endauth
 
         <form id="preferences" action="/events/manage" method="get" style="display: flex; flex-direction: column;">
             @csrf

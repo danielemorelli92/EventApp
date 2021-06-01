@@ -130,6 +130,21 @@ button:active {
     display: inline-block;
     font-size: 16px;
 }
+button:disabled {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #aaa;
+    height: 45px;
+
+    background-color: #bbb;
+    color: #444;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
 .icon-button-42 {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
