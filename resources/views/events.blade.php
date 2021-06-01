@@ -9,19 +9,19 @@
         <div class="section-title" style="margin-left: 12px">Eventi in base ai filtri</div>
         <div class="events-list">
             @foreach($events as $event)
-            <a name="event" class="event-rectangle" href="/event/{{ $event->id }}">
-                <div class="event-rectangle-image-container">
-                    <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
-                </div>
-                <div class="event-rectangle-title">{{ $event->title }}</div>
-                <div class="event-rectangle-attributes-group">
-                    <div class="event-rectangle-attribute">
-                        {{ $event->address }}
+                <a name="event" class="event-rectangle" href="/event/{{ $event->id }}">
+                    <div class="event-rectangle-image-container">
+                        <img class="image-preview" src="{{ $event->getImage() }}" alt="image-stock">
                     </div>
-                    <div class="event-rectangle-attribute" style="min-width: fit-content;">
-                        {{ substr($event->starting_time, 0, -3) }}
+                    <div class="event-rectangle-title">{{ $event->title }}</div>
+                    <div class="event-rectangle-attributes-group">
+                        <div class="event-rectangle-attribute">
+                            {{ $event->address }}
+                        </div>
+                        <div class="event-rectangle-attribute" style="min-width: fit-content;">
+                            {{ substr($event->starting_time, 0, -3) }}
+                        </div>
                     </div>
-                </div>
             </a>
             @endforeach
         </div>
