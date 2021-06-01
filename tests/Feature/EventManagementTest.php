@@ -187,4 +187,11 @@ class EventManagementTest extends TestCase
 
         $request->assertStatus(401);
     }
+
+    public function test_a_user_cannot_register_to_a_event() //raggiunto numero max di iscritti
+    {
+        $event = Event::factory()->create();
+        $user = User::factory()->create();
+
+    }
 }
