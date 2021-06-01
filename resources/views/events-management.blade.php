@@ -11,7 +11,8 @@
             @foreach($my_events as $event)
                 <a name="event" class="event-rectangle" href="/event/{{ $event->id }}">
                     <div class="event-rectangle-image-container">
-                        <img class="image-preview" src="{{ url('/images/event-stock.jpg') }}" alt="image-stock">
+                        <img class="image-preview" src="{!! $event->images->first()->url . '?' . $event->id !!}"
+                             alt="image-stock">
                     </div>
                     <div class="event-rectangle-title">{{ $event->title }}</div>
                     <div class="event-rectangle-attributes-group">
