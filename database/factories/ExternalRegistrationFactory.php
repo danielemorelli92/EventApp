@@ -22,7 +22,7 @@ class ExternalRegistrationFactory extends Factory
     public function definition()
     {
         return [
-            $this->faker->bothify('######??#??#???#'),
+            'cf' => $this->faker->bothify('######??#??#???#'),
         ];
     }
 }
