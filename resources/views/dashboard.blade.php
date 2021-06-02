@@ -12,8 +12,7 @@
                 @foreach($interesting_events as $interesting_event)
                     <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="{!! $interesting_event->images->first()->url . '?' . $interesting_event->id !!}"
-                                 alt="image-stock">
+                            <img class="image-preview" src="{{ $interesting_event->getImage() }}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
@@ -35,7 +34,7 @@
                 @foreach($registered_events_future as $registered_event_future)
                     <a class="event-square" href="/event/{{ $registered_event_future->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="{!! $registered_event_future->images->first()->url . '?' . $registered_event_future->id !!}"
+                            <img class="image-preview" src="{{ $registered_event_future->getImage() }}"
                                  alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event_future->title }}</div>
@@ -57,8 +56,7 @@
                 @foreach($registered_events_past as $registered_event_past)
                     <a class="event-square" href="/event/{{ $registered_event_past->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{!! $registered_event_past->images->first()->url . '?' . $registered_event_past->id !!}"
-                                 alt="image-stock">
+                            <img class="image-small" src="{{ $registered_event_past->getImage() }}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event_past->title }}</div>
                         <div class="event-square-attributes-group">
@@ -78,12 +76,12 @@
 
     <div class="right-side-column">
 
-        <button style="">Modifica account</button>
+        <button style="width: 100%; margin-bottom: 4px;">Modifica account</button>
 
         @if (Gate::allows('create-request'))
                 <form action="/request" method="get">
                     @csrf
-                    <button style="">Richiedi abilitazione</button>
+                    <button style="width: 100%">Richiedi abilitazione</button>
                 </form>
 
             @else

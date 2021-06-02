@@ -13,9 +13,15 @@
             <img src="{{ url('/images/logo-header.svg') }}" style="width: 171px; height: 40px;" alt="logo-header">
         </div>
 
-
         @if (Route::has('login'))
             @auth
+            @if (!Gate::allows('create-request') || count(Auth::user()->createdEvents) > 0)
+                @auth
+                    <form action="/events/manage">
+                        <button class="header-button" type="submit" value="Gestione eventi">Gestione eventi</button>
+                    </form>
+                @endauth
+            @endif
                 <form action="{{ route('dashboard') }}">
                     <button class="header-button" type="submit" value="Area personale">Area personale</button>
                 </form>

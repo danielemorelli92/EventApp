@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
+use Faker\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,6 +36,16 @@ class Event extends Model
     public function author()
     {   // creatore dell'evento
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function getImage()
+    {
+        $image = $this->images->first();
+        if ($image != null) {
+            return $image->url;
+        } else {
+            return url('/images/event-stock.jpg');
+        }
     }
 
     public function getDistanceToMe(): float

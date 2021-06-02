@@ -5,48 +5,51 @@
 @endsection
 
 @section('content')
+    <div class="main-content-column">
+        <div class="request-events-administration-form-container" style="margin-left: auto; margin-right: auto;">
+            <form style="display: flex; flex-direction: column;" method="post" action="/request">
+                @csrf
 
-    <div class="container-request">
-        <form class="" method="post" action="/request" style="">
-            @csrf
+                <h2 style="margin-bottom: 20px;">Richiesta abilitazione creazione eventi</h2>
 
-            <h2>Inviaci la richiesta</h2>
+                <div class="form-group">
+                    <div class="form-row">
+                        <label style="margin-left: 3px; margin-right: auto; font-size: 19px">Nome</label>
+                        <input style="width: 300px" type="text" placeholder="" name="nome">
+                    </div>
 
-            <div class="form-group">
-                <label>Nome</label>
-                <input type="text" class="form-control" placeholder="" name="nome">
-            </div>
+                    <div class="form-row">
+                        <label style="margin-left: 3px; margin-right: auto; font-size: 19px">Cognome</label>
+                        <input style="width: 300px" type="text" placeholder="" name="cognome">
+                    </div>
 
-            <div class="form-group">
-                <label>Cognome</label>
-                <input type="text" class="form-control" placeholder="" name="cognome">
-            </div>
+                    <div class="form-row">
+                        <label style="margin-left: 3px; margin-right: auto; font-size: 19px">Data di nascita</label>
+                        <input style="width: 300px" type="date" placeholder="" name="data_nascita">
+                    </div>
 
-            <div class="form-group">
-                <label>Data di nascita</label>
-                <input type="date" class="form-control" placeholder="" name="data_nascita">
-            </div>
+                    <div class="form-row">
+                        <label style="margin-left: 3px; margin-right: auto; font-size: 19px">Codice documento</label>
+                        <input style="width: 300px" type="text" placeholder="" name="codice_documento">
+                    </div>
 
-            <div class="form-group">
-                <label>Codice documento</label>
-                <input type="text" class="form-control" placeholder="" name="codice_documento">
-            </div>
+                    <div class="form-row">
+                        <label style="margin-left: 3px; margin-right: auto; font-size: 19px">Tipo documento</label>
+                        <select style="width: 300px" name="tipo_documento">
+                            <option name="tipo_documento" value="identity card" selected="selected">carta d'identita
+                            </option>
+                            <option name="tipo_documento" value="driving license">patente</option>
+                            <option name="tipo_documento" value="passport">passaporto</option>
+                        </select>
+                    </div>
 
-            <div class="form-group">
-                <label>Tipo documento</label>
-                <select name="tipo_documento">
-                    <option name="tipo_documento" value="identity card" selected="selected">carta d'identita </option>
-                    <option name="tipo_documento" value="driving license">patente</option>
-                    <option name="tipo_documento" value="passport">passaporto</option>
-                </select>
-            </div>
+                    <button style="width: 80px; margin-top: 50px; margin-left: auto" type="submit">Invia</button>
+                </div>
 
-            <div class="...">
-                <button type="submit">Invia</button>
-            </div>
+            </form>
 
-        </form>
-
+        </div>
     </div>
+
 
 @endsection
