@@ -280,9 +280,15 @@ class EventController extends Controller
 
         $validatedData = request()->validate([
             'title' => 'string|min:4|max:255',
-            'address' => 'string',
+            'description' => 'string',
             'type' => 'string|min:4|max:255',
-            'starting_time' => 'date'
+            'max_partecipants' => 'numeric|max:999999999',
+            'price' => 'numeric|max:9999999',
+            'ticket_office' => 'string|max:2083',
+            'website' => 'string|max:2083',
+            'address' => 'string',
+            'starting_time' => 'date',
+            'ending_time' => 'date'
         ]);
 
         $event->update($validatedData);

@@ -70,7 +70,7 @@
                 @endif
             @if ($event->price != null)
                     <label class="info-item-title">Prezzo</label>
-                    <label class="info-item-label">{{ $event->price/100 }}€</label>
+                    <label class="info-item-label">{{ $event->price }}€</label>
                 @endif
             @if (count($event->tags) > 0)
                     <label class="info-item-title">Categoria principale</label>
