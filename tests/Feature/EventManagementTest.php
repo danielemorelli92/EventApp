@@ -188,9 +188,9 @@ class EventManagementTest extends TestCase
         $request->assertStatus(401);
     }
 
-    public function test_a_logged_user_cannot_register_to_a_event() //raggiunto numero max di iscritti
+    public function test_a_logged_user_cannot_register_to_a_full_event() //raggiunto numero max di iscritti
     {
-        $event = Event::factory()->create([
+        $event = Event::factory()->hasRegisteredUsers(6)->hasExternalRegistrations(4)->create([
             'max_partecipants' => 10
         ]);
         $user = User::factory()->create();
@@ -198,18 +198,24 @@ class EventManagementTest extends TestCase
             'email' => $user->email,
             'password' => 'password',
         ]);
-        $response = $this->get('/event/' . $event->id);
-        $response->assertSee('Registrati');
+        $this->post('/registration', [
+            'event' => $event->id
+        ]);
+        $this->assertCount(10, $event->registeredUsers, "l'utente loggato si è registrato ad un evento completo");
 
     }
 
-    public function test_a_user_cannot_register_to_a_event() //raggiunto numero max di iscritti
+    public function test_a_user_cannot_register_to_a_full_event() //raggiunto numero max di iscritti
     {
-        $event = Event::factory()->create([
+        $event = Event::factory()->hasRegisteredUsers(10)->hasExternalRegistrations(5)->create([
             'max_partecipants' => 15
         ]);
-        $response = $this->get('/event/' . $event->id);
-        $response->assertSee('Registrati');
+        $this->post('/registration', [
+            'event' => $event->id,
+            'cf' => 'codice123'
+        ]);
+        $this->assertCount(15, $event->registeredUsers, "l'utente non loggato si è registrato ad un evento completo");
+
 
     }
 }
