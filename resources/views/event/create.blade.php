@@ -7,7 +7,7 @@
 @section('content')
     <div class="main-content-column">
         <div class="big-form-container">
-            <form style="display: flex; flex-direction: column;" method="post" action="/request">
+            <form style="display: flex; flex-direction: column;" method="post" action="/events">
                 @csrf
                 <h2 style="margin-bottom: 20px;">Informazioni dell'evento</h2>
                 <div class="big-form-group">
