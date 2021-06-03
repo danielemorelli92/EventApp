@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('create-request', function (User $user){
-            return $user != null && $user->type === 'normale';
+            return $user != null && $user->type === 'normale' && $user->request === null;
         });
 
         Gate::define('create-event', function (User $user) {

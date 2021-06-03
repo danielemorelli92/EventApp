@@ -11,19 +11,15 @@ class RequestController extends Controller
 {
     public function create()
     {
-        if (!Gate::allows('create-request')) {
-            abort(401);
-        }
-
-        if (\App\Models\Request::query()->where('user_id', "=", Auth::id())->get()->first() != null)
+        if (Gate::denies('create-request')) {
             return redirect('/dashboard');
-        else
-            return view('request.create');
+        }
+        return view('request.create');
     }
 
     public function store()
     {
-        if (Gate::denies('create-request') || \App\Models\Request::query()->where('user_id', "=", Auth::id())->get()->first() != null) {
+        if (Gate::denies('create-request')) {
             abort(401);
         }
 

@@ -79,18 +79,15 @@
         <button style="width: 100%; margin-bottom: 4px;">Modifica account</button>
 
         @if (Gate::allows('create-request'))
-            @if (\App\Models\Request::query()->where('user_id', "=", Auth::id())->get()->first() != null) <form action="/request" method="get">
-                @csrf
-                <button style="width: 100%" disabled>Abilitazione in approvazione</button>
-            </form>
-            @else
-                <form action="/request" method="get">
-                @csrf
+            <form action="/request" method="get">
                 <button style="width: 100%">Richiedi abilitazione</button>
             </form>
+        @else
+            @if (\Illuminate\Support\Facades\Auth::user()->type == "normale")
+                <form action="/request" method="get">
+                    <button style="width: 100%" disabled>Abilitazione in approvazione</button>
+                </form>
             @endif
-
-
         @endif
 
         <label class="section-title">I tuoi gusti</label>
