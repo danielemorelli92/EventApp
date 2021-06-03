@@ -27,7 +27,6 @@ class RequestsTest extends TestCase
 
     public function test_a_user_can_submit_a_request()
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
 
         $data = [

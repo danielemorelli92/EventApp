@@ -29,19 +29,24 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('create-request', function (User $user){
-            return $user != null && $user->type === 'normale' && \App\Models\Request::query()->where('user_id', "=", Auth::id())->get()->first() === null; //TODO fix $user->request === null;
+            $user = User::find(Auth::id());
+            return $user !== null && $user->type === 'normale' && $user->request === null;
         });
 
         Gate::define('create-event', function (User $user) {
+            $user = User::find(Auth::id());
             return $user->type === 'organizzatore' || $user->type === 'admin';
         });
         Gate::define('delete-event', function (User $user, Event $event) {
+            $user = User::find(Auth::id());
             return $user->id === $event->author_id;
         });
         Gate::define('has-a-event', function (User $user) {
+            $user = User::find(Auth::id());
             return $user->createdEvents->count() > 0;
         });
         Gate::define('edit-event', function (User $user, Event $event) {
+            $user = User::find(Auth::id());
             return $user->id === $event->author_id;
         });
 
