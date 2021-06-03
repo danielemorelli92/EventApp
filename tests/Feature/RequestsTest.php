@@ -27,7 +27,6 @@ class RequestsTest extends TestCase
 
     public function test_a_user_can_submit_a_request()
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
 
         $data = [
@@ -47,4 +46,82 @@ class RequestsTest extends TestCase
         $this->assertCount(1, $actual);
     }
 
+    public function test_a_user_cannot_see_request_button_if_already_done()
+    {
+        $user = User::factory()->create();
+
+        $expected = Request::make([
+            'nome' => 'Nome',
+            'cognome' => 'Cognome',
+            'data_nascita' => '1992-09-19',
+            'codice_documento' => $this->faker->bothify('??########'),
+            'tipo_documento' => $this->faker->randomElement(['driving license', 'identity card', 'passport'])
+        ]);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->post('/request', $expected->toArray());
+
+        $response = $this->get('/dashboard');
+        $response->assertSee('Abilitazione in approvazione');
+        $response->assertDontSee('Richiedi abilitazione');
+    }
+
+    public function test_a_user_cannot_access_request_form_if_already_requested()
+    {
+        $user = User::factory()->create();
+
+        $expected = Request::make([
+            'nome' => 'Nome',
+            'cognome' => 'Cognome',
+            'data_nascita' => '1992-09-19',
+            'codice_documento' => $this->faker->bothify('??########'),
+            'tipo_documento' => $this->faker->randomElement(['driving license', 'identity card', 'passport'])
+        ]);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->post('/request', $expected->toArray());
+
+        $response = $this->get('/request');
+        $response->assertRedirect('/dashboard');
+
+    }
+
+   public function test_abilitation_request_duplicates_not_saved()
+    {
+        $user = User::factory()->create();
+
+        $request1 = Request::make([
+            'nome' => 'Nome',
+            'cognome' => 'Cognome',
+            'data_nascita' => '1992-09-19',
+            'codice_documento' => $this->faker->bothify('??########'),
+            'tipo_documento' => $this->faker->randomElement(['driving license', 'identity card', 'passport'])
+        ]);
+
+        $request2 = Request::make([
+            'nome' => 'Nome',
+            'cognome' => 'Cognome',
+            'data_nascita' => '1992-09-19',
+            'codice_documento' => $this->faker->bothify('??########'),
+            'tipo_documento' => $this->faker->randomElement(['driving license', 'identity card', 'passport'])
+        ]);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->post('/request', $request1->toArray());
+        self::assertCount(1, Request::query()->where('user_id', '=', $user->id)->get(), 'è fallita la prima richiesta');
+        $this->post('/request', $request2->toArray());
+        self::assertCount(1, Request::query()->where('user_id', '=', $user->id)->get(), 'è stata inserita la seconda richiesta');
+    }
 }

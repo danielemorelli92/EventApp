@@ -43,7 +43,7 @@ class User extends Authenticatable
 
     public function request()
     {
-        return $this->belongsTo(Request::class);
+        return $this->hasOne(Request::class);
     }
 
     public function createdEvents()

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,10 +11,9 @@ class RequestController extends Controller
 {
     public function create()
     {
-        if (! Gate::allows('create-request')){
-            abort(401);
+        if (Gate::denies('create-request')) {
+            return redirect('/dashboard');
         }
-
         return view('request.create');
     }
 
@@ -35,7 +33,9 @@ class RequestController extends Controller
 
         $validatedData['user_id'] = Auth::id();
 
+
         \App\Models\Request::create($validatedData);
+
 
         return redirect('/dashboard');
     }
