@@ -187,4 +187,37 @@ class EventManagementTest extends TestCase
 
         $request->assertStatus(401);
     }
+
+    public function test_a_logged_user_cannot_register_to_a_full_event() //raggiunto numero max di iscritti
+    {
+
+        $this->withoutExceptionHandling();
+        $event = Event::factory()->hasRegisteredUsers(6)->hasExternalRegistrations(4)->create([
+            'max_partecipants' => 10
+        ]);
+        $user = User::factory()->create();
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $this->post('/registration', [
+            'event' => $event->id,
+        ]);
+        $this->assertEquals(10, ($event->registeredUsers->count()) + ($event->externalRegistrations->count()), "l'utente loggato si è registrato ad un evento completo");
+
+    }
+
+    public function test_a_user_cannot_register_to_a_full_event() //raggiunto numero max di iscritti
+    {
+        $event = Event::factory()->hasRegisteredUsers(10)->hasExternalRegistrations(5)->create([
+            'max_partecipants' => 15
+        ]);
+        $this->post('/registration', [
+            'event' => $event->id,
+            'cf' => 'codice123'
+        ]);
+        $this->assertEquals(15, ($event->registeredUsers->count()) + ($event->externalRegistrations->count()), "l'utente non loggato si è registrato ad un evento completo");
+
+
+    }
 }

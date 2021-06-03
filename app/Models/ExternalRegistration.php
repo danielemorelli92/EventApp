@@ -16,7 +16,7 @@ class ExternalRegistration extends Model
 
     protected $guarded = [];
 
-    public function events()
+    public function event()
     {
         return $this->belongsTo(Event::class);
     }
