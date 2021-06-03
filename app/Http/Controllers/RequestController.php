@@ -15,7 +15,10 @@ class RequestController extends Controller
             abort(401);
         }
 
-        return view('request.create');
+        if (\App\Models\Request::query()->where('user_id', "=", Auth::id())->get()->first() != null)
+            return redirect('/dashboard');
+        else
+            return view('request.create');
     }
 
     public function store()
