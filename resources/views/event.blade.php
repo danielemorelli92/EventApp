@@ -49,7 +49,7 @@
                     <label class="info-item-label">{{ substr($event->starting_time, 0, -3) }}</label>
                 @endif
             @if ($event->starting_time != null && $event->ending_time != null)
-                    <label class="info-item-title">Durata</label>
+                    <label class="info-item-title">Fine</label>
                     <label class="info-item-label">{{ substr($event->ending_time, 0, -3) }}</label>
                 @endif
             @if ($event->registeredUsers != null)
@@ -58,7 +58,7 @@
                 @endif
             @if ($event->max_partecipants != null && $event->registeredUsers != null)
                     <label class="info-item-title">Posti disponibili</label>
-                    <label class="info-item-label">{{ $event->max_partecipants - count($event->registeredUsers) }}</label>
+                    <label class="info-item-label">{{ $event->max_partecipants - ($event->registeredUsers->count() + ($event->externalRegistrations->count())) }}</label>
                 @endif
             @if ($event->website != null)
                     <a href="{{ $event->website }}" target="_blank" class="info-item-title">Sito web</a>
@@ -108,9 +108,9 @@
                 <!-- onsubmit usa JavaScript, andrebbe prima comunicata al server
                       la registrazione dell'utente, poi il refresh che già c'è -->
                 <form method="post" action="/registration" class="not-registered-user-info-form"
-                      style="margin-top: auto; margin-bottom: 8px; display: flex; flex-direction: column; width: 100%">
+                      style="margin-bottom: 8px; display: flex; flex-direction: column; width: 100%">
                     @csrf
-                    <input style="width: 100%" name="cf" type="text"
+                    <input style="margin-bottom: 4px; width: 100%" name="cf" type="text"
                            placeholder="Codice fiscale" required>
                     <button type="submit" name="event" value="{{ $event->id }}"
                             style="width: 100%">Registrati
