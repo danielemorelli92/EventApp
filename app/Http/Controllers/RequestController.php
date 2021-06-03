@@ -20,23 +20,22 @@ class RequestController extends Controller
 
     public function store()
     {
-        if (Gate::denies('create-request')) {
+        if (Gate::denies('create-request') || \App\Models\Request::query()->where('user_id', "=", Auth::id())->get()->first() != null) {
             abort(401);
         }
-        if (\App\Models\Request::query()->where('user_id', "=", Auth::id())->get()->first() == null) {
-            $validatedData = request()->validate([
-                'nome' => 'required|string|max:255',
-                'cognome' => 'required|string|max:255',
-                'data_nascita' => 'required|date',
-                'codice_documento' => 'required|string',
-                'tipo_documento' => 'required|string'
-            ]);
 
-            $validatedData['user_id'] = Auth::id();
+        $validatedData = request()->validate([
+            'nome' => 'required|string|max:255',
+            'cognome' => 'required|string|max:255',
+            'data_nascita' => 'required|date',
+            'codice_documento' => 'required|string',
+            'tipo_documento' => 'required|string'
+        ]);
+
+        $validatedData['user_id'] = Auth::id();
 
 
-            \App\Models\Request::create($validatedData);
-        }
+        \App\Models\Request::create($validatedData);
 
 
         return redirect('/dashboard');
