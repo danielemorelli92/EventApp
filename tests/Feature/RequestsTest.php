@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\TextUI\XmlConfiguration\PHPUnit;
 use Tests\TestCase;
 
@@ -123,5 +124,20 @@ class RequestsTest extends TestCase
         self::assertCount(1, Request::query()->where('user_id', '=', $user->id)->get(), 'è fallita la prima richiesta');
         $this->post('/request', $request2->toArray());
         self::assertCount(1, Request::query()->where('user_id', '=', $user->id)->get(), 'è stata inserita la seconda richiesta');
+    }
+
+    public function test_admin_can_view_requests_list_page()
+    {
+        $user = User::factory()->create(); // crea l'utente
+
+        $user->type = 'admin'; // upgrade locale ad admin
+
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $request = $this->actingAs($user)->get('/request_list');
+
+        $request->assertOk();
     }
 }
