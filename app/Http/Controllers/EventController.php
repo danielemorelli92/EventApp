@@ -119,7 +119,8 @@ class EventController extends Controller
             'max_partecipants' => 'nullable|min:0|max:999999999',
             'price' => 'nullable|min:0|max:9999999',
             'ticket_office' => 'nullable',
-            'website' => 'nullable'
+            'website' => 'nullable',
+            'external_registration' => 'required|string'
         ]);
 
         $validatedData['author_id'] = Auth::id();
@@ -288,7 +289,8 @@ class EventController extends Controller
             'website' => 'string|max:2083',
             'address' => 'string',
             'starting_time' => 'date',
-            'ending_time' => 'date'
+            'ending_time' => 'date',
+            'external_registration' => 'required|string'
         ]);
 
         $event->update($validatedData);

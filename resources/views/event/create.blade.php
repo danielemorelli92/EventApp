@@ -29,11 +29,11 @@
                             <label for="external_registration" class="radio-selection-item-label" >No</label>
                         </div>
                         <div class="radio-selection-item" style="flex-grow: 1">
-                            <input onclick="document.getElementById('ticket_office').required = true; document.getElementById('website').required = false" type="radio" class="radio-selection-item-radio" name="external_registration" value="none">
+                            <input onclick="document.getElementById('ticket_office').required = true; document.getElementById('website').required = false" type="radio" class="radio-selection-item-radio" name="external_registration" value="ticket_office">
                             <label for="external_registration" class="radio-selection-item-label" >Dalla biglietteria</label>
                         </div>
                         <div class="radio-selection-item" style="flex-grow: 1">
-                            <input onclick="document.getElementById('website').required = true; document.getElementById('ticket_office').required = false" type="radio" class="radio-selection-item-radio" name="external_registration" value="none">
+                            <input onclick="document.getElementById('website').required = true; document.getElementById('ticket_office').required = false" type="radio" class="radio-selection-item-radio" name="external_registration" value="website">
                             <label for="external_registration" class="radio-selection-item-label" >Dal sito web</label>
                         </div>
                     </div>
