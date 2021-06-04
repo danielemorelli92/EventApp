@@ -124,6 +124,9 @@ class EventController extends Controller
         ]);
 
         $validatedData['author_id'] = Auth::id();
+        if ( ($validatedData['external_registration'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['external_registration'] == 'website' && $validatedData['website'] == "") ) {
+            abort(400);
+        }
 
         $event = Event::factory()->create($validatedData);
 
@@ -292,6 +295,10 @@ class EventController extends Controller
             'ending_time' => 'date',
             'external_registration' => 'required|string'
         ]);
+
+        if ( ($validatedData['external_registration'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['external_registration'] == 'website' && $validatedData['website'] == "") ) {
+            abort(400);
+        }
 
         $event->update($validatedData);
 
