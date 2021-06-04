@@ -113,11 +113,9 @@ class EventManagementTest extends TestCase
 
         $event = $user->createdEvents->first(); // l'evento creato precedentemente
 
-        $this->assertCount(1, Event::all()->where('author_id', '=', $user->id));
-
         $request = $this->actingAs($user)->delete('/events/' . $event->id); // richiede la cancellazione dell'evento
 
-        $request->assertSessionHasNoErrors();
+        self::assertNull(Event::find($event->id), "l'evento non è stato cancellato");
     }
 
     public function test_a_user_cannot_delete_a_event_of_someone_else()
@@ -127,12 +125,10 @@ class EventManagementTest extends TestCase
         $user_with_event = User::factory()->hasCreatedEvents(1)->create(); // un altro utente con un evento
         $event = $user_with_event->createdEvents->first(); // l'evento di un altro utente
 
-        $this->assertCount(1, Event::all()->where('author_id', '=', $user_with_event->id));
-
         // richiede la cancellazione di un evento non suo
         $request = $this->actingAs($user_without_events)->delete('/events/' . $event->id);
 
-        $this->assertCount(1, Event::all()->where('author_id', '=', $user_with_event->id));
+        self::assertNotNull(Event::find($event->id), "l'evento è stato cancellato da un utente non proprietario");
     }
 
     public function test_a_user_can_edit_a_own_event()
@@ -147,7 +143,8 @@ class EventManagementTest extends TestCase
             'title' => 'new title'
         ]);
 
-        $request->assertSessionHasNoErrors();
+        $updated_event = Event::find($event->id);
+        self::assertEquals('new title', $updated_event->title, "l'evento non è stato modificato");
     }
 
     public function test_a_user_cannot_edit_a_event_of_someone_else()
