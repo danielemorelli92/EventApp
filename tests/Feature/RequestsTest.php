@@ -140,4 +140,22 @@ class RequestsTest extends TestCase
 
         $request->assertOk();
     }
+
+    public function test_other_user_cannot_view_requests_list_page()
+    {
+        $user1 = User::factory()->create(); // sarà utente normale
+        $user2 = User::factory()->create(); // sarà organizzatore
+
+        $user2->type = 'organizzatore';
+
+        DB::table('users')
+            ->where('email', $user2->email)
+            ->update(['type' => 'organizzatore']);
+
+        $request1 = $this->actingAs($user1)->get('/request_list');
+        $request2 = $this->actingAs($user2)->get('/request_list');
+
+        $request1->assertStatus(401);
+        $request2->assertStatus(401);
+    }
 }
