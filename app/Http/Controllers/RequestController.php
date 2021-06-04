@@ -40,4 +40,12 @@ class RequestController extends Controller
         return redirect('/dashboard');
     }
 
+    public function list()
+    {
+
+
+
+        return view('list_request');
+    }
+
 }
