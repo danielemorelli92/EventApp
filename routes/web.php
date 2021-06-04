@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\{Event};
@@ -58,13 +59,13 @@ Route::post('/registration', [EventRegistrationController::class, 'create']);
 
 Route::post('/delete-registration', [EventRegistrationController::class, 'delete']);
 
-Route::get('/events/edit/{event}', [EventController::class, 'edit'])->where('event', '[0-9]+');
+Route::get('/events/edit/{event}', [EventController::class, 'edit'])->where('event', '[0-9]+')->name('events.edit');
 
-Route::put('/events/{event}', [EventController::class, 'update'])->where('event', '[0-9]+')->name('events.edit');
+Route::put('/events/{event}', [EventController::class, 'update'])->where('event', '[0-9]+')->name('events.update');
 
-Route::get('/request', [\App\Http\Controllers\RequestController::class, 'create']);
+Route::get('/request', [RequestController::class, 'create']);
 
-Route::post('/request', [\App\Http\Controllers\RequestController::class, 'store']);
+Route::post('/request', [RequestController::class, 'store']);
 
 
 require __DIR__ . '/auth.php';
