@@ -23,18 +23,18 @@
                     <div class="big-form-row"><label class="big-form-label" for="starting_time">Data inizio evento</label><input class="big-form-compact-field" type="datetime-local" name="starting_time" required></div>
                     <div class="big-form-row"><label class="big-form-label" for="ending_time">Data fine evento</label><input class="big-form-compact-field" type="datetime-local" name="ending_time"></div>
                     <div class="big-form-row" style="width: auto">
-                        <label class="big-form-label" style="min-width: 400px" for="external_registration">Richiedi registrazione esterna</label>
+                        <label class="big-form-label" style="min-width: 400px" for="registration_link">Richiedi registrazione da sito esterno</label>
                         <div class="radio-selection-item" style="flex-grow: 1">
-                            <input onclick="document.getElementById('ticket_office').required = false; document.getElementById('website').required = false" type="radio" class="radio-selection-item-radio" name="external_registration" value="none" checked>
-                            <label for="external_registration" class="radio-selection-item-label" >No</label>
+                            <input onclick="document.getElementById('ticket_office').required = false; document.getElementById('website').required = false" type="radio" class="radio-selection-item-radio" name="registration_link" value="none" checked>
+                            <label for="registration_link" class="radio-selection-item-label" >No</label>
                         </div>
                         <div class="radio-selection-item" style="flex-grow: 1">
-                            <input onclick="document.getElementById('ticket_office').required = true; document.getElementById('website').required = false" type="radio" class="radio-selection-item-radio" name="external_registration" value="ticket_office">
-                            <label for="external_registration" class="radio-selection-item-label" >Dalla biglietteria</label>
+                            <input onclick="document.getElementById('ticket_office').required = true; document.getElementById('website').required = false" type="radio" class="radio-selection-item-radio" name="registration_link" value="ticket_office">
+                            <label for="registration_link" class="radio-selection-item-label" >Dalla biglietteria</label>
                         </div>
                         <div class="radio-selection-item" style="flex-grow: 1">
-                            <input onclick="document.getElementById('website').required = true; document.getElementById('ticket_office').required = false" type="radio" class="radio-selection-item-radio" name="external_registration" value="website">
-                            <label for="external_registration" class="radio-selection-item-label" >Dal sito web</label>
+                            <input onclick="document.getElementById('website').required = true; document.getElementById('ticket_office').required = false" type="radio" class="radio-selection-item-radio" name="registration_link" value="website">
+                            <label for="registration_link" class="radio-selection-item-label" >Dal sito web</label>
                         </div>
                     </div>
 

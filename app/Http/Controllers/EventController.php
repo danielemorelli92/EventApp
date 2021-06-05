@@ -120,11 +120,11 @@ class EventController extends Controller
             'price' => 'nullable|min:0|max:9999999',
             'ticket_office' => 'nullable',
             'website' => 'nullable',
-            'external_registration' => 'required|string'
+            'registration_link' => 'string'
         ]);
 
         $validatedData['author_id'] = Auth::id();
-        if ( ($validatedData['external_registration'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['external_registration'] == 'website' && $validatedData['website'] == "") ) {
+        if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
             abort(400);
         }
 
@@ -293,10 +293,10 @@ class EventController extends Controller
             'address' => 'string',
             'starting_time' => 'date',
             'ending_time' => 'date',
-            'external_registration' => 'required|string'
+            'registration_link' => 'string'
         ]);
 
-        if ( ($validatedData['external_registration'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['external_registration'] == 'website' && $validatedData['website'] == "") ) {
+        if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
             abort(400);
         }
 
