@@ -122,6 +122,12 @@ class EventController extends Controller
             'website' => 'nullable',
             'registration_link' => 'string'
         ]);
+        if ($validatedData['website'] != "" && !str_contains($validatedData['website'], "http://")  && !str_contains($validatedData['website'], "https://") ) {
+            $validatedData['website'] = 'https://'.$validatedData['website'];
+        }
+        if ($validatedData['ticket_office'] != "" && !str_contains($validatedData['ticket_office'], "http://")  && !str_contains($validatedData['ticket_office'], "https://") ) {
+            $validatedData['ticket_office'] = 'https://'.$validatedData['ticket_office'];
+        }
 
         $validatedData['author_id'] = Auth::id();
         if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
@@ -295,6 +301,12 @@ class EventController extends Controller
             'ending_time' => 'date',
             'registration_link' => 'string'
         ]);
+        if ($validatedData['website'] != "" && !str_contains($validatedData['website'], "http://")  && !str_contains($validatedData['website'], "https://") ) {
+            $validatedData['website'] = 'https://'.$validatedData['website'];
+        }
+        if ($validatedData['ticket_office'] != "" && !str_contains($validatedData['ticket_office'], "http://")  && !str_contains($validatedData['ticket_office'], "https://") ) {
+            $validatedData['ticket_office'] = 'https://'.$validatedData['ticket_office'];
+        }
 
         if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
             abort(400);

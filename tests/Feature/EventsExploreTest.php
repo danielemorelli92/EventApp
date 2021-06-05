@@ -101,6 +101,37 @@ class EventsExploreTest extends TestCase
         $registeredUsers = $event->registeredUsers;
         $registeredUsers->contains($user);
     }
+    
+    public function test_a_user_cant_register_to_event_that_uses_external_link_registration()
+    {
+        $event = Event::factory()->create([
+            'website' => "https://fakesite.it",
+            'registration_link' => 'website'
+        ]);
+        $user = User::factory()->create();
+
+        // NON LOGGATO
+        $this->get('/event/' . $event->id);
+
+        $this->post('/registration', [
+            'event' => $event->id,
+            'cf' => 'codicefiscalefake'
+        ]);
+        $externalRegistrationsNumber = count($event->externalRegistrations);
+        $this->assertEquals(0, $externalRegistrationsNumber);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee('Registrati');
+        $this->post('/registration', [
+            'event' => $event->id
+        ]);
+        $registeredUsersNumber = count($event->registeredUsers);
+        $this->assertEquals(0, $registeredUsersNumber);
+    }
 
     //Un utente può cercare in base a distanza massima.
     public function test_a_user_can_search_by_distance()
