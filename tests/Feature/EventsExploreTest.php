@@ -6,6 +6,7 @@ use App\Models\{ExternalRegistration, User, Event, Tag};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Throwable;
 
 class EventsExploreTest extends TestCase
 {
@@ -160,5 +161,23 @@ class EventsExploreTest extends TestCase
 
         $request->assertSee($event_with_tag->title);
         $request->assertDontSee($event_without_tag->title);
+    }
+
+    public function test_a_user_cannot_edit_acceptance_criteria()
+    {
+        $user = User::factory()->create();
+
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri',
+            'author_id' => $user->id
+        ]);
+
+        $this->actingAs($user)->put('/events/' . $event->id, [
+            'criteri_accettazione' => 'nuovo criterio'
+        ]);
+
+        $event->refresh();
+
+        $this->assertEquals('questi sono i criteri', $event->criteri_accettazione, 'sono stati modificati i criteri');
     }
 }
