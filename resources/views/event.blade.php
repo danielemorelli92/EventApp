@@ -94,12 +94,21 @@
                 </form>
 
                 @else
-                    <form action="/registration" method="post">
-                        @csrf
-                        <button type="submit" name="event" value="{{ $event->id }}"
-                                style="width: 100%">Registrati
-                        </button>
-                    </form>
+                   @if($event->criteri_accettazione != null)
+                        <form action="/accetta/{{ $event->id }}" method="get">
+                            @csrf
+                            <button type="submit" name="event" value="{{ $event->id }}"
+                                    style="width: 100%">Registrati
+                            </button>
+                        </form>
+                     @else
+                        <form action="/registration" method="post">
+                            @csrf
+                            <button type="submit" name="event" value="{{ $event->id }}"
+                                    style="width: 100%">Registrati
+                            </button>
+                        </form>
+                   @endif
 
             @endif
         @endauth

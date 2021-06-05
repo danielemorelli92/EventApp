@@ -56,6 +56,8 @@ Route::delete('/events/{event}', [EventController::class, 'destroy'])->where('ev
 
 Route::post('/registration', [EventRegistrationController::class, 'create']);
 
+Route::get('/accetta/{event}',  [EventRegistrationController::class, 'show']);
+
 Route::post('/delete-registration', [EventRegistrationController::class, 'delete']);
 
 Route::get('/events/edit/{event}', [EventController::class, 'edit'])->where('event', '[0-9]+');

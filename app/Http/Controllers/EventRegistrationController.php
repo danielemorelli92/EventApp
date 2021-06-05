@@ -38,4 +38,11 @@ class EventRegistrationController extends Controller
             return redirect('/event/' . request('event'));
         }
     }
+
+    public function show(Event $event)
+    {
+        return view('acceptance-criteria', [
+            'event' => $event
+        ]);
+    }
 }
