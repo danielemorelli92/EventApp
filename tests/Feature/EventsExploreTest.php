@@ -162,4 +162,61 @@ class EventsExploreTest extends TestCase
         $request->assertSee($event_with_tag->title);
         $request->assertDontSee($event_without_tag->title);
     }
+
+    public function test_an_event_with_acceptance_criteria_must_redirect_to_the_acceptance_criteria_page()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri'
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+
+        $response->assertSee('/accetta/' . $event->id);
+
+
+    }
+
+    public function test_a_user_can_see_acceptance_criteria_page()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri'
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+        $response = $this->get('/accetta/' . $event->id);
+        $response->assertOk();
+    }
+
+    public function test_acceptance_criteria_page_redirects_to_registration()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri'
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+        $response = $this->get('/accetta/' . $event->id);
+        $response->assert();
+
+    }
 }
