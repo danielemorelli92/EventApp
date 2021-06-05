@@ -217,9 +217,6 @@ class EventManagementTest extends TestCase
             'cf' => 'codice123'
         ]);
         $this->assertEquals(15, ($event->registeredUsers->count()) + ($event->externalRegistrations->count()), "l'utente non loggato si è registrato ad un evento completo");
-
-
     }
-
 
 }

@@ -6,6 +6,7 @@ use App\Models\{ExternalRegistration, User, Event, Tag};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Throwable;
 
 class EventsExploreTest extends TestCase
 {
