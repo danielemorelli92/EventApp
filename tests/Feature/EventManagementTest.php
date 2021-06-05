@@ -66,7 +66,7 @@ class EventManagementTest extends TestCase
             'longitude' => -20.48122800,
             'ticket_office' => 'http://www.ticket-office.com/',
             'website' => 'http://www.best-website-ever.com/',
-            'external_registration' => 'none',
+            'registration_link' => 'none',
             'address' => 'Via di casa mia, 77',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
@@ -95,7 +95,7 @@ class EventManagementTest extends TestCase
             'longitude' => -20.48122800,
             'ticket_office' => 'http://www.ticket-office.com/',
             'website' => 'http://www.best-website-ever.com/',
-            'external_registration' => 'none',
+            'registration_link' => 'none',
             'address' => 'Via di casa mia, 77',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
