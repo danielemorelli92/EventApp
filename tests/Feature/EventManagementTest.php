@@ -108,7 +108,7 @@ class EventManagementTest extends TestCase
         $this->assertCount(0, Event::all());
     }
 
-    public function test_a_organizer_cant_create_event_with_empty_external_registration_when_enabled()
+    public function test_a_organizer_cant_create_event_with_empty_registration_link_when_redirecting_users()
     {
         $user = User::create([
             'email' => 'test@test.com',
@@ -138,11 +138,9 @@ class EventManagementTest extends TestCase
             'ending_time' => null
         ]; // crea un evento locale
 
-        $this->assertCount(0, Event::all());
-
         $this->actingAs($user)->post('/events', $event1);
 
-        $this->assertCount(0, Event::all(), "l'organizzatore ha creato un evento con registrazione esterna su ticket office senza specificarne l'URL.");
+        $this->assertCount(0, Event::all(), "l'organizzatore ha creato con successo un evento con registrazione esterna su ticket office senza specificarne l'URL.");
 
         $event2 = [
             'title' => 'A fake event!',
@@ -162,7 +160,7 @@ class EventManagementTest extends TestCase
         ]; // crea un evento locale
         $this->actingAs($user)->post('/events', $event2);
 
-        $this->assertCount(0, Event::all(), "l'organizzatore ha creato un evento con registrazione esterna su website senza specificarne l'URL.");
+        $this->assertCount(0, Event::all(), "l'organizzatore ha creato con successo un evento con registrazione esterna su website senza specificarne l'URL.");
     }
 
 
