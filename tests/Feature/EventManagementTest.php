@@ -220,4 +220,24 @@ class EventManagementTest extends TestCase
 
 
     }
+
+    public function test_a_user_cannot_edit_acceptance_criteria()
+    {
+        $user = User::factory()->create();
+
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri',
+            'author_id' => $user->id
+        ]);
+
+        $this->actingAs($user)->put('/events/' . $event->id,[
+            'criteri_accettazione' => 'nuovo criterio'
+        ]);
+
+        $event->refresh();
+
+        $this->assertEquals('questi sono i criteri', $event->criteri_accettazione, 'sono stati modificati i criteri');
+
+
+    }
 }

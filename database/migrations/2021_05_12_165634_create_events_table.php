@@ -28,6 +28,7 @@ class CreateEventsTable extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->dateTime('starting_time')->nullable(); //TODO - Per testing ora è nullable
             $table->dateTime('ending_time')->nullable();
+            $table->text('criteri_accettazione')->nullable();
             $table->timestamps();
         });
 

@@ -23,6 +23,11 @@
                     <div class="big-form-row"><label class="big-form-label" for="starting_time">Data inizio evento</label><input class="big-form-compact-field" type="datetime-local" name="starting_time" required></div>
                     <div class="big-form-row"><label class="big-form-label" for="ending_time">Data fine evento</label><input class="big-form-compact-field" type="datetime-local" name="ending_time"></div>
 
+
+                    <label for="criteri_accettazione">Criteri accettazione:</label>
+                        <textarea id="" name="criteri_accettazione">
+                        </textarea>
+
                     <button class="big-form-submit-button" type="submit" value="Crea evento">Crea evento</button>
                 </div>
             </form>
