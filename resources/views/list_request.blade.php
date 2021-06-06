@@ -13,21 +13,19 @@
             <div class="section-title">Richieste aperte</div>
 
             <div class="requests-list">
-                @foreach($registered_events_future as $registered_event_future)
-                    <a class="event-square" href="/event/{{ $registered_event_future->id }}">
-                        <div class="event-square-title">{{ $registered_event_future->title }}</div>
-                        <div class="event-square-attributes-group">
-                            <div class="event-square-attribute">
-                                {{ $registered_event_future->address }}
-                            </div>
-                        </div>
-                    </a>
+                @foreach($pending_requests as $request)
+
+
                 @endforeach
             </div>
         </section>
 
         <section id="accepted_request">
             <div class="section-title">Richieste accettate</div>
+            @foreach($closed_requests as $request)
+
+
+            @endforeach
 
             <div class="requests-list">
 

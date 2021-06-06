@@ -136,7 +136,7 @@ class RequestsTest extends TestCase
             ->where('email', $user->email)
             ->update(['type' => 'admin']); // upgrade sul database ad admin
 
-        $request = $this->actingAs($user)->get('/request_list');
+        $request = $this->actingAs($user)->get('/admin_page');
 
         $request->assertOk();
     }
@@ -152,8 +152,8 @@ class RequestsTest extends TestCase
             ->where('email', $user2->email)
             ->update(['type' => 'organizzatore']);  // sul db
 
-        $request1 = $this->actingAs($user1)->get('/request_list');
-        $request2 = $this->actingAs($user2)->get('/request_list');
+        $request1 = $this->actingAs($user1)->get('/admin_page');
+        $request2 = $this->actingAs($user2)->get('/admin_page');
 
         $request1->assertStatus(401);
         $request2->assertStatus(401);

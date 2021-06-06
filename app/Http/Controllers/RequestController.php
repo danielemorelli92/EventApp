@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Models\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Symfony\Component\HttpFoundation\Request;
+
 
 class RequestController extends Controller
 {
@@ -42,11 +44,21 @@ class RequestController extends Controller
         return redirect('/dashboard');
     }
 
-    public function show_list(Request $request)
+    public function show_list()
     {
-        if(Auth::user()->type == 'admin'){
+        $requests = Request::all();
+        $pending_requests = $requests->filter(function (Request $request){
+           return $request->user->type == 'normale';
+        });
+
+        $closed_requests = $requests->filter(function (Request $request){
+            return $request->user->type == 'organizzatore';
+        });
+
+        if(Auth::user()->type === 'admin'){
             return view('list_request', [
-                'request' => $request
+                'pending_requests' => $pending_requests,
+                'closed_requests' => $closed_requests
             ]);
         }
     }

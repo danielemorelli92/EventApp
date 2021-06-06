@@ -66,7 +66,7 @@ Route::get('/request', [\App\Http\Controllers\RequestController::class, 'create'
 
 Route::post('/request', [\App\Http\Controllers\RequestController::class, 'store']);
 
-Route::get('/request_list', [\App\Http\Controllers\RequestController::class, 'show_list']);
+Route::get('/admin_page', [\App\Http\Controllers\RequestController::class, 'show_list']);
 
 
 require __DIR__ . '/auth.php';
