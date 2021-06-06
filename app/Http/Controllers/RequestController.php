@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -40,12 +42,13 @@ class RequestController extends Controller
         return redirect('/dashboard');
     }
 
-    public function list()
+    public function show_list(Request $request)
     {
-
-
-
-        return view('list_request');
+        if(Auth::user()->type == 'admin'){
+            return view('list_request', [
+                'request' => $request
+            ]);
+        }
     }
 
 }
