@@ -216,7 +216,7 @@ class EventsExploreTest extends TestCase
 
         $response = $this->get('/event/' . $event->id);
         $response = $this->get('/accetta/' . $event->id);
-        $response->assert();
+        $response->assertSee('/registration');
 
     }
 }
