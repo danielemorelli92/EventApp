@@ -179,6 +179,7 @@ class EventsExploreTest extends TestCase
         $response = $this->get('/event/' . $event->id);
 
         $response->assertSee('/accetta/' . $event->id);
+        $response->assertDontSee('/registration');
 
 
     }
@@ -196,12 +197,11 @@ class EventsExploreTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response = $this->get('/event/' . $event->id);
         $response = $this->get('/accetta/' . $event->id);
         $response->assertOk();
     }
 
-    public function test_acceptance_criteria_page_redirects_to_registration()
+    public function test_a_user_can_registrate_on_acceptance_criteria_page()
     {
         $event = Event::factory()->create([
             'criteri_accettazione' => 'questi sono i criteri'
@@ -214,9 +214,29 @@ class EventsExploreTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response = $this->get('/event/' . $event->id);
         $response = $this->get('/accetta/' . $event->id);
         $response->assertSee('/registration');
+
+    }
+
+    public function test_an_event_without_acceptance_criteria_must_not_redirect_to_the_acceptance_criteria_page()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => null
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+
+        $response->assertDontSee('/accetta/' . $event->id);
+        $response->assertSee('/registration');
+
 
     }
 }
