@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->enum('type', ['normale', 'organizzatore', 'admin'])->default('normale');
             $table->string('name');
             $table->date('birthday')->nullable();
-            $table->unsignedInteger('numero_telefono')->nullable();
+            $table->string('numero_telefono')->nullable();
             $table->text('sito_web')->nullable();
             $table->rememberToken();
             $table->timestamps();
