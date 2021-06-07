@@ -10,7 +10,25 @@
 
         <section id="organized_events">
             <div class="section-title">Eventi organizzati</div>
+            <div class="events-list">
+                @foreach($created_events as $created_event)
+                    <a class="event-square" href="/event/{{ $created_event->id }}">
+                        <div class="event-square-image-container">
+                            <img class="image-small" src="{{ $created_event->getImage() }}" alt="image-stock">
+                        </div>
+                        <div class="event-square-title">{{ $created_event->title }}</div>
+                        <div class="event-square-attributes-group">
+                            <div class="event-square-attribute">
+                                {{ $created_event->address }}
+                            </div>
+                            <div class="event-square-attribute">
+                                {{ substr($created_event->starting_time, 0, -3) }}
 
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
         </section>
 
         <section id="registered_events_past">
