@@ -60,6 +60,16 @@
                     <label class="info-item-title">Posti disponibili</label>
                     <label class="info-item-label">{{ $event->max_partecipants - ($event->registeredUsers->count() + ($event->externalRegistrations->count())) }}</label>
                 @endif
+
+            @if ($event->author_id != null)
+                    <label class="info-item-title">Organizzatore</label>
+                    <label class="info-item-label">
+                        <a style="color: #0000FF" href="/user-profile/{{ $event->author->id}}">
+                           {{ $event->author->name }}
+                        </a>
+                    </label>
+                @endif
+
             @if ($event->website != null)
                     <a href="{{ $event->website }}" target="_blank" class="info-item-title">Sito web</a>
                     <a href="{{ $event->website }}" target="_blank" class="info-item-label">{{ $event->website }}</a>
