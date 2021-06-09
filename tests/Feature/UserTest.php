@@ -44,17 +44,11 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
         $event = Event::factory()->create([
-            'title' => 'evento a cui user è registrato',
-            'starting_time' => date(now()->addDay()),
+            'title' => 'evento a cui user ha partecipato',
+            'starting_time' => date(now()->subWeek())
         ]);
 
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-
-        $event->registeredUsers()->attach(Auth::user());
-        //$event->registeredUsers()->attach($user);
+        $event->registeredUsers()->attach($user);
 
         $response = $this->get('/user-profile/' . $user->id);
         $response->assertSee($event->title);

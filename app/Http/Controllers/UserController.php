@@ -20,8 +20,8 @@ class UserController extends Controller
 
     public function user_profile(User $user)
     {
-        $created_events = Event::all()->where('author_id', $user->id);
-        $registered_events_past = Event::all()->where('starting_time' <= date(now()));
+        $created_events = Event::all()->where('author_id', '=', $user->id);
+        $registered_events_past = Event::all()->where('starting_time', '<=', date(now()));
             return view('user-profile', [
                 'created_events' => $created_events,
                 'registered_events_past' => $registered_events_past,
