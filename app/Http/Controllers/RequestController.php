@@ -46,7 +46,12 @@ class RequestController extends Controller
 
     public function show_list()
     {
+        if(Auth::user()->type != 'admin'){
+            abort(401);
+        }
+
         $requests = Request::all();
+
         $pending_requests = $requests->filter(function (Request $request){
            return $request->user->type == 'normale';
         });
@@ -55,12 +60,14 @@ class RequestController extends Controller
             return $request->user->type == 'organizzatore';
         });
 
-        if(Auth::user()->type === 'admin'){
-            return view('list_request', [
-                'pending_requests' => $pending_requests,
-                'closed_requests' => $closed_requests
-            ]);
-        }
+        $users = User::all();
+
+        return view('list_request', [
+            'pending_requests' => $pending_requests,
+            'closed_requests' => $closed_requests,
+            'users' => $users
+        ]);
+
     }
 
 }
