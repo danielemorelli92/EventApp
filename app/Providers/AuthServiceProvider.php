@@ -39,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('delete-event', function (User $user, Event $event) {
             $user = User::find(Auth::id());
-            return $user->id === $event->author_id;
+            return $user->id === $event->author_id || $user->type === 'admin';
         });
         Gate::define('has-a-event', function (User $user) {
             $user = User::find(Auth::id());
