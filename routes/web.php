@@ -70,7 +70,5 @@ Route::post('/request', [RequestController::class, 'store']);
 
 Route::get('/user-profile/{user}', [UserController::class, 'show']);
 
-Route::get('/user-profile/{user}', [UserController::class, 'user_profile']);
-
 
 require __DIR__ . '/auth.php';
