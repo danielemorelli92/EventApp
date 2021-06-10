@@ -56,6 +56,13 @@
     </div>
 
     <div class="right-side-column">
+        @if(Illuminate\Support\Facades\Gate::allows('downgrade', $user))
+            <form action="/permissions/{{ $user->id }}" method="POST">
+                @csrf
+                @method('delete')
+                <input type="submit" value="Rimuovi permessi">
+            </form>
+        @endif
         <div class="section-title">Informazioni utente</div>
         <div class="info-box">
 

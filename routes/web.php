@@ -70,5 +70,7 @@ Route::post('/request', [RequestController::class, 'store']);
 
 Route::get('/user-profile/{user}', [UserController::class, 'show']);
 
+Route::delete('/permissions/{user}', [UserController::class, 'downgrade']); // cancella i permessi dati ad un organizzatore
+
 
 require __DIR__ . '/auth.php';
