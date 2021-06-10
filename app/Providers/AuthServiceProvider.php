@@ -49,7 +49,15 @@ class AuthServiceProvider extends ServiceProvider
             $user = User::find(Auth::id());
             return $user->id === $event->author_id;
         });
-
+        Gate::define('downgrade', function (User $user, User $other) {
+            $user->refresh();
+            $other->refresh();
+            return $user->type === 'admin' and $other->type === 'organizzatore';
+        });
+        Gate::define('admin', function (User $user) {
+            $user->refresh();
+            return $user->type === 'admin';
+        });
     }
 
 }
