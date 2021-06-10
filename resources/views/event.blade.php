@@ -34,6 +34,11 @@
     </div>
 
     <div class="right-side-column">
+        @if(\Illuminate\Support\Facades\Gate::allows('admin'))
+            <form action="/events/edit/{{ $event->id }}" method="GET">
+                <input type="submit" value="Modifica">
+            </form>
+        @endif
         <div class="section-title">Informazioni evento</div>
         <div class="info-box">
             @if ($event->city != null)
@@ -41,9 +46,9 @@
                 <label class="info-item-label">Roseto degli Abruzzi</label>
             @endif
             @if ($event->address != null)
-                    <label class="info-item-title">Indirizzo</label>
-                    <label class="info-item-label">{{ $event->address }}</label>
-                @endif
+                <label class="info-item-title">Indirizzo</label>
+                <label class="info-item-label">{{ $event->address }}</label>
+            @endif
             @if ($event->starting_time != null)
                     <label class="info-item-title">Inizio</label>
                     <label class="info-item-label">{{ substr($event->starting_time, 0, -3) }}</label>
