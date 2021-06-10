@@ -7,9 +7,9 @@
 @section('content')
 
     <div class="main-content-column">
-        <div class="section-title" style="margin-left: 12px">
+        <div id="" class="section-title" style="margin-left: 12px">
             Lista richieste di abilitazione
-            <form method="get" action="/request" class="" >
+            <form method="get" action="/admin_page" class="" >
                 <input
                     name="search"
                     class="filters-item"

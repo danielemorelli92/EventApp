@@ -50,7 +50,18 @@ class RequestController extends Controller
             abort(401);
         }
 
-        $requests = Request::all();
+        if (request('search') != null && ! blank(request('search'))){
+            $requests = Request::query()
+                ->where('id', '=', request('search'))
+                ->orWhere('nome', 'like', '%' . request('search') . '%')
+                ->orWhere('cognome', 'like', '%' . request('search') . '%')
+                ->orWhere('data_nascita', 'like', '%' . request('search') . '%')
+                ->orWhere('codice_documento', 'like', '%' . request('search') . '%')
+                ->orWhere('tipo_documento', 'like', '%' . request('search') . '%');
+        } else{
+            $requests = Request::all();
+        }
+
 
         $pending_requests = $requests->filter(function (Request $request){
            return $request->user->type == 'normale';
