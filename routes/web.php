@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\{Event};
@@ -66,6 +67,10 @@ Route::put('/events/{event}', [EventController::class, 'update'])->where('event'
 Route::get('/request', [RequestController::class, 'create']);
 
 Route::post('/request', [RequestController::class, 'store']);
+
+Route::get('/user-profile/{user}', [UserController::class, 'show']);
+
+Route::get('/user-profile/{user}', [UserController::class, 'user_profile']);
 
 
 require __DIR__ . '/auth.php';
