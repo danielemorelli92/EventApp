@@ -161,4 +161,15 @@ class EventsExploreTest extends TestCase
         $request->assertSee($event_with_tag->title);
         $request->assertDontSee($event_without_tag->title);
     }
+
+    public function test_a_user_can_access_author_event_profile_from_event_page()
+    {
+        $event = Event::factory()->create([
+            'starting_time' => date(now()->addYear())
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee($event->author->name);
+        $response->assertSee('/user-profile/' . $event->author->id);
+    }
 }
