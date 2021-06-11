@@ -319,7 +319,23 @@ class EventManagementTest extends TestCase
             'cf' => 'codice123'
         ]);
         $this->assertEquals(15, ($event->registeredUsers->count()) + ($event->externalRegistrations->count()), "l'utente non loggato si è registrato ad un evento completo");
+    }
 
+    public function test_a_user_cannot_edit_acceptance_criteria()
+    {
+        $user = User::factory()->create();
 
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri',
+            'author_id' => $user->id
+        ]);
+
+        $this->actingAs($user)->put('/events/' . $event->id, [
+            'criteri_accettazione' => 'nuovo criterio'
+        ]);
+
+        $event->refresh();
+
+        $this->assertEquals('questi sono i criteri', $event->criteri_accettazione, 'sono stati modificati i criteri');
     }
 }

@@ -119,7 +119,8 @@ class EventController extends Controller
             'max_partecipants' => 'nullable|min:0|max:999999999',
             'price' => 'nullable|min:0|max:9999999',
             'ticket_office' => 'nullable',
-            'website' => 'nullable'
+            'website' => 'nullable',
+            'criteri_accettazione'=> 'nullable'
         ]);
 
         $validatedData['author_id'] = Auth::id();
