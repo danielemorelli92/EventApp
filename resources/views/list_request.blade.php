@@ -81,7 +81,7 @@
 
 
 
-        <table id='lista_utenti' style="width:100%">
+        <table id='lista_utenti' hidden style="width:100%">
 
             <tr>
                 <th>ID</th>
@@ -94,20 +94,20 @@
             </tr>
 
             @foreach($users as $user)
-                <tr>
-                    <th>{{$user->id}}</th>
-                    <th>{{$user->email}}</th>
-                    <th>
-                        {{$user->type}}
-                    </th>
-                    <th> <a href="/user-profile/{{$user->id}}">
+                    <tr>
+                        <th><a href="/user-profile/{{$user->id}}">
+                            {{$user->id}}</a></th>
+                        <th><a href="/user-profile/{{$user->id}}">{{$user->email}}</a></th>
+                        <th><a href="/user-profile/{{$user->id}}">
+                            {{$user->type}}
+                            </a></th>
+                        <th><a href="/user-profile/{{$user->id}}">
                             {{$user->name}}
-                        </a>
-                    </th>
-                    <th>{{$user->birthday}}</th>
-                    <th>{{$user->numero_telefono}}</th>
-                    <th>{{$user->sito_web}}</th>
-                </tr>
+                            </a></th>
+                        <th><a href="/user-profile/{{$user->id}}">{{$user->birthday}}</a></th>
+                        <th><a href="/user-profile/{{$user->id}}">{{$user->numero_telefono}}</a></th>
+                        <th><a href="/user-profile/{{$user->id}}">{{$user->sito_web}}</a></th>
+                    </tr>
             @endforeach
         </table>
 
