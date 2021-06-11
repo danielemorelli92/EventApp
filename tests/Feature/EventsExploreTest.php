@@ -102,7 +102,7 @@ class EventsExploreTest extends TestCase
         $registeredUsers = $event->registeredUsers;
         $registeredUsers->contains($user);
     }
-    
+
     public function test_a_user_cant_register_to_event_that_uses_external_link_registration()
     {
         $event = Event::factory()->create([
@@ -126,7 +126,7 @@ class EventsExploreTest extends TestCase
             'password' => 'password',
         ]);
         $response = $this->get('/event/' . $event->id);
-        $response->assertSee('Registrati');
+        $response->assertSee('Vai alla registrazione');
         $this->post('/registration', [
             'event' => $event->id
         ]);

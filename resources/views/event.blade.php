@@ -114,7 +114,6 @@
                                 style="width: 100%">Annulla registrazione
                         </button>
                     </form>
-
                 @else
                    @if($event->criteri_accettazione != null)
                         <form action="/accetta/{{ $event->id }}" method="get">
@@ -144,21 +143,21 @@
                         <input style="margin-bottom: 4px; width: 100%" name="cf" type="text"
                                placeholder="Codice fiscale" required>
                         <button type="submit" name="event" value="{{ $event->id }}"
-                                style="width: 100%">Registrati
+                                style="width: 100%">Registrazione
                         </button>
                     </form>
-            @endguest
-        @endif
-    @elseif ($event->registration_link == "website")
-            <form action="{{$event->website}}" target="_blank">
-                <button type="submit"
-                        style="width: 100%">Vai alla registrazione
-                </button>
-            </form>
-    @elseif ($event->registration_link == "ticket_office")
-            <form action="{{$event->ticket_office}}" target="_blank">
-                <button type="submit"
-                        style="width: 100%">Vai alla registrazione
+                    @endguest
+                @endif
+            @elseif ($event->registration_link == "website")
+                <form action="{{$event->website}}" target="_blank">
+                    <button type="submit"
+                            style="width: 100%">Vai alla registrazione
+                    </button>
+                </form>
+            @elseif ($event->registration_link == "ticket_office")
+                <form action="{{$event->ticket_office}}" target="_blank">
+                    <button type="submit"
+                            style="width: 100%">Vai alla registrazione
                 </button>
             </form>
     @endif

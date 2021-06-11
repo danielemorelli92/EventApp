@@ -209,7 +209,7 @@ class EventManagementTest extends TestCase
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
             'title' => 'new title'
         ]);
-        $updated_event = Event::find($event->id);
+        $updated_event = $event->fresh();
         self::assertEquals('new title', $updated_event->title, "il titolo dell'evento non è stato modificato");
 
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
