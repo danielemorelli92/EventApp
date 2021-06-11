@@ -20,7 +20,7 @@
             </form>
         </div>
 
-        <table style="width:100%">
+        <table id='lista_richieste' style="width:100%">
 
             <tr>
                 <th>ID</th>
@@ -81,7 +81,7 @@
 
 
 
-        <table style="width:100%">
+        <table id='lista_utenti' style="width:100%">
 
             <tr>
                 <th>ID</th>
@@ -116,10 +116,23 @@
     <div class="right-side-column">
 
         <div class="section-title" style="margin-left: 12px">Sezioni:</div>
+        <div style="display: flex; flex-direction: row; ">
+             <label for="radio1">
+                 Richieste
+             </label>
+             <input id='radio1' type="radio" name="view" checked
+             onclick="document.getElementById('lista_richieste').removeAttribute('hidden');
+                document.getElementById('lista_utenti').setAttribute('hidden', 'hidden')">
+        </div>
 
-        <button style="width: 100%; margin-bottom: 4px;">Richieste</button>
-
-        <button style="width: 100%; margin-bottom: 4px;">Utenti</button>
+        <div style="display: flex; flex-direction: row; ">
+            <label for="radio2">
+                Utenti
+            </label>
+            <input id='radio2' type="radio" name="view"
+                   onclick="document.getElementById('lista_utenti').removeAttribute('hidden');
+                document.getElementById('lista_richieste').setAttribute('hidden', 'hidden')">
+        </div>
 
     </div>
 
