@@ -74,12 +74,12 @@ class AdminTest extends TestCase
         $event = Event::factory()->create([
             'author_id' => $user->id
         ]);
-  
+
         $request = $this->actingAs($admin)->get('/event/' . $event->id);
 
         $request->assertSee('Cancella');
     }
-  
+
     public function test_an_admin_can_delete_any_event()
     {
         $admin = User::factory()->create();
@@ -94,7 +94,7 @@ class AdminTest extends TestCase
 
         self::assertNull($event->fresh(), 'l\'evento non è stato cancellato');
     }
-  
+
     public function test_an_admin_can_view_the_event_edit_page()
     {
         $admin = User::factory()->create();
@@ -143,4 +143,38 @@ class AdminTest extends TestCase
 
         self::assertEquals('new title', $event->fresh()->title, 'l\'evento non è stato modificato dall\'admin');
     }
+
+    public function test_admin_can_view_admin_page()
+    {
+        $user = User::factory()->create(); // crea l'utente
+
+        $user->type = 'admin'; // upgrade locale ad admin
+
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $request = $this->actingAs($user)->get('/admin_page');
+
+        $request->assertOk();
+    }
+
+    public function test_other_users_cannot_view_admin_page()
+    {
+        $user1 = User::factory()->create(); // sarà utente normale
+        $user2 = User::factory()->create(); // sarà organizzatore
+
+        $user2->type = 'organizzatore'; // locale
+
+        DB::table('users')
+            ->where('email', $user2->email)
+            ->update(['type' => 'organizzatore']);  // sul db
+
+        $request1 = $this->actingAs($user1)->get('/admin_page');
+        $request2 = $this->actingAs($user2)->get('/admin_page');
+
+        $request1->assertStatus(401);
+        $request2->assertStatus(401);
+    }
+
 }

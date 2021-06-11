@@ -125,37 +125,4 @@ class RequestsTest extends TestCase
         $this->post('/request', $request2->toArray());
         self::assertCount(1, Request::query()->where('user_id', '=', $user->id)->get(), 'è stata inserita la seconda richiesta');
     }
-
-    public function test_admin_can_view_requests_list_page()
-    {
-        $user = User::factory()->create(); // crea l'utente
-
-        $user->type = 'admin'; // upgrade locale ad admin
-
-        DB::table('users')
-            ->where('email', $user->email)
-            ->update(['type' => 'admin']); // upgrade sul database ad admin
-
-        $request = $this->actingAs($user)->get('/admin_page');
-
-        $request->assertOk();
-    }
-
-    public function test_other_users_cannot_view_requests_list_page()
-    {
-        $user1 = User::factory()->create(); // sarà utente normale
-        $user2 = User::factory()->create(); // sarà organizzatore
-
-        $user2->type = 'organizzatore'; // locale
-
-        DB::table('users')
-            ->where('email', $user2->email)
-            ->update(['type' => 'organizzatore']);  // sul db
-
-        $request1 = $this->actingAs($user1)->get('/admin_page');
-        $request2 = $this->actingAs($user2)->get('/admin_page');
-
-        $request1->assertStatus(401);
-        $request2->assertStatus(401);
-    }
 }

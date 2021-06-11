@@ -38,8 +38,8 @@
                     <th>{{$request->cognome}}</th>
                     <th>Pending</th>
                     <th>
-                        <button class="big-form-submit-button" type="submit">Accetta</button>
-                        <button class="big-form-submit-button" type="submit">Rifiuta</button>
+                        <button type="submit">Accetta</button>
+                        <button type="submit">Rifiuta</button>
                     </th>
 
                 </tr>

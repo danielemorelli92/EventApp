@@ -73,7 +73,7 @@ class RequestController extends Controller
 
         $users = User::all();
 
-        return view('list_request', [
+        return view('admin_page', [
             'pending_requests' => $pending_requests,
             'closed_requests' => $closed_requests,
             'users' => $users
