@@ -38,6 +38,11 @@
                         </div>
                     </div>
 
+
+                    <label for="criteri_accettazione">Criteri accettazione:</label>
+                        <textarea id="" name="criteri_accettazione">
+                        </textarea>
+
                     <button class="big-form-submit-button" type="submit" value="Crea evento">Crea evento</button>
                 </div>
             </form>
