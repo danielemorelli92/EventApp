@@ -23,10 +23,11 @@ class CreateEventsTable extends Migration
             $table->decimal('price')->nullable();
             $table->string('ticket_office', 2083)->nullable();
             $table->string('website', 2083)->nullable();
-            $table->text('address')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
-            $table->dateTime('starting_time')->nullable(); //TODO - Per testing ora è nullable
+            $table->enum('registration_link', ['none', 'ticket_office', 'website'])->default('none');
+            $table->text('address');
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
+            $table->dateTime('starting_time');
             $table->dateTime('ending_time')->nullable();
             $table->text('criteri_accettazione')->nullable();
             $table->timestamps();

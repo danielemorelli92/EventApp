@@ -66,6 +66,7 @@ class EventManagementTest extends TestCase
             'longitude' => -20.48122800,
             'ticket_office' => 'http://www.ticket-office.com/',
             'website' => 'http://www.best-website-ever.com/',
+            'registration_link' => 'none',
             'address' => 'Via di casa mia, 77',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
@@ -94,6 +95,7 @@ class EventManagementTest extends TestCase
             'longitude' => -20.48122800,
             'ticket_office' => 'http://www.ticket-office.com/',
             'website' => 'http://www.best-website-ever.com/',
+            'registration_link' => 'none',
             'address' => 'Via di casa mia, 77',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
@@ -104,6 +106,61 @@ class EventManagementTest extends TestCase
         $request = $this->actingAs($user)->post('/events', $event);
 
         $this->assertCount(0, Event::all());
+    }
+
+    public function test_a_organizer_cant_create_event_with_empty_registration_link_when_redirecting_users()
+    {
+        $user = User::create([
+            'email' => 'test@test.com',
+            'password' => bcrypt('password'),
+            'name' => 'Giovanni Giorgio'
+        ]); // crea l'utente
+
+        $user->type = 'organizzatore'; // upgrade locale a organizzatore
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']); // upgrade sul database a organizzatore
+
+        $event1 = [
+            'title' => 'A fake event!',
+            'description' => 'A very very very fake event...',
+            'author_id' => $user->id,
+            'type' => 'Concert',
+            'max_partecipants' => '250',
+            'price' => 100,
+            'latitude' => 56.72932400,
+            'longitude' => -20.48122800,
+            'ticket_office' => '',
+            'website' => 'http://www.best-website-ever.com/',
+            'external_registration' => 'ticket_office',
+            'address' => 'Via di casa mia, 77',
+            'starting_time' => '2021-09-11 12:30',
+            'ending_time' => null
+        ]; // crea un evento locale
+
+        $this->actingAs($user)->post('/events', $event1);
+
+        $this->assertCount(0, Event::all(), "l'organizzatore ha creato con successo un evento con registrazione esterna su ticket office senza specificarne l'URL.");
+
+        $event2 = [
+            'title' => 'A fake event!',
+            'description' => 'A very very very fake event...',
+            'author_id' => $user->id,
+            'type' => 'Concert',
+            'max_partecipants' => '250',
+            'price' => 100,
+            'latitude' => 56.72932400,
+            'longitude' => -20.48122800,
+            'ticket_office' => 'http://www.best-website-ever.com/buy',
+            'website' => '',
+            'external_registration' => 'website',
+            'address' => 'Via di casa mia, 77',
+            'starting_time' => '2021-09-11 12:30',
+            'ending_time' => null
+        ]; // crea un evento locale
+        $this->actingAs($user)->post('/events', $event2);
+
+        $this->assertCount(0, Event::all(), "l'organizzatore ha creato con successo un evento con registrazione esterna su website senza specificarne l'URL.");
     }
 
 
@@ -152,7 +209,7 @@ class EventManagementTest extends TestCase
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
             'title' => 'new title'
         ]);
-        $updated_event = Event::find($event->id);
+        $updated_event = $event->fresh();
         self::assertEquals('new title', $updated_event->title, "il titolo dell'evento non è stato modificato");
 
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
