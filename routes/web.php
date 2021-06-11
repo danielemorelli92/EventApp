@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
+use App\Http\Controllers\RequestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\{Event};
@@ -60,13 +62,17 @@ Route::get('/accetta/{event}',  [EventRegistrationController::class, 'show']);
 
 Route::post('/delete-registration', [EventRegistrationController::class, 'delete']);
 
-Route::get('/events/edit/{event}', [EventController::class, 'edit'])->where('event', '[0-9]+');
+Route::get('/events/edit/{event}', [EventController::class, 'edit'])->where('event', '[0-9]+')->name('events.edit');
 
-Route::put('/events/{event}', [EventController::class, 'update'])->where('event', '[0-9]+')->name('events.edit');
+Route::put('/events/{event}', [EventController::class, 'update'])->where('event', '[0-9]+')->name('events.update');
 
-Route::get('/request', [\App\Http\Controllers\RequestController::class, 'create']);
+Route::get('/request', [RequestController::class, 'create']);
 
-Route::post('/request', [\App\Http\Controllers\RequestController::class, 'store']);
+Route::post('/request', [RequestController::class, 'store']);
+
+Route::get('/user-profile/{user}', [UserController::class, 'show']);
+
+Route::delete('/permissions/{user}', [UserController::class, 'downgrade']); // cancella i permessi dati ad un organizzatore
 
 
 require __DIR__ . '/auth.php';
