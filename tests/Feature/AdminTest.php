@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use Tests\TestCase;
 
 class AdminTest extends TestCase
@@ -73,15 +74,44 @@ class AdminTest extends TestCase
         $event = Event::factory()->create([
             'author_id' => $user->id
         ]);
-
+  
         $request = $this->actingAs($admin)->get('/event/' . $event->id);
 
         $request->assertSee('Cancella');
     }
-
+  
     public function test_an_admin_can_delete_any_event()
     {
-        $this->withoutExceptionHandling();
+        $admin = User::factory()->create();
+        DB::table('users')
+            ->where('id', $admin->id)
+            ->update(['type' => 'admin']);
+        $user = User::factory()->create();
+        $event = Event::factory()->create([
+            'author_id' => $user->id
+        ]);
+        $this->actingAs($admin)->delete('/events/' . $event->id);
+
+        self::assertNull($event->fresh(), 'l\'evento non è stato cancellato');
+    }
+  
+    public function test_an_admin_can_view_the_event_edit_page()
+    {
+        $admin = User::factory()->create();
+        DB::table('users')
+            ->where('id', $admin->id)
+            ->update(['type' => 'admin']);
+        $user = User::factory()->create();
+        $event = Event::factory()->create([
+            'author_id' => $user->id
+        ]);
+        $response = $this->actingAs($admin)->get('/events/edit/' . $event->id);
+
+        $response->assertOk();
+    }
+
+    public function test_an_admin_can_modify_user_s_event_from_event_page()
+    {
         $admin = User::factory()->create();
         DB::table('users')
             ->where('id', $admin->id)
@@ -91,8 +121,26 @@ class AdminTest extends TestCase
             'author_id' => $user->id
         ]);
 
-        $this->actingAs($admin)->delete('/events/' . $event->id);
+        $response = $this->actingAs($admin)->get('/event/' . $event->id);
 
-        self::assertNull($event->fresh(), 'l\'evento non è stato cancellato');
+        $response->assertSee('Modifica');
+    }
+
+    public function test_an_admin_can_modify_a_event()
+    {
+        $admin = User::factory()->create();
+        DB::table('users')
+            ->where('id', $admin->id)
+            ->update(['type' => 'admin']);
+        $user = User::factory()->create();
+        $event = Event::factory()->create([
+            'author_id' => $user->id
+        ]);
+
+        $this->actingAs($admin)->put('/events/' . $event->id, [
+            'title' => 'new title'
+        ]);
+
+        self::assertEquals('new title', $event->fresh()->title, 'l\'evento non è stato modificato dall\'admin');
     }
 }

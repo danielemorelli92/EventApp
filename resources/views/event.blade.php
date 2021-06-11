@@ -40,6 +40,9 @@
                 @method('delete')
                 <input type="submit" value="Cancella">
             </form>
+            <form action="/events/edit/{{ $event->id }}" method="GET">
+                <input type="submit" value="Modifica">
+            </form>
         @endif
         <div class="section-title">Informazioni evento</div>
         <div class="info-box">
