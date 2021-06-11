@@ -29,6 +29,7 @@ class CreateEventsTable extends Migration
             $table->decimal('longitude', 11, 8);
             $table->dateTime('starting_time');
             $table->dateTime('ending_time')->nullable();
+            $table->text('criteri_accettazione')->nullable();
             $table->timestamps();
         });
 
