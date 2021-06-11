@@ -177,4 +177,125 @@ class AdminTest extends TestCase
         $request2->assertStatus(401);
     }
 
+    public function test_admin_can_see_requests_list_in_admin_page()
+    {
+        $admin = User::factory()->create();
+
+        $admin->type = 'admin';
+
+        DB::table('users')
+            ->where('email', $admin->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $response = $this->actingAs($admin)->get('/admin_page');
+
+        $response->assertSee('lista_richieste');
+
+    }
+
+    public function test_admin_can_see_users_list_in_admin_page()
+    {
+        $admin = User::factory()->create();
+
+        $admin->type = 'admin';
+
+        DB::table('users')
+            ->where('email', $admin->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $response = $this->actingAs($admin)->get('/admin_page');
+
+        $response->assertSee('lista_utenti');
+    }
+
+    public function test_admin_can_access_to_a_user_page_from_admin_page()
+    {
+        $admin = User::factory()->create();
+
+        $admin->type = 'admin';
+
+        DB::table('users')
+            ->where('email', $admin->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($admin)->get('/admin_page');
+
+        $response->assertSee('/user-profile/' . $user->id);
+    }
+
+    public function test_admin_can_see_accept_and_reject_buttons_in_admin_page()
+    {
+        $admin = User::factory()->create();
+
+        $admin->type = 'admin';
+
+        DB::table('users')
+            ->where('email', $admin->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $response = $this->actingAs($admin)->get('/admin_page');
+
+        $response->assertSee('Accetta');
+        $response->assertSee('Rifiuta');
+    }
+
+    public function test_admin_can_accept_a_request_in_admin_page()
+    {
+        $admin = User::factory()->create();
+        $user = User::factory()->create();
+
+        $admin->type = 'admin';
+
+        DB::table('users')
+            ->where('email', $admin->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $request = Request::create([
+            'codice_documento' => 'EA049232',
+            'tipo_documento' => 'driving license',
+            'nome' => 'NomeUtente',
+            'cognome' => 'CognomeUtente',
+            'data_nascita' => '1992-09-19',
+            'user_id' => $user->id
+        ]);
+
+        $this->actingAs($admin)->get('/admin_page');
+
+        $this->actingAs($admin)->post('/permissions' . $user->id);
+
+        self::assertEquals('organizzatore', $user->fresh()->type, 'non sono stati aggiunti i permessi all\'organizzatore');
+    }
+
+    public function test_admin_can_reject_a_request_in_admin_page()
+    {
+        $admin = User::factory()->create();
+        $user = User::factory()->create();
+
+        $admin->type = 'admin';
+
+        DB::table('users')
+            ->where('email', $admin->email)
+            ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        $request = Request::create([
+            'codice_documento' => 'EA049232',
+            'tipo_documento' => 'driving license',
+            'nome' => 'NomeUtente',
+            'cognome' => 'CognomeUtente',
+            'data_nascita' => '1992-09-19',
+            'user_id' => $user->id
+        ]);
+
+        $this->actingAs($admin)->get('/admin_page');
+
+        $this->actingAs($admin)->post('/permissions' . $user->id);
+
+
+
+
+        self::assertNull($request->fresh(), 'la richiesta non è stata cancellata');
+    }
+
 }
