@@ -119,10 +119,21 @@ class EventController extends Controller
             'max_partecipants' => 'nullable|min:0|max:999999999',
             'price' => 'nullable|min:0|max:9999999',
             'ticket_office' => 'nullable',
-            'website' => 'nullable'
+            'website' => 'nullable',
+            'registration_link' => 'string',
+            'criteri_accettazione'=> 'nullable'
         ]);
+        if ($validatedData['website'] != "" && !str_contains($validatedData['website'], "http://")  && !str_contains($validatedData['website'], "https://") ) {
+            $validatedData['website'] = 'https://'.$validatedData['website'];
+        }
+        if ($validatedData['ticket_office'] != "" && !str_contains($validatedData['ticket_office'], "http://")  && !str_contains($validatedData['ticket_office'], "https://") ) {
+            $validatedData['ticket_office'] = 'https://'.$validatedData['ticket_office'];
+        }
 
         $validatedData['author_id'] = Auth::id();
+        if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
+            abort(400);
+        }
 
         $event = Event::factory()->create($validatedData);
 
@@ -281,15 +292,25 @@ class EventController extends Controller
         $validatedData = request()->validate([
             'title' => 'string|min:4|max:255',
             'description' => 'string',
-            'type' => 'string|min:4|max:255',
-            'max_partecipants' => 'numeric|max:999999999',
-            'price' => 'numeric|max:9999999',
-            'ticket_office' => 'string|max:2083',
-            'website' => 'string|max:2083',
             'address' => 'string',
+            'type' => 'string|min:4|max:255',
             'starting_time' => 'date',
-            'ending_time' => 'date'
+            'registration_link' => 'string',
+            'ending_time' => 'nullable|date',
+            'max_partecipants' => 'nullable|min:0|max:999999999',
+            'price' => 'nullable|min:0|max:9999999',
+            'ticket_office' => 'nullable',
+            'website' => 'nullable'
         ]);
+
+        if (array_key_exists('registration_link', $validatedData) && $event->fresh()->registration_link != $validatedData['registration_link']) {
+            if (!($validatedData['registration_link'] == 'ticket_office' && (array_key_exists('ticket_office', $validatedData) || $event->ticket_office != null))) {
+                abort(400);
+            }
+            if (!($validatedData['registration_link'] == 'website' && (array_key_exists('website', $validatedData) || $event->website != null))) {
+                abort(400);
+            }
+        }
 
         $event->update($validatedData);
 

@@ -34,6 +34,16 @@
     </div>
 
     <div class="right-side-column">
+        @if(\Illuminate\Support\Facades\Gate::allows('admin'))
+            <form action="/events/{{$event->id}}" method="POST">
+                @csrf
+                @method('delete')
+                <input type="submit" value="Cancella">
+            </form>
+            <form action="/events/edit/{{ $event->id }}" method="GET">
+                <input type="submit" value="Modifica">
+            </form>
+        @endif
         <div class="section-title">Informazioni evento</div>
         <div class="info-box">
             @if ($event->city != null)
@@ -41,9 +51,9 @@
                 <label class="info-item-label">Roseto degli Abruzzi</label>
             @endif
             @if ($event->address != null)
-                    <label class="info-item-title">Indirizzo</label>
-                    <label class="info-item-label">{{ $event->address }}</label>
-                @endif
+                <label class="info-item-title">Indirizzo</label>
+                <label class="info-item-label">{{ $event->address }}</label>
+            @endif
             @if ($event->starting_time != null)
                     <label class="info-item-title">Inizio</label>
                     <label class="info-item-label">{{ substr($event->starting_time, 0, -3) }}</label>
@@ -60,6 +70,16 @@
                     <label class="info-item-title">Posti disponibili</label>
                     <label class="info-item-label">{{ $event->max_partecipants - ($event->registeredUsers->count() + ($event->externalRegistrations->count())) }}</label>
                 @endif
+
+            @if ($event->author_id != null)
+                    <label class="info-item-title">Organizzatore</label>
+                    <label class="info-item-label">
+                        <a style="color: #0000FF" href="/user-profile/{{ $event->author->id}}">
+                           {{ $event->author->name }}
+                        </a>
+                    </label>
+                @endif
+
             @if ($event->website != null)
                     <a href="{{ $event->website }}" target="_blank" class="info-item-title">Sito web</a>
                     <a href="{{ $event->website }}" target="_blank" class="info-item-label">{{ $event->website }}</a>
@@ -81,42 +101,65 @@
                     <label class="info-item-label">{{ $event->host->name }}</label>
                 @endif
         </div>
-    @if (Route::has('login'))
-        @auth
-            @if($event->registeredUsers->contains(Auth::user())) <!-- Controlla se l'utente collegato è registrato all'evento -->
-                <!-- onClick usa JavaScript, andrebbe prima comunicata al server
-                      la registrazione dell'utente, poi il refresh che già c'è -->
-                <form action="/delete-registration" method="post">
-                    @csrf
-                    <button type="submit" name="event" value="{{ $event->id }}"
-                            style="width: 100%">Annulla registrazione
-                    </button>
-                </form>
 
-                @else
-                    <form action="/registration" method="post">
+    @if($event->registration_link == "none")
+        @if (Route::has('login'))
+            @auth
+                @if($event->registeredUsers->contains(Auth::user())) <!-- Controlla se l'utente collegato è registrato all'evento -->
+                    <!-- onClick usa JavaScript, andrebbe prima comunicata al server
+                          la registrazione dell'utente, poi il refresh che già c'è -->
+                    <form action="/delete-registration" method="post">
                         @csrf
                         <button type="submit" name="event" value="{{ $event->id }}"
-                                style="width: 100%">Registrati
+                                style="width: 100%">Annulla registrazione
                         </button>
                     </form>
+                @else
+                   @if($event->criteri_accettazione != null)
+                        <form action="/accetta/{{ $event->id }}" method="get">
+                            @csrf
+                            <button type="submit" name="event" value="{{ $event->id }}"
+                                    style="width: 100%">Registrati
+                            </button>
+                        </form>
+                     @else
+                        <form action="/registration" method="post">
+                            @csrf
+                            <button type="submit" name="event" value="{{ $event->id }}"
+                                    style="width: 100%">Registrati
+                            </button>
+                        </form>
+                   @endif
 
-            @endif
-        @endauth
-        @guest
-            <!-- non sei loggato-->
-                <!-- onsubmit usa JavaScript, andrebbe prima comunicata al server
-                      la registrazione dell'utente, poi il refresh che già c'è -->
-                <form method="post" action="/registration" class="not-registered-user-info-form"
-                      style="margin-bottom: 8px; display: flex; flex-direction: column; width: 100%">
-                    @csrf
-                    <input style="margin-bottom: 4px; width: 100%" name="cf" type="text"
-                           placeholder="Codice fiscale" required>
-                    <button type="submit" name="event" value="{{ $event->id }}"
-                            style="width: 100%">Registrati
+                @endif
+            @endauth
+            @guest
+                <!-- non sei loggato-->
+                    <!-- onsubmit usa JavaScript, andrebbe prima comunicata al server
+                          la registrazione dell'utente, poi il refresh che già c'è -->
+                    <form method="post" action="/registration" class="not-registered-user-info-form"
+                          style="margin-bottom: 8px; display: flex; flex-direction: column; width: 100%">
+                        @csrf
+                        <input style="margin-bottom: 4px; width: 100%" name="cf" type="text"
+                               placeholder="Codice fiscale" required>
+                        <button type="submit" name="event" value="{{ $event->id }}"
+                                style="width: 100%">Registrazione
+                        </button>
+                    </form>
+                    @endguest
+                @endif
+            @elseif ($event->registration_link == "website")
+                <form action="{{$event->website}}" target="_blank">
+                    <button type="submit"
+                            style="width: 100%">Vai alla registrazione
                     </button>
                 </form>
-        @endguest
+            @elseif ($event->registration_link == "ticket_office")
+                <form action="{{$event->ticket_office}}" target="_blank">
+                    <button type="submit"
+                            style="width: 100%">Vai alla registrazione
+                </button>
+            </form>
     @endif
 
     <!--<button>Aggiungi al calendario</button>-->

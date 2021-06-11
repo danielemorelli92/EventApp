@@ -6,6 +6,7 @@ use App\Models\{ExternalRegistration, User, Event, Tag};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Throwable;
 
 class EventsExploreTest extends TestCase
 {
@@ -102,6 +103,37 @@ class EventsExploreTest extends TestCase
         $registeredUsers->contains($user);
     }
 
+    public function test_a_user_cant_register_to_event_that_uses_external_link_registration()
+    {
+        $event = Event::factory()->create([
+            'website' => "https://fakesite.it",
+            'registration_link' => 'website'
+        ]);
+        $user = User::factory()->create();
+
+        // NON LOGGATO
+        $this->get('/event/' . $event->id);
+
+        $this->post('/registration', [
+            'event' => $event->id,
+            'cf' => 'codicefiscalefake'
+        ]);
+        $externalRegistrationsNumber = count($event->externalRegistrations);
+        $this->assertEquals(0, $externalRegistrationsNumber);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee('Vai alla registrazione');
+        $this->post('/registration', [
+            'event' => $event->id
+        ]);
+        $registeredUsersNumber = count($event->registeredUsers);
+        $this->assertEquals(0, $registeredUsersNumber);
+    }
+
     //Un utente può cercare in base a distanza massima.
     public function test_a_user_can_search_by_distance()
     {
@@ -160,5 +192,92 @@ class EventsExploreTest extends TestCase
 
         $request->assertSee($event_with_tag->title);
         $request->assertDontSee($event_without_tag->title);
+    }
+
+    public function test_an_event_with_acceptance_criteria_must_redirect_to_the_acceptance_criteria_page()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri'
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+
+        $response->assertSee('/accetta/' . $event->id);
+        $response->assertDontSee('/registration');
+
+
+    }
+
+    public function test_a_user_can_see_acceptance_criteria_page()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri'
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/accetta/' . $event->id);
+        $response->assertOk();
+    }
+
+    public function test_a_user_can_registrate_on_acceptance_criteria_page()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => 'questi sono i criteri'
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/accetta/' . $event->id);
+        $response->assertSee('/registration');
+
+    }
+
+    public function test_an_event_without_acceptance_criteria_must_not_redirect_to_the_acceptance_criteria_page()
+    {
+        $event = Event::factory()->create([
+            'criteri_accettazione' => null
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+
+        $response->assertDontSee('/accetta/' . $event->id);
+        $response->assertSee('/registration');
+
+    }
+
+    public function test_a_user_can_access_author_event_profile_from_event_page()
+    {
+        $event = Event::factory()->create([
+            'starting_time' => date(now()->addYear())
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee($event->author->name);
+        $response->assertSee('/user-profile/' . $event->author->id);
     }
 }
