@@ -35,6 +35,11 @@
 
     <div class="right-side-column">
         @if(\Illuminate\Support\Facades\Gate::allows('admin'))
+            <form action="/events/{{$event->id}}" method="POST">
+                @csrf
+                @method('delete')
+                <input type="submit" value="Cancella">
+            </form>
             <form action="/events/edit/{{ $event->id }}" method="GET">
                 <input type="submit" value="Modifica">
             </form>

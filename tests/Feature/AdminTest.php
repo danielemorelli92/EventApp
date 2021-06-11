@@ -64,6 +64,37 @@ class AdminTest extends TestCase
         self::assertEquals('normale', $user->fresh()->type, 'non sono stati tolti i permessi all\'organizzatore');
     }
 
+    public function test_an_admin_sees_the_button_to_delete_an_event_on_any_event_page()
+    {
+        $admin = User::factory()->create();
+        DB::table('users')
+            ->where('id', $admin->id)
+            ->update(['type' => 'admin']);
+        $user = User::factory()->create();
+        $event = Event::factory()->create([
+            'author_id' => $user->id
+        ]);
+  
+        $request = $this->actingAs($admin)->get('/event/' . $event->id);
+
+        $request->assertSee('Cancella');
+    }
+  
+    public function test_an_admin_can_delete_any_event()
+    {
+        $admin = User::factory()->create();
+        DB::table('users')
+            ->where('id', $admin->id)
+            ->update(['type' => 'admin']);
+        $user = User::factory()->create();
+        $event = Event::factory()->create([
+            'author_id' => $user->id
+        ]);
+        $this->actingAs($admin)->delete('/events/' . $event->id);
+
+        self::assertNull($event->fresh(), 'l\'evento non è stato cancellato');
+    }
+  
     public function test_an_admin_can_view_the_event_edit_page()
     {
         $admin = User::factory()->create();
@@ -74,7 +105,6 @@ class AdminTest extends TestCase
         $event = Event::factory()->create([
             'author_id' => $user->id
         ]);
-
         $response = $this->actingAs($admin)->get('/events/edit/' . $event->id);
 
         $response->assertOk();
