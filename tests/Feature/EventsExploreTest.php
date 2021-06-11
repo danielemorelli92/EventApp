@@ -237,7 +237,7 @@ class EventsExploreTest extends TestCase
         $response->assertDontSee('/accetta/' . $event->id);
         $response->assertSee('/registration');
 
-
+    }
 
     public function test_a_user_can_access_author_event_profile_from_event_page()
     {
