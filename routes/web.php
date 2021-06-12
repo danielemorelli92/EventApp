@@ -68,11 +68,15 @@ Route::put('/events/{event}', [EventController::class, 'update'])->where('event'
 
 Route::get('/request', [RequestController::class, 'create']);
 
+Route::delete('/request/{request}', [RequestController::class, 'destroy']);
+
 Route::post('/request', [RequestController::class, 'store']);
 
 Route::get('/user-profile/{user}', [UserController::class, 'show']);
 
 Route::delete('/permissions/{user}', [UserController::class, 'downgrade']); // cancella i permessi dati ad un organizzatore
+
+Route::post('/permissions/{user}', [UserController::class, 'upgrade']);
 
 Route::get('/admin_page', [\App\Http\Controllers\RequestController::class, 'show_list']);
 

@@ -29,7 +29,6 @@ class UserController extends Controller
         }
 
         if ($user->type === 'organizzatore') {
-            $user->type = 'normale';
             $user->update(['type' => 'normale']);
             $request = \App\Models\Request::all()
                 ->where('user_id', $user->id)->first();
@@ -39,5 +38,19 @@ class UserController extends Controller
         }
 
         return redirect('/user-profile/' . $user->id);
+    }
+
+    public function upgrade(User $user)
+    {
+
+        if (Gate::denies('admin')) {
+            abort('401');
+        }
+
+        if($user->type === 'normale'){
+            $user->update(['type' => 'organizzatore']);
+        }
+
+        return redirect('/admin_page');
     }
 }

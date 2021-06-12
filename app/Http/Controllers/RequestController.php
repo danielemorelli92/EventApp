@@ -81,4 +81,15 @@ class RequestController extends Controller
 
     }
 
+    public function destroy(Request $request)
+    {
+        if (Gate::denies('admin')){
+            abort(401);
+        }
+
+        $request->delete();
+
+        return redirect('/admin_page');
+    }
+
 }

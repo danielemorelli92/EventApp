@@ -261,9 +261,7 @@ class AdminTest extends TestCase
             'user_id' => $user->id
         ]);
 
-        $this->actingAs($admin)->get('/admin_page');
-
-        $this->actingAs($admin)->post('/permissions' . $user->id);
+        $this->actingAs($admin)->post('/permissions/' . $user->id);
 
         self::assertEquals('organizzatore', $user->fresh()->type, 'non sono stati aggiunti i permessi all\'organizzatore');
     }
@@ -288,12 +286,7 @@ class AdminTest extends TestCase
             'user_id' => $user->id
         ]);
 
-        $this->actingAs($admin)->get('/admin_page');
-
-        $this->actingAs($admin)->post('/permissions' . $user->id);
-
-
-
+        $this->actingAs($admin)->delete('/request');
 
         self::assertNull($request->fresh(), 'la richiesta non è stata cancellata');
     }
