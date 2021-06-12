@@ -15,7 +15,6 @@
                     <strong>Il titolo di un <a href="/event/{{$notification->data['event_id']}}">evento</a> a cui sei
                         registrato è stato modificato!<br><br>
                         Data notifica: {{ $notification->created_at }}</strong>
-
                 @else
                     Il titolo di un <a href="/event/{{$notification->data['event_id']}}">evento</a> a cui sei registrato
                     è stato modificato!<br><br>
@@ -25,7 +24,6 @@
             @break
             @case(\App\Notifications\DescriptionChanged::class)
             <div style="border: 2px solid black; width: 700px;">
-
                 @if($notification->read_at == null)
                     <strong>La descrizione di un <a href="/event/{{$notification->data['event_id']}}">evento</a> a cui
                         sei registrato è stata modificata!<br><br>
@@ -35,12 +33,10 @@
                     registrato è stata modificata!<br><br>
                     Data notifica: {{ $notification->created_at }}
                 @endif
-
             </div>
             @break
             @case(\App\Notifications\AddressChanged::class)
             <div style="border: 2px solid black; width: 700px;">
-
                 @if($notification->read_at == null)
                     <strong>La posizione di un <a href="/event/{{$notification->data['event_id']}}">evento</a> a cui sei
                         registrato è stata modificata!<br><br>
@@ -50,7 +46,6 @@
                     registrato è stata modificata!<br><br>
                     Data notifica: {{ $notification->created_at }}
                 @endif
-
             </div>
             @break
             @case(\App\Notifications\DateChanged::class)
