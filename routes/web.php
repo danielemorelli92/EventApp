@@ -74,5 +74,8 @@ Route::get('/user-profile/{user}', [UserController::class, 'show']);
 
 Route::delete('/permissions/{user}', [UserController::class, 'downgrade']); // cancella i permessi dati ad un organizzatore
 
+Route::get('/notifications', function () {
+    return view('notifications');
+});
 
 require __DIR__ . '/auth.php';
