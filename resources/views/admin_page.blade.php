@@ -82,8 +82,8 @@
                 <th style="width: 110px">Stato</th>
                 <th style="width: 160px;">Controlli</th>
             </tr>
-
             @foreach($pending_requests as $request)
+
                 <tr>
                     <th>{{$request->id}}</th>
                     <td>{{$request->created_at}}</td>
@@ -91,8 +91,19 @@
                     <td>{{$request->cognome}}</td>
                     <td>Pending</td>
                     <th style="display: flex; flex-direction: row">
-                        <button type="submit" style="height:36px; margin-right: 4px">Accetta</button>
-                        <button type="submit" style="height:36px; margin-right: auto;" >Rifiuta</button>
+
+                            <form action="/permissions/{{ $request->user_id }}" method="POST">
+                                @csrf
+                                @method('post')
+                                <button type="submit" style="height:36px; margin-left: auto; margin-right: 4px">Accetta</button>
+                            </form>
+
+                        <form action="/request/{{ $request->id }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" style="height:36px; margin-right: auto;" >Rifiuta</button>
+                        </form>
+
                     </th>
                 </tr>
             @endforeach

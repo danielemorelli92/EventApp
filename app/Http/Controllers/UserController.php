@@ -29,6 +29,7 @@ class UserController extends Controller
         }
 
         if ($user->type === 'organizzatore') {
+            $user->type = 'normale';
             $user->update(['type' => 'normale']);
             $request = \App\Models\Request::all()
                 ->where('user_id', $user->id)->first();
@@ -48,6 +49,7 @@ class UserController extends Controller
         }
 
         if($user->type === 'normale'){
+            $user->type = 'organizzatore';
             $user->update(['type' => 'organizzatore']);
         }
 
