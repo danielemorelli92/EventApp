@@ -18,7 +18,7 @@
             //console.log("Siamo nel metodo");
             for (i = 0; i < tr_richiesta.length; i++) {
                 if (filter !== "" && filter != null) {
-                    th = tr_richiesta[i].getElementsByTagName("th");
+                    th = tr_richiesta[i].getElementsByTagName("td");
                     for (j = 0; j < th.length; j++) {
                         if (th[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
                             richiesta_found = true;
@@ -36,7 +36,7 @@
             }
             for (i = 0; i < tr_utente.length; i++) {
                 if (filter !== "" && filter != null) {
-                    th = tr_utente[i].getElementsByTagName("th");
+                    th = tr_utente[i].getElementsByTagName("td");
                     for (j = 0; j < th.length; j++) {
                         if (th[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
                             utente_found = true;
@@ -74,35 +74,36 @@
 
         <table id='lista_richieste' style="width:100%">
 
-            <tr class="table_titles_row" style="height: 48px">
-                <th>ID</th>
+            <tr class="tr_titles" >
+                <th style="width: 24px">ID</th>
                 <th>Data sottomissione</th>
                 <th>Nome richiedente</th>
                 <th>Cognome richiedente</th>
-                <th>Stato</th>
+                <th style="width: 110px">Stato</th>
+                <th style="width: 160px;">Controlli</th>
             </tr>
 
             @foreach($pending_requests as $request)
-                <tr class="table_data_row" style="height: 40px">
+                <tr>
                     <th>{{$request->id}}</th>
-                    <th>{{$request->created_at}}</th>
-                    <th>{{$request->nome}}</th>
-                    <th>{{$request->cognome}}</th>
-                    <th>Pending</th>
-                    <td style="display: flex; flex-direction: row">
-                        <button type="submit" style="height:36px; margin-left: auto; margin-right: 4px">Accetta</button>
+                    <td>{{$request->created_at}}</td>
+                    <td>{{$request->nome}}</td>
+                    <td>{{$request->cognome}}</td>
+                    <td>Pending</td>
+                    <th style="display: flex; flex-direction: row">
+                        <button type="submit" style="height:36px; margin-right: 4px">Accetta</button>
                         <button type="submit" style="height:36px; margin-right: auto;" >Rifiuta</button>
-                    </td>
+                    </th>
                 </tr>
             @endforeach
 
             @foreach($closed_requests as $request)
-                <tr class="table_data_row" style="height: 40px">
+                <tr style="height: 40px">
                     <th>{{$request->id}}</th>
-                    <th>{{$request->created_at}}</th>
-                    <th>{{$request->nome}}</th>
-                    <th>{{$request->cognome}}</th>
-                    <th>Closed</th>
+                    <td>{{$request->created_at}}</td>
+                    <td>{{$request->nome}}</td>
+                    <td>{{$request->cognome}}</td>
+                    <td>Closed</td>
                 </tr>
             @endforeach
         </table>
@@ -111,30 +112,30 @@
 
         <table id='lista_utenti' hidden style="width:100%">
 
-            <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Nome</th>
-                <th>Data di nascita</th>
-                <th>numero di telefono</th>
-                <th>Sito web</th>
+            <tr class="tr_titles">
+                <th  style="width: 24px">ID</th>
+                <th >Email</th>
+                <th >Tipo</th>
+                <th >Nome</th>
+                <th >Data di nascita</th>
+                <th >numero di telefono</th>
+                <th >Sito web</th>
             </tr>
 
             @foreach($users as $user)
                 <tr>
                     <th><a href="/user-profile/{{$user->id}}">
                             {{$user->id}}</a></th>
-                    <th><a href="/user-profile/{{$user->id}}">{{$user->email}}</a></th>
-                    <th><a href="/user-profile/{{$user->id}}">
+                    <td><a href="/user-profile/{{$user->id}}">{{$user->email}}</a></td>
+                    <td><a href="/user-profile/{{$user->id}}">
                             {{$user->type}}
-                        </a></th>
-                    <th><a href="/user-profile/{{$user->id}}">
+                        </a></td>
+                    <td><a href="/user-profile/{{$user->id}}">
                             {{$user->name}}
-                        </a></th>
-                    <th><a href="/user-profile/{{$user->id}}">{{$user->birthday}}</a></th>
-                    <th><a href="/user-profile/{{$user->id}}">{{$user->numero_telefono}}</a></th>
-                    <th><a href="/user-profile/{{$user->id}}">{{$user->sito_web}}</a></th>
+                        </a></td>
+                    <td><a href="/user-profile/{{$user->id}}">{{$user->birthday}}</a></td>
+                    <td><a href="/user-profile/{{$user->id}}">{{$user->numero_telefono}}</a></td>
+                    <td><a href="/user-profile/{{$user->id}}">{{$user->sito_web}}</a></td>
                 </tr>
             @endforeach
         </table>
