@@ -13,25 +13,19 @@ class EventRegistrationController extends Controller
     {
         $event = Event::query()->where('id', request('event'))->get()->first();
 
-
         if ($event->registration_link == "none") {
-            if (($event->registeredUsers->count()) + ($event->externalRegistrations->count()) < $event->max_partecipants) {
-
+            if ($event->max_partecipants == 0 || ($event->registeredUsers->count()) + ($event->externalRegistrations->count()) < $event->max_partecipants) {
                 if (Auth::check()) {
                     $event->registeredUsers()->attach(Auth::user());
                 } else {
-                    $registration = ExternalRegistration::create([
+                    ExternalRegistration::create([
                         'event_id' => $event->id,
                         'cf' => request('cf')
                     ]);
-
                 }
-                return redirect('/event/' . request('event'));
-
             }
-        } else {
-            abort(400);
         }
+        return redirect('/event/' . request('event'));
     }
 
     public function delete()

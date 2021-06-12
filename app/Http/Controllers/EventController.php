@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\AddressChanged;
+use App\Notifications\DateChanged;
+use App\Notifications\DescriptionChanged;
+use App\Notifications\EventCanceled;
+use App\Notifications\TitleChanged;
 use App\Models\{Event, Tag};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 
 class EventController extends Controller
 {
@@ -230,7 +237,7 @@ class EventController extends Controller
         $interesting_events = collect();
         if (Auth::check()) {
             foreach ($events as $event) {
-        if ($event->registeredUsers->contains(Auth::user())) {
+                if ($event->registeredUsers->contains(Auth::user())) {
                     if ($event->starting_time > date(now())) {
                         $registered_events_future->push($event);
                     } else {
@@ -267,7 +274,15 @@ class EventController extends Controller
             abort(401);
         }
 
+        $title = $event->title;
+        $start = $event->starting_time;
+        $address = $event->address;
+
         $event->delete();
+
+        if (now()->isBefore(new Carbon($start))) { // invia la notifica di cancellazione solo se l'evento non è ancora iniziato
+            Notification::send($event->registeredUsers, new EventCanceled($title, $start, $address));
+        }
 
         return redirect('/events/manage');
     }
@@ -312,7 +327,27 @@ class EventController extends Controller
             }
         }
 
+        $old_title = $event->title;
+        $old_descr = $event->description;
+        $old_start = $event->starting_time;
+        $old_address = $event->address;
+
         $event->update($validatedData);
+
+        $event->refresh();
+
+        if ($event->title != $old_title) {
+            Notification::send($event->registeredUsers, new TitleChanged($event, $old_title));
+        }
+        if ($event->description != $old_descr) {
+            Notification::send($event->registeredUsers, new DescriptionChanged($event, $old_descr));
+        }
+        if ($event->starting_time != $old_start) {
+            Notification::send($event->registeredUsers, new DateChanged($event, $old_start));
+        }
+        if ($event->address != $old_address) {
+            Notification::send($event->registeredUsers, new AddressChanged($event, $old_address));
+        }
 
         return redirect('/events/manage');
     }
