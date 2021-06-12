@@ -6,16 +6,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use function Sodium\add;
 
 class EventCanceled extends Notification
 {
     use Queueable;
 
     protected $title;
+    protected $start;
+    protected $address;
 
-    public function __construct(string $title)
+    public function __construct(string $title, string $start, string $address)
     {
         $this->title = $title;
+        $this->address = $address;
+        $this->start = $start;
     }
 
 
@@ -27,7 +32,9 @@ class EventCanceled extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'title' => $this->title
+            'title' => $this->title,
+            'address' => $this->address,
+            'starting_time' => $this->start
         ];
     }
 }

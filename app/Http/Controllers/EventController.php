@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Notifications\AddressChanged;
 use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
+use App\Notifications\EventCanceled;
 use App\Notifications\TitleChanged;
 use App\Models\{Event, Tag};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -272,7 +274,15 @@ class EventController extends Controller
             abort(401);
         }
 
+        $title = $event->title;
+        $start = $event->starting_time;
+        $address = $event->address;
+
         $event->delete();
+
+        if (now()->isBefore(new Carbon($start))) { // invia la notifica di cancellazione solo se l'evento non è ancora iniziato
+            Notification::send($event->registeredUsers, new EventCanceled($title, $start, $address));
+        }
 
         return redirect('/events/manage');
     }
