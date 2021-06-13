@@ -680,32 +680,32 @@ button:disabled {
     top: 80px;
 }
 #notifications-popup.show {
-     -webkit-animation: fade_in 200ms ease both;
-     animation: fade_in 200ms ease both;
+     -webkit-animation: fade_in_top_right 200ms ease both;
+     animation: fade_in_top_right 200ms ease both;
  }
 
 #notifications-popup.hide {
-    -webkit-animation: fade_out 150ms ease both;
-    animation: fade_out 150ms ease both;
+    -webkit-animation: fade_out_top_right 150ms ease both;
+    animation: fade_out_top_right 150ms ease both;
 }
 
 
-@-webkit-keyframes fade_in {
+@-webkit-keyframes fade_in_top_right {
     0% { -webkit-transform-origin: top right; -webkit-transform: scale(0.98); /*rotate(12deg);*/ opacity: 0; visibility: hidden;  }
     100% { -webkit-transform-origin: top right; -webkit-transform: scale(1); /* rotate(0);*/ opacity: 1; visibility: visible; }
 }
 
-@keyframes fade_in {
+@keyframes fade_in_top_right {
     0% { transform-origin: top right; transform: scale(0.98); opacity: 0; visibility: hidden;  }
     100% { transform-origin: top right; transform: scale(1); opacity: 1; visibility: visible; }
 }
 
-@-webkit-keyframes fade_out {
+@-webkit-keyframes fade_out_top_right {
     0% { -webkit-transform-origin: top right; -webkit-transform: scale(1); opacity: 1; visibility: visible; }
     100% { -webkit-transform-origin: top right; -webkit-transform: scale(0.98); opacity: 0; visibility: hidden; }
 }
 
-@keyframes fade_out {
+@keyframes fade_out_top_right {
     0% { transform-origin: top right; transform: scale(1); opacity: 1; visibility: visible; }
     100% { transform-origin: top right; transform: scale(0.98); opacity: 0; visibility: hidden;  }
 }
