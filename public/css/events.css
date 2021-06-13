@@ -671,6 +671,12 @@ button:disabled {
     border-bottom: 1.5px solid #bbbbbb;
     width: auto;
 }
+.notification-item:hover {
+    background: rgb(246, 246, 246);
+}
+.notification-item:active {
+    background: rgb(236, 236, 236);
+}
 .notification-item-date {
     font-size: 14px;
     margin-top: 12px;
