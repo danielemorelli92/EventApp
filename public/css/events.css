@@ -664,17 +664,40 @@ button:disabled {
     font-size: 18px;
 }
 
+.notification-item {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-bottom: 1.5px solid #bbbbbb;
+    width: auto;
+}
+.notification-item-date {
+    margin-top: 12px;
+}
+.notification-item-title {
+
+}
+.notification-item-title-unread {
+    font-weight: bold;
+}
+.notifications-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
 #notifications-popup{
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
     max-height: 800px;
     box-shadow: 4px 6px 32px rgba(0, 0, 0, 0.45);
+    overflow-y: auto;
 
+    display: none;
     background: white;
     z-index: 12;
     width:400px;
-    height: 300px;
     position: absolute;
     right: 90px;
     top: 80px;
