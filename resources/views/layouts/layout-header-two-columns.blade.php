@@ -29,97 +29,24 @@
 <div id="notifications-popup">
     <div class="notifications-container">
         @foreach(\App\Models\User::find(\Illuminate\Support\Facades\Auth::id())->notifications as $notification)
-            @switch($notification->type)
-                @case(\App\Notifications\TitleChanged::class)
-                <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
+            <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
+                <label
                     @if($notification->read_at == null)
-                        <label class="notification-item-title-unread">Il titolo di un evento a cui sei
-                            registrato è stato modificato!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
+                        class="notification-item-title-unread"
                     @else
-                        <label class="notification-item-title">
-                            Il titolo di un evento a cui sei registrato
-                            è stato modificato!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
+                        class="notification-item-title"
                     @endif
-                </a>
-                @break
-                @case(\App\Notifications\DescriptionChanged::class)
-                <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
-                    @if($notification->read_at == null)
-                        <label class="notification-item-title-unread">La descrizione di un evento a cui
-                            sei registrato è stata modificata!</label>>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
-                    @else
-                        <label class="notification-item-title">
-                            La descrizione di un evento a cui sei
-                            registrato è stata modificata!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
-                    @endif
-                </a>
-                @break
-                @case(\App\Notifications\AddressChanged::class)
-                <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
-                    @if($notification->read_at == null)
-                        <label class="notification-item-title-unread">La posizione di un evento a cui sei
-                            registrato è stata modificata!</label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
-                    @else
-                        <label class="notification-item-title">
-                            La posizione di un evento a cui sei
-                            registrato è stata modificata!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
-                    @endif
-                </a>
-                @break
-                @case(\App\Notifications\DateChanged::class)
-                <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
-                    @if($notification->read_at == null)
-                        <label class="notification-item-title-unread">La data di un evento a cui sei
-                            registrato è stata modificata!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
-                    @else
-                        <label class="notification-item-title">
-                            La data di un evento a cui sei registrato è
-                            stata modificata!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
-                    @endif
-                </a>
-                @break
-                @case(\App\Notifications\EventCanceled::class)
-                <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
-                    @if($notification->read_at == null)
-                        <label class="notification-item-title-unread">Un evento a cui eri registrato è
-                            stato cancellato!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}
-                        </label>
-                    @else
-                        <label class="notification-item-title">
-                            Un evento a cui eri registrato è stato
-                            cancellato!
-                        </label>
-                        <label class="notification-item-date">
-                            Data notifica: {{ $notification->created_at }}</label>
-                    @endif
-                </a>
-                @break
-            @endswitch
+                >@switch($notification->type)
+                        @case(\App\Notifications\TitleChanged::class)Il titolo di un evento a cui sei registrato è stato modificato!@break
+                        @case(\App\Notifications\DescriptionChanged::class)La descrizione di un evento a cui sei registrato è stata modificata!@break
+                        @case(\App\Notifications\AddressChanged::class)La posizione di un evento a cui sei registrato è stata modificata!@break
+                        @case(\App\Notifications\DateChanged::class)La data di un evento a cui sei registrato è stata modificata!@break
+                        @case(\App\Notifications\EventCanceled::class)Un evento a cui eri registrato è stato cancellato!@break
+                    @endswitch
+                </label>
+                <label class="notification-item-date">
+                    Data notifica: {{ $notification->created_at }}</label>
+            </a>
             @php
                 $notification->markAsRead()
             @endphp
