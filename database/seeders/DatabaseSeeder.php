@@ -48,11 +48,19 @@ class DatabaseSeeder extends Seeder
         foreach ($events as $event) {
             $n = rand(0, 8);
             for ($i = 0; $i < $n; $i++) { // associa da 0 a 8 tag
-                $event->tags()->attach($tags[rand(0, 15)]);
+                $tag = $tags[rand(0, 15)];
+                $event->load('tags');
+                if (!$event->tags->contains($tag)) {
+                    $event->tags()->attach($tag);
+                }
             }
             $n = rand(0, 100);
             for ($i = 0; $i < $n; $i++) {
-                $event->registeredUsers()->attach($users[rand(0, 99)]);
+                $user = $users[rand(0, 99)];
+                $event->load('registeredUsers');
+                if (!$event->registeredUsers->contains($user)) {
+                    $event->registeredUsers()->attach($user);
+                }
             }
         }
     }

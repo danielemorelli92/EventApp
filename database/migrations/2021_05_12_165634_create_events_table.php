@@ -38,6 +38,7 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('event_id');
+            $table->unique(['user_id', 'event_id']);
         });
         //tag dell'evento
         Schema::create('event_tag', function (Blueprint $table) {
