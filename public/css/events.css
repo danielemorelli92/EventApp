@@ -113,7 +113,39 @@ button {
     display: inline-block;
     font-size: 16px;
 }
+input[type="submit"] {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 45px;
+    white-space:nowrap;
+
+    background-color: white;
+    color: #0090E1;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
 button:hover {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 45px;
+    white-space:nowrap;
+
+    background-color: #0090E1;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+input[type="submit"]:hover {
     -webkit-border-radius: 0px 0px 12px 0px;
     -moz-border-radius: 0px 0px 12px 0px;
     border-radius: 0px 0px 12px 0px;
@@ -144,7 +176,37 @@ button:active {
     display: inline-block;
     font-size: 16px;
 }
+input[type="submit"]:active {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 45px;
+
+    background-color: #0067a0;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
 button:disabled {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #aaa;
+    height: 45px;
+
+    background-color: #bbb;
+    color: #444;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+input[type="submit"]:disabled {
     -webkit-border-radius: 0px 0px 12px 0px;
     -moz-border-radius: 0px 0px 12px 0px;
     border-radius: 0px 0px 12px 0px;
@@ -649,6 +711,16 @@ button:disabled {
     margin-bottom: 8px;
     width: auto;
     height: fit-content;
+}
+.clickable-info-item-container {
+    display: flex;
+    flex-direction: column;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.clickable-info-item-container:hover {
+    background: rgba(0, 0, 0, 0.08);
 }
 .info-item-title{
     width: 100%;
