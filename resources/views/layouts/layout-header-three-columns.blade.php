@@ -16,6 +16,13 @@
 
         @if (Route::has('login'))
             @auth
+                @if (Gate::allows('admin'))
+                    @auth
+                        <form action="/admin_page">
+                            <button class="header-button" type="submit" value="Amministrazione">Amministrazione</button>
+                        </form>
+                    @endauth
+                @endif
                 @if (!Gate::allows('create-request') || count(Auth::user()->createdEvents) > 0)
                     @auth
                         <form action="/events/manage">

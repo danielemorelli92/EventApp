@@ -228,12 +228,22 @@ class AdminTest extends TestCase
     public function test_admin_can_see_accept_and_reject_buttons_in_admin_page()
     {
         $admin = User::factory()->create();
+        $user = User::factory()->create();
 
         $admin->type = 'admin';
 
         DB::table('users')
             ->where('email', $admin->email)
             ->update(['type' => 'admin']); // upgrade sul database ad admin
+
+        Request::create([
+            'codice_documento' => 'EA049232',
+            'tipo_documento' => 'driving license',
+            'nome' => 'NomeUtente',
+            'cognome' => 'CognomeUtente',
+            'data_nascita' => '1992-09-19',
+            'user_id' => $user->id
+        ]);
 
         $response = $this->actingAs($admin)->get('/admin_page');
 
