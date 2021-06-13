@@ -3,10 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>EventApp</title>
-    @yield('style')
+    <link rel="stylesheet" type="text/css" href="{{ url('/css/events.css') }}">
 </head>
 <body>
 
+<script>
+    function toggleNotificationsPopup() {
+        notifications_popup = document.getElementById("notifications-popup");
+
+        notifications_popup.className = notifications_popup.className !== 'show' ? 'show' : 'hide';
+        if (notifications_popup.className === 'show') {
+            setTimeout(function(){
+                notifications_popup.style.display = 'block';
+            },0); // timed to occur immediately
+        } else {
+            setTimeout(function(){
+                notifications_popup.style.display = 'none';
+            },200); // timed to match animation-duration
+        }
+
+    }
+</script>
+
+
+<div id="notifications-popup" hidden >
+
+</div>
 <div class="whole-page-three-columns">
     <div class="header" style="width: 100%">
         <div class="header-logo-container">
@@ -43,6 +65,10 @@
         <div style="width: 100%"></div> <!--spacer-->
         @if (Route::has('login'))
             @auth
+                <button class="header-button" onclick="toggleNotificationsPopup()"
+                        style="margin-left: auto; margin-right: 12px;"
+                        value="Notifiche">Notifiche
+                </button>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button class="header-button" style="margin-left: auto; margin-right: 12px;" type="submit" value="Logout" >Logout</button>
