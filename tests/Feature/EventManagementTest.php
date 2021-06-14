@@ -437,6 +437,7 @@ class EventManagementTest extends TestCase
 
     public function test_an_event_admin_can_delete_an_image()
     {
+        $this->withoutExceptionHandling();
         $user = User::factory()->create();
 
         $user->type = 'organizzatore';
@@ -453,28 +454,14 @@ class EventManagementTest extends TestCase
             'event_id' => $event->id
         ]);
 
-        dd(Storage::exists(asset('storage/images/'. $image1->file_name)));
+        $this->assertTrue($event->getImages()->contains($image1), "l'immagine 1 non è stata caricata nel DB");
+        $this->assertTrue(Storage::exists('/public/images/' . $image1->file_name), "l'immagine 1 non è stata caricata nel filesystem");
 
-        $trovato1 = false;
+        $this->actingAs($user)->delete("/image/" . $image1->id); // ROUTE chiamata dall'organizzatore, per fare in modo che cancelli una immagine
+        $event->refresh();
 
-        foreach($event->getImages() as $image){
-            if($image->file_name === $image1->file_name){
-                $trovato1 = true;
-            }
-        }
+        $this->assertFalse($event->getImages()->contains($image1), "l'immagine 1 non è stata eliminata nel DB");
+        $this->assertFalse(Storage::exists('/public/images/' . $image1->file_name), "l'immagine 1 non è stata eliminata nel filesystem");
 
-        $this->assertEquals(true, $trovato1, "l'immagine 1 non è stata caricata");
-
-        Storage::delete('/storage/images/' . $image1->file_name);
-
-        $trovato1 = false;
-
-        foreach($event->getImages() as $image){
-            if($image->file_name === $image1->file_name){
-                $trovato1 = true;
-            }
-        }
-
-        $this->assertEquals(false, $trovato1, "l'immagine 1 non è stata cancellata");
     }
 }

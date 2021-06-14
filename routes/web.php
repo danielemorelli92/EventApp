@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -74,5 +75,6 @@ Route::get('/user-profile/{user}', [UserController::class, 'show']);
 
 Route::delete('/permissions/{user}', [UserController::class, 'downgrade']); // cancella i permessi dati ad un organizzatore
 
+Route::delete('/image/{image}', [ImageController::class, 'destroy']); // cancella un immagine di un evento
 
 require __DIR__ . '/auth.php';
