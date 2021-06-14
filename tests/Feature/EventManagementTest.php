@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\EventController;
 use App\Models\Event;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -394,5 +395,47 @@ class EventManagementTest extends TestCase
         $event->refresh();
 
         $this->assertEquals('questi sono i criteri', $event->criteri_accettazione, 'sono stati modificati i criteri');
+    }
+
+    public function test_an_event_admin_can_create_event_uploading_images_()
+    {
+        $user = User::factory()->create();
+
+        $user->type = 'organizzatore';
+
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']);
+
+        $event = Event::factory()->create([
+            'author_id' => $user->id
+        ]);
+
+        $image1 = Image::factory()->create([
+            'event_id' => $event->id
+        ]);
+
+        $image2 = Image::factory()->create([
+            'event_id' => $event->id
+        ]);
+
+        $trovato1 = false;
+        $trovato2 = false;
+
+        foreach($event->getImages() as $image){
+            if($image->file_name === $image1->file_name){
+                $trovato1 = true;
+            }
+            if($image->file_name === $image2->file_name){
+                $trovato2 = true;
+            }
+        }
+        $this->assertEquals(true, $trovato1, "l'immagine 1 non è stata caricata");
+        $this->assertEquals(true, $trovato2, "l'immagine 2 non è stata caricata");
+    }
+
+    public function test_an_event_admin_can_upload_images_in_edit_page()
+    {
+
     }
 }
