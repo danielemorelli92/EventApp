@@ -219,6 +219,23 @@ button:disabled {
     height: 42px;
     width: 42px;
 }
+.header-icon-button-container {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding: 4px 6px;
+    width: 30px;
+    height: 30px;
+}
+.header-icon-button-container:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.header-icon-preview {
+    object-fit: cover;
+
+    width: 30px;
+    height: 30px;
+}
 .header-button {
     -webkit-border-radius: 0px 12px 0px 0px;
     -moz-border-radius: 0px 12px 0px 0px;

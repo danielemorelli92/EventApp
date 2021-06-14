@@ -10,13 +10,16 @@
 <script>
     function toggleNotificationsPopup() {
         notifications_popup = document.getElementById("notifications-popup");
+        notifications_icon = document.getElementById("notifications-icon");
 
         notifications_popup.className = notifications_popup.className !== 'show' ? 'show' : 'hide';
         if (notifications_popup.className === 'show') {
+            notifications_icon.src = "/images/notification-icon-fill.svg";
             setTimeout(function(){
                 notifications_popup.style.display = 'block';
             },0); // timed to occur immediately
         } else {
+            notifications_icon.src = "/images/notification-icon-outline.svg";
             setTimeout(function(){
                 notifications_popup.style.display = 'none';
             },200); // timed to match animation-duration
@@ -26,38 +29,38 @@
 </script>
 
 
-<div id="notifications-popup">
-    <div class="notifications-container">
-        @foreach(\App\Models\User::find(\Illuminate\Support\Facades\Auth::id())->notifications as $notification)
-            <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
-                <label
-                    @if($notification->read_at == null)
-                    class="notification-item-title-unread"
-                    @else
-                    class="notification-item-title"
-                    @endif
-                >@switch($notification->type)
-                        @case(\App\Notifications\TitleChanged::class)Il titolo di un evento a cui sei registrato è stato modificato!
-                        @break
-                        @case(\App\Notifications\DescriptionChanged::class)La descrizione di un evento a cui sei registrato è stata modificata!
-                        @break
-                        @case(\App\Notifications\AddressChanged::class)La posizione di un evento a cui sei registrato è stata modificata!
-                        @break
-                        @case(\App\Notifications\DateChanged::class)La data di un evento a cui sei registrato è stata modificata!
-                        @break
-                        @case(\App\Notifications\EventCanceled::class)Un evento a cui eri registrato è stato cancellato!
-                        @break
-                    @endswitch
-                </label>
-                <label class="notification-item-date">
-                    Data notifica: {{ $notification->created_at }}</label>
-            </a>
-            @php
-                $notification->markAsRead()
-            @endphp
-        @endforeach
-    </div>
-</div>
+@if (Route::has('login'))
+    @auth
+        <div id="notifications-popup">
+            <div class="notifications-container">
+                @foreach(\App\Models\User::find(\Illuminate\Support\Facades\Auth::id())->notifications as $notification)
+                    <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
+                        <div
+                            @if($notification->read_at == null)
+                            class="notification-item-title-unread"
+                            @else
+                            class="notification-item-title"
+                            @endif
+                        >@switch($notification->type)
+                                @case(\App\Notifications\TitleChanged::class)Il titolo di un evento a cui sei registrato è stato modificato!@break
+                                @case(\App\Notifications\DescriptionChanged::class)La descrizione di un evento a cui sei registrato è stata modificata!@break
+                                @case(\App\Notifications\AddressChanged::class)La posizione di un evento a cui sei registrato è stata modificata!@break
+                                @case(\App\Notifications\DateChanged::class)La data di un evento a cui sei registrato è stata modificata!@break
+                                @case(\App\Notifications\EventCanceled::class)Un evento a cui eri registrato è stato cancellato!@break
+                            @endswitch
+                        </div>
+                        <div class="notification-item-date">
+                            Data notifica: {{ $notification->created_at }}</div>
+                    </a>
+                    @php
+                        $notification->markAsRead()
+                    @endphp
+                @endforeach
+            </div>
+        </div>
+    @endauth
+@endif
+
 <div class="whole-page-three-columns">
     <div class="header" style="width: 100%">
         <div class="header-logo-container">
@@ -94,10 +97,9 @@
         <div style="width: 100%"></div> <!--spacer-->
         @if (Route::has('login'))
             @auth
-                <button class="header-button" onclick="toggleNotificationsPopup()"
-                        style="margin-left: auto; margin-right: 12px;"
-                        value="Notifiche">Notifiche
-                </button>
+                <div class="header-icon-button-container" onclick="toggleNotificationsPopup()" style="margin-left: auto; margin-right: 12px;">
+                    <img id="notifications-icon"  class="header-icon-preview" src="{{ url('/images/notification-icon-outline.svg') }}" alt="">
+                </div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button class="header-button" style="margin-left: auto; margin-right: 12px;" type="submit" value="Logout" >Logout</button>
