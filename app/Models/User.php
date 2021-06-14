@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -30,24 +31,29 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function registeredEvents()
+    public function registeredEvents(): Relation
     {
         return $this->belongsToMany(Event::class, 'event_user', 'event_id', 'user_id');
     }
 
-    public function tags()
+    public function tags(): Relation
     {
         return $this->belongsToMany(Tag::class);
     }
 
 
-    public function request()
+    public function request(): Relation
     {
         return $this->hasOne(Request::class);
     }
 
-    public function createdEvents()
+    public function createdEvents(): Relation
     {
         return $this->hasMany(Event::class, 'author_id');
+    }
+
+    public function comments(): Relation
+    {
+        return $this->hasMany(Comment::class, 'author_id');
     }
 }
