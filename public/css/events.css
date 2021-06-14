@@ -476,11 +476,15 @@ button:disabled {
     align-items: center;
 }
 .event-images-item{
-    flex: none;
-    background-color: #aaa;
+    overflow: hidden;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     margin: 4px;
     width: 284px;
     height: 284px;
+
+    flex: none;
 }
 .event-rectangle-image-container{
     overflow: hidden;

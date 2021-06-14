@@ -47,6 +47,10 @@ class Event extends Model
             return '/images/event-stock.jpg';
         }
     }
+    public function getImages()
+    {
+        return $this->images;
+    }
 
     public function getDistanceToMe(): float
     {
