@@ -39,10 +39,16 @@
                     </div>
 
 
-                    <label for="criteri_accettazione">Criteri accettazione:</label>
-                        <textarea id="" name="criteri_accettazione">
-                        </textarea>
+                    <div class="big-form-column">
+                        <label class="big-form-label" style="min-width: 400px" for="registration_link">Carica immagini</label>
+                        <input type="file" name="file">
+                    </div>
 
+
+                    <div class="big-form-column">
+                        <label class="big-form-label" for="criteri_accettazione" style="min-width: 400px">Criteri di accettazione</label>
+                        <textarea class="big-form-big-field" id="" name="criteri_accettazione" style="resize: vertical;"></textarea>
+                    </div>
                     <button class="big-form-submit-button" type="submit" value="Crea evento">Crea evento</button>
                 </div>
             </form>
