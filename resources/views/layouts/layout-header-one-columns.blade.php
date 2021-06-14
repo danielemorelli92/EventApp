@@ -42,9 +42,6 @@
         <form action="/events">
             <button class="header-button" type="submit" value="Esplora">Esplora</button>
         </form>
-        <form action="#">
-            <button class="header-button" type="submit" value="Forum">Forum</button>
-        </form>
 
 
         <div style="width: 100%"></div> <!--spacer-->
