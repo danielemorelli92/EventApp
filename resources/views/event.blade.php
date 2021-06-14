@@ -31,15 +31,19 @@
 
         <hr> <!-- Linea orizzontale -->
         <h1>Commenti</h1>
-        <ul style="list-style-type: none;">
-            <li>
-                <p>Inizia una discussione:</p>
-                <form action="/comment/{{$event->id}}" method="POST">
-                    <textarea name="content" id="" cols="100" rows="3" placeholder="Invia un commento..."></textarea>
-                    <input type="submit" value="Invia">
-                </form>
-            </li>
-        </ul>
+        @if(\Illuminate\Support\Facades\Auth::check())
+            <ul style="list-style-type: none;">
+                <li>
+                    <p>Inizia una discussione:</p>
+                    <form action="/comment/{{$event->id}}" method="POST">
+                        <textarea name="content" id="" cols="100" rows="3"
+                                  placeholder="Invia un commento..."></textarea>
+                        <input type="submit" value="Invia">
+                    </form>
+                </li>
+            </ul>
+        @endif
+
         <ul style="list-style-type: none">
             @foreach($event->comments as $comment)
                 @if($comment->parent_id == null)
