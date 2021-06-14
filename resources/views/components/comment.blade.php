@@ -47,7 +47,7 @@
                               style="width: 90%; height: auto;"
                               placeholder="Rispondi al commento..."
                     ></textarea>
-                    <input id="reply" type="submit" value="Invia risposta">
+                    <input type="submit" value="Invia risposta">
                 </form>
             @else
                 <div style="display: flex; justify-content: space-between; width: 90%">
@@ -56,6 +56,7 @@
                              onclick="
                                  let comment_area = document.getElementById('comment_{{ $comment->id }}');
                                  comment_area.removeAttribute('readonly');
+                                 document.getElementById('update_form_{{$comment->id}}').hidden = false;
                                  comment_area.focus();
                                  "
                         >
@@ -72,7 +73,8 @@
                     >
                         @csrf
                         @method('PUT')
-                        <input id="modifica" type="submit">
+
+                        <input type="submit" value="Invia">
                     </form>
                     @endif
                     @endif

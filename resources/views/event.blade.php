@@ -2,8 +2,6 @@
 
 @section('script')
     <script>
-        let active_form = document.getElementById('document.activeElement.form');
-
     </script>
 @endsection
 
@@ -56,7 +54,7 @@
         @endif
 
         <ul style="list-style-type: none">
-            @foreach($event->comments as $comment)
+            @foreach($event->comments->sortDesc() as $comment)
                 @if($comment->parent_id == null)
                     @include('components.comment')
                 @endif
