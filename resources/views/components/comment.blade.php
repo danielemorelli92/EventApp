@@ -1,6 +1,12 @@
 <li>
     <div>
-        <p><strong>{{ $comment->author->name }}</strong> scrive:</p>
+        <p><strong>
+                @if( $comment->author->id != $event->author->id )
+                    {{ $comment->author->name }}
+                @else
+                    L'<u>ORGANIZZATORE</u>
+                @endif
+            </strong> scrive:</p>
         <textarea name="" id="" cols="100" readonly>{{ $comment->content }}</textarea>
         <div style="color: blue; "
              onclick="
