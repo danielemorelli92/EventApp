@@ -18,9 +18,9 @@
         <div class="event-images-list">
 
 
-            @foreach($event->getImages() as $filename)
+            @foreach($event->images as $image)
                 <div class="event-images-item">
-                    <img class="image-preview" src="/storage/images/{{$filename->file_name}}"
+                    <img class="image-preview" src="/storage/images/{{$image->file_name}}"
                          alt="image-stock">
                 </div>
             @endforeach
