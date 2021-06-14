@@ -31,17 +31,37 @@
                 <div class="category-oval">{{ $tag->body }}</div>
             @endforeach
         </div>
+
+        <hr> <!-- Linea orizzontale -->
+        <h1>Commenti</h1>
+        <ul style="list-style-type: none;">
+            <li>
+                <p>Inizia una discussione:</p>
+                <form action="/comment/{{$event->id}}" method="POST">
+                    <textarea name="content" id="" cols="100" rows="3" placeholder="Invia un commento..."></textarea>
+                    <input type="submit" value="Invia">
+                </form>
+            </li>
+        </ul>
+        <ul style="list-style-type: none">
+            @foreach($event->comments as $comment)
+                @if($comment->parent_id == null)
+                    @include('components.comment')
+                @endif
+            @endforeach
+        </ul>
+
     </div>
 
     <div class="right-side-column">
         @if(\Illuminate\Support\Facades\Gate::allows('admin'))
+            <form action="/events/edit/{{ $event->id }}" method="GET">
+                <input type="submit" style="width: 100%;" value="Modifica">
+            </form>
             <form action="/events/{{$event->id}}" method="POST">
                 @csrf
                 @method('delete')
-                <input type="submit" value="Cancella">
-            </form>
-            <form action="/events/edit/{{ $event->id }}" method="GET">
-                <input type="submit" value="Modifica">
+                <input type="submit" style="width: 100%; margin-top: 4px" value="Cancella">
             </form>
         @endif
         <div class="section-title">Informazioni evento</div>
@@ -72,21 +92,25 @@
                 @endif
 
             @if ($event->author_id != null)
+                <a class="clickable-info-item-container" href="/user-profile/{{ $event->author->id}}">
                     <label class="info-item-title">Organizzatore</label>
                     <label class="info-item-label">
-                        <a style="color: #0000FF" href="/user-profile/{{ $event->author->id}}">
-                           {{ $event->author->name }}
-                        </a>
+                            {{ $event->author->name }}
                     </label>
+                </a>
                 @endif
 
             @if ($event->website != null)
-                    <a href="{{ $event->website }}" target="_blank" class="info-item-title">Sito web</a>
-                    <a href="{{ $event->website }}" target="_blank" class="info-item-label">{{ $event->website }}</a>
+                    <a class="clickable-info-item-container" href="{{ $event->website }}" target="_blank">
+                        <label class="info-item-title">Sito web</label>
+                        <label class="info-item-label">{{ $event->website }}</label>
+                    </a>
                 @endif
             @if ($event->ticket_office != null)
-                    <a href="{{ $event->ticket_office }}" target="_blank" class="info-item-title">Biglietti</a>
-                    <a href="{{ $event->ticket_office }}" target="_blank" class="info-item-label">{{ $event->ticket_office }}</a>
+                    <a class="clickable-info-item-container" href="{{ $event->ticket_office }}" target="_blank">
+                        <label class="info-item-title">Biglietti</label>
+                        <label class="info-item-label">{{ $event->ticket_office }}</label>
+                    </a>
                 @endif
             @if ($event->price != null)
                     <label class="info-item-title">Prezzo</label>

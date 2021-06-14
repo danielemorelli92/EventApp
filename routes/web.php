@@ -68,6 +68,8 @@ Route::put('/events/{event}', [EventController::class, 'update'])->where('event'
 
 Route::get('/request', [RequestController::class, 'create']);
 
+Route::delete('/request/{request}', [RequestController::class, 'destroy']);
+
 Route::post('/request', [RequestController::class, 'store']);
 
 Route::get('/user-profile/{user}', [UserController::class, 'show']);
@@ -77,5 +79,12 @@ Route::delete('/permissions/{user}', [UserController::class, 'downgrade']); // c
 Route::get('/notifications', function () {
     return view('notifications');
 });
+Route::post('/permissions/{user}', [UserController::class, 'upgrade']);
+
+Route::get('/admin_page', [RequestController::class, 'show_list']);
+
+Route::post('/comment/{event}/{comment}', [EventController::class, 'store_comment_reply'])->where('event', '[0-9]+')->where('comment', '[0-9]+');
+
+Route::post('/comment/{event}', [EventController::class, 'store_comment'])->where('event', '[0-9]+');
 
 require __DIR__ . '/auth.php';

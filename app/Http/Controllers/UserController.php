@@ -40,4 +40,19 @@ class UserController extends Controller
 
         return redirect('/user-profile/' . $user->id);
     }
+
+    public function upgrade(User $user)
+    {
+
+        if (Gate::denies('admin')) {
+            abort('401');
+        }
+
+        if($user->type === 'normale'){
+            $user->type = 'organizzatore';
+            $user->update(['type' => 'organizzatore']);
+        }
+
+        return redirect('/admin_page');
+    }
 }
