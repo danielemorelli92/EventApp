@@ -6,8 +6,9 @@ use App\Notifications\AddressChanged;
 use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
+use App\Notifications\ReplyToMe;
 use App\Notifications\TitleChanged;
-use App\Models\{Comment, Event, Tag};
+use App\Models\{Comment, Event, Tag, User};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -375,5 +376,7 @@ class EventController extends Controller
             'event_id' => $event->id,
             'parent_id' => $comment->id
         ]);
+
+        $comment->author->notify(new ReplyToMe($event, User::find(Auth::id())));
     }
 }
