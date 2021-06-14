@@ -52,7 +52,7 @@
             @else
                 <div style="display: flex; justify-content: space-between; width: 90%">
                     <div style="display: flex;">
-                        <div style="color: blue; "
+                        <div style="color: blue; margin-right: 10px;"
                              onclick="
                                  let comment_area = document.getElementById('comment_{{ $comment->id }}');
                                  comment_area.removeAttribute('readonly');
@@ -62,11 +62,17 @@
                         >
                             Modifica
                         </div>
-                        <div>
-                            Cancella<!-- QUI CI VA Elimina -->
-                        </div>
+                        <form action="/comment/{{ $event->id }}/{{$comment->id}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div style="color: blue; "
+                                 onclick="this.parentNode.submit()"
+                            >Cancella
+                            </div>
+                        </form>
+
                     </div>
-                    <form id="update_form_{{$comment->id}}" action="/comment/{{$comment->id}}"
+                    <form id="update_form_{{$comment->id}}" action="/comment/{{$event->id}}/{{$comment->id}}"
                           method="POST"
                           hidden
                           onfocusout="document.getElementById('response_{{$comment->id}}').hidden = true;"

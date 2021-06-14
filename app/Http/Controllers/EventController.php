@@ -383,4 +383,41 @@ class EventController extends Controller
 
         return redirect('/event/' . $event->id);
     }
+
+    public function destroy_comment(Event $event, Comment $comment)
+    {
+        if (Auth::id() != $comment->author->id) {
+            abort(401);
+        }
+
+        $this->destroy_recursively($comment);
+
+        return redirect('/event/' . $event->id);
+    }
+
+    private function destroy_recursively(Comment $comment)
+    {
+        foreach ($comment->comments as $subcomment) {
+            $this->destroy_recursively($subcomment);
+            $subcomment->delete();
+        }
+        $comment->delete();
+    }
+
+    public function update_comment(Event $event, Comment $comment)
+    {
+        if (Auth::id() != $comment->author->id) {
+            abort(401);
+        }
+
+        if (request('content') == null || blank(request('content'))) {
+            return $this->destroy_comment($event, $comment);
+        }
+
+        $comment->update([
+            'content' => request('content')
+        ]);
+
+        return redirect('/event/' . $event->id);
+    }
 }

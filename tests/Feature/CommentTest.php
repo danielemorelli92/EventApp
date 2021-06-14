@@ -79,4 +79,40 @@ class CommentTest extends TestCase
         self::assertEquals($comment->id, $user->comments->first()->parent_id, 'il commento salvato non è una risposta al commento preesistente');
     }
 
+    public function test_a_user_can_update_own_comments()
+    {
+        $event = Event::factory()->create();
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->post('/comment/' . $event->id, [
+            'content' => 'old content'
+        ]);
+
+        $comment = $event->comments->first();
+
+        $this->actingAs($user)->put('/comment/' . $event->id . '/' . $comment->id, [
+            'content' => 'new content'
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee('new content');
+    }
+
+    public function test_a_user_can_delete_own_comments()
+    {
+        $event = Event::factory()->create();
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->post('/comment/' . $event->id, [
+            'content' => 'some content'
+        ]);
+
+        $comment = $event->comments->first();
+
+        $this->actingAs($user)->delete('/comment/' . $event->id . '/' . $comment->id);
+
+        $response = $this->get('/event/' . $event->id);
+        $response->assertDontSee('some content');
+    }
+
 }
