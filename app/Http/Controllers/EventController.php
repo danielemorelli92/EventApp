@@ -363,6 +363,8 @@ class EventController extends Controller
             'content' => request('content'),
             'event_id' => $event->id
         ]);
+
+        return redirect('/event/' . $event->id);
     }
 
     public function store_comment_reply(Event $event, Comment $comment)
@@ -378,5 +380,44 @@ class EventController extends Controller
         ]);
 
         $comment->author->notify(new ReplyToMe($event, User::find(Auth::id())));
+
+        return redirect('/event/' . $event->id);
+    }
+
+    public function destroy_comment(Event $event, Comment $comment)
+    {
+        if (Auth::id() != $comment->author->id) {
+            abort(401);
+        }
+
+        $this->destroy_recursively($comment);
+
+        return redirect('/event/' . $event->id);
+    }
+
+    private function destroy_recursively(Comment $comment)
+    {
+        foreach ($comment->comments as $subcomment) {
+            $this->destroy_recursively($subcomment);
+            $subcomment->delete();
+        }
+        $comment->delete();
+    }
+
+    public function update_comment(Event $event, Comment $comment)
+    {
+        if (Auth::id() != $comment->author->id) {
+            abort(401);
+        }
+
+        if (request('content') == null || blank(request('content'))) {
+            return $this->destroy_comment($event, $comment);
+        }
+
+        $comment->update([
+            'content' => request('content')
+        ]);
+
+        return redirect('/event/' . $event->id);
     }
 }

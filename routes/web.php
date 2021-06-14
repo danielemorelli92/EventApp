@@ -87,4 +87,8 @@ Route::post('/comment/{event}/{comment}', [EventController::class, 'store_commen
 
 Route::post('/comment/{event}', [EventController::class, 'store_comment'])->where('event', '[0-9]+');
 
+Route::delete('/comment/{event}/{comment}', [EventController::class, 'destroy_comment']);
+
+Route::put('/comment/{event}/{comment}', [EventController::class, 'update_comment']);
+
 require __DIR__ . '/auth.php';

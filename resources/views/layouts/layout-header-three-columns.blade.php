@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>EventApp</title>
     <link rel="stylesheet" type="text/css" href="{{ url('/css/events.css') }}">
+    @yield('script')
 </head>
 <body>
 
