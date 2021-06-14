@@ -8,6 +8,36 @@ a{
     text-decoration: inherit;
     color: inherit;
 }
+tr {
+    height: 40px;
+}
+.tr_titles {
+    height: 50px;
+}
+th {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+td {
+    font-size: 18px;
+    font-weight: normal;
+    text-align: left;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+table {
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.15);
+
+    padding: 4px 12px 8px;
+    overflow: hidden;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    background-color: #fbfbfb;
+    border-radius: 18px;
+}
 input[type="radio"] {
     filter: hue-rotate(-14deg) brightness(1.05);
 }

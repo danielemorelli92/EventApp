@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\{User,Tag,Event,Image};
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::factory()->create([
+            'email' => 'user@email.com'
+        ]);
+        User::factory()->create([
+            'email' => 'admin@email.com'
+        ]);
+
+        DB::table('users')
+            ->where('email', '=', 'admin@email.com')
+            ->update(['type' => 'admin']);
+
 
         $events = Event::factory()->hasImages(4)->count(15)->hasAuthor(User::factory()->create())->create();
         $events->push(Event::factory()->hasImages(4)->create([
