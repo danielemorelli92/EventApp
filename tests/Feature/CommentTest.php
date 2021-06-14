@@ -52,4 +52,31 @@ class CommentTest extends TestCase
             $response->assertSee($comment->content);
         }
     }
+
+    public function test_a_registered_user_can_create_a_comment_on_a_event()
+    {
+        $event = Event::factory()->create();
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->post('/comment/' . $event->id, [
+            'content' => 'A new comment!'
+        ]);
+
+        self::assertNotNull($user->comments->first(), 'il comment non è stato creato');
+    }
+
+    public function test_a_registered_user_can_reply_to_a_comment()
+    {
+        $event = Event::factory()->hasComments(1)->create();
+        $comment = $event->comments->first();
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->post('/comment/' . $event->id . '/' . $comment->id, [
+            'content' => 'A new comment!'
+        ]);
+
+        self::assertNotNull($user->comments->first(), 'il comment non è stato creato');
+        self::assertEquals($comment->id, $user->comments->first()->parent_id, 'il commento salvato non è una risposta al commento preesistente');
+    }
+
 }
