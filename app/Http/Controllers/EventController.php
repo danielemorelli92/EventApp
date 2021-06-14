@@ -363,6 +363,8 @@ class EventController extends Controller
             'content' => request('content'),
             'event_id' => $event->id
         ]);
+
+        return redirect('/event/' . $event->id);
     }
 
     public function store_comment_reply(Event $event, Comment $comment)
@@ -378,5 +380,7 @@ class EventController extends Controller
         ]);
 
         $comment->author->notify(new ReplyToMe($event, User::find(Auth::id())));
+
+        return redirect('/event/' . $event->id);
     }
 }

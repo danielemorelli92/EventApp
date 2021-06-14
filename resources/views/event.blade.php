@@ -1,11 +1,19 @@
 @extends('layouts.layout-header-three-columns')
 
+@section('script')
+    <script>
+        let active_form = document.getElementById('document.activeElement.form');
+
+    </script>
+@endsection
+
 
 @section('content')
 
 
     <div class="left-side-column">
-        <a href="javascript:history.back()" style="display: flex; align-items: center; height: 32px; flex-direction: row">
+        <a href="javascript:history.back()"
+           style="display: flex; align-items: center; height: 32px; flex-direction: row">
             <div style="width: 18px; height: 18px; margin: 4px">
                 <img class="image-preview" src="{{ url('/images/close-icon.svg') }}" alt="close-icon">
             </div>
@@ -30,14 +38,17 @@
         </div>
 
         <hr> <!-- Linea orizzontale -->
+
         <h1>Commenti</h1>
         @if(\Illuminate\Support\Facades\Auth::check())
-            <ul style="list-style-type: none;">
+            <ul style="list-style-type: none; list-style-position: outside;">
                 <li>
                     <p>Inizia una discussione:</p>
                     <form action="/comment/{{$event->id}}" method="POST">
-                        <textarea name="content" id="" cols="100" rows="3"
-                                  placeholder="Invia un commento..."></textarea>
+                        @csrf
+                        <textarea name="content" id="new_comment" cols="100" rows="3"
+                                  placeholder="Scrivi un commento..." required></textarea>
+                        <br>
                         <input type="submit" value="Invia">
                     </form>
                 </li>

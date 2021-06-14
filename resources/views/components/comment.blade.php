@@ -1,32 +1,85 @@
 <li>
     <div>
-        <p><strong>
-                @if( $comment->author->id != $event->author->id )
-                    {{ $comment->author->name }}
-                @else
-                    L'<u>ORGANIZZATORE</u>
-                @endif
-            </strong> scrive:</p>
-        <textarea name="" id="" cols="100" readonly>{{ $comment->content }}</textarea>
+        <p>
+            @if( $comment->author->id == \Illuminate\Support\Facades\Auth::id())
+                <strong>Tu</strong> hai scritto:
+            @elseif( $comment->author->id != $event->author->id )
+                <strong>{{ $comment->author->name }}</strong> ha scritto:
+            @else
+                <strong>L'<u>ORGANIZZATORE</u></strong> ha scritto:
+            @endif
+        </p>
+        <textarea
+            style="width: 90%; height: auto;"
+            form="update_form_{{ $comment->id }}"
+            name="content"
+            id="comment_{{ $comment->id }}"
+            readonly
+            onchange="
+                let button = document.getElementById('submit_{{ $comment->id }}');
+                if(document.getElementById('comment_{{ $comment->id }}').value !== {{ $comment->content }}) {
+                button.hidden = false;
+                } else {
+                button.hidden = true;
+                }
+                "
+        >{{ $comment->content }}</textarea>
         @if(\Illuminate\Support\Facades\Auth::check())
-            <div style="color: blue; "
-                 onclick="
-                     document.getElementById('response_{{$comment->id}}').hidden = false;
-                     document.getElementById('content-area_{{$comment->id}}').focus();"
-            >Rispondi
-            </div>
-            <form id="response_{{$comment->id}}" action="/comment/{{$event->id}}/{{$comment->id}}" method="POST" hidden
-                  onfocusout="
-                                document.getElementById('response_{{$comment->id}}').hidden = true;
-                                ">
-                <textarea cols="100" rows="3" name="content" id="content-area_{{$comment->id}}"></textarea>
-                <input id="rispondi" type="submit" value="INVIA">
-            </form>
-        @endif
-    </div>
-    @foreach($comment->comments as $comment)
-        <ul style="list-style-type: none;">
-            @include('components.comment')
-        </ul>
+            @if(\Illuminate\Support\Facades\Auth::id() != $comment->author_id)
+                <div style="display: flex; justify-content: space-between; width: 90%">
+                    <div style="color: blue;"
+                         onclick="
+                             document.getElementById('response_{{$comment->id}}').hidden = !document.getElementById('response_{{$comment->id}}').hidden;
+                             document.getElementById('content-area_{{$comment->id}}').focus();"
+                    >
+                        Rispondi
+                    </div>
+                </div>
+                <form
+                    id="response_{{$comment->id}}"
+                    action="/comment/{{$event->id}}/{{$comment->id}}"
+                    method="POST"
+                    hidden
+                >
+                    @csrf
+                    <textarea name="content"
+                              id="content-area_{{$comment->id}}"
+                              style="width: 90%; height: auto;"
+                              placeholder="Rispondi al commento..."
+                    ></textarea>
+                    <input id="reply" type="submit" value="Invia risposta">
+                </form>
+            @else
+                <div style="display: flex; justify-content: space-between; width: 90%">
+                    <div style="display: flex;">
+                        <div style="color: blue; "
+                             onclick="
+                                 let comment_area = document.getElementById('comment_{{ $comment->id }}');
+                                 comment_area.removeAttribute('readonly');
+                                 comment_area.focus();
+                                 "
+                        >
+                            Modifica
+                        </div>
+                        <div>
+                            Cancella<!-- QUI CI VA Elimina -->
+                        </div>
+                    </div>
+                    <form id="update_form_{{$comment->id}}" action="/comment/{{$comment->id}}"
+                          method="POST"
+                          hidden
+                          onfocusout="document.getElementById('response_{{$comment->id}}').hidden = true;"
+                    >
+                        @csrf
+                        @method('PUT')
+                        <input id="modifica" type="submit">
+                    </form>
+                    @endif
+                    @endif
+                </div>
+                @foreach($comment->comments as $comment)
+                    <ul style="list-style-type: none; list-style-position: outside;">
+                        @include('components.comment')
+                    </ul>
     @endforeach
 </li>
