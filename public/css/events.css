@@ -53,6 +53,19 @@ input[type="text"] {
     box-sizing: border-box;
     min-height: 36px;
 }
+textarea {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    min-height: 36px;
+}
 input[type="number"] {
     padding-left: 8px;
     padding-right: 8px;
