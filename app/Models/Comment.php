@@ -24,6 +24,11 @@ class Comment extends Model
 
     public function comments(): Relation
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'parent_id');
+    }
+
+    public function event(): Relation
+    {
+        return $this->belongsTo(Event::class);
     }
 }
