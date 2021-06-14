@@ -15,11 +15,13 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('path');
+            $table->string('file_name');
             $table->string('title')->nullable();
             $table->foreignId('event_id');
             $table->timestamps();
         });
+
+        \Illuminate\Support\Facades\Storage::makeDirectory('/public/images/');
     }
 
     /**
@@ -30,5 +32,6 @@ class CreateImagesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('images');
+        \Illuminate\Support\Facades\Storage::deleteDirectory('/public/images/');
     }
 }
