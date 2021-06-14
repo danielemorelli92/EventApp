@@ -12,7 +12,7 @@
                 @foreach($interesting_events as $interesting_event)
                     <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="{{ $interesting_event->getImage() }}" alt="image-stock">
+                            <img class="image-preview" src="/storage/images/{{$interesting_event->getImage()}}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
@@ -34,7 +34,7 @@
                 @foreach($registered_events_future as $registered_event_future)
                     <a class="event-square" href="/event/{{ $registered_event_future->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="{{ $registered_event_future->getImage() }}"
+                            <img class="image-preview" src="/storage/images/{{$registered_event_future->getImage()}}"
                                  alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event_future->title }}</div>
@@ -56,7 +56,7 @@
                 @foreach($registered_events_past as $registered_event_past)
                     <a class="event-square" href="/event/{{ $registered_event_past->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ $registered_event_past->getImage() }}" alt="image-stock">
+                            <img class="image-small" src="/storage/images/{{$registered_event_past->getImage()}}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event_past->title }}</div>
                         <div class="event-square-attributes-group">

@@ -14,7 +14,7 @@
                 @foreach($created_events as $created_event)
                     <a class="event-square" href="/event/{{ $created_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ $created_event->getImage() }}" alt="image-stock">
+                            <img class="image-small" src="/storage/images/{{$created_event->getImage()}}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $created_event->title }}</div>
                         <div class="event-square-attributes-group">
@@ -37,7 +37,7 @@
                 @foreach($registered_events_past as $registered_event_past)
                     <a class="event-square" href="/event/{{ $registered_event_past->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ $registered_event_past->getImage() }}" alt="image-stock">
+                            <img class="image-small" src="/storage/images/{{$registered_event_past->getImage()}}" alt="image-stock">
                         </div>
                         <div class="event-square-title">{{ $registered_event_past->title }}</div>
                         <div class="event-square-attributes-group">
