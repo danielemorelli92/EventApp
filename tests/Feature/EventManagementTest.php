@@ -400,6 +400,9 @@ class EventManagementTest extends TestCase
 
     public function test_an_event_admin_can_create_event_uploading_images()
     {
+        //TODO
+        self::markTestIncomplete();
+
         $user = User::factory()->create();
 
         $user->type = 'organizzatore';
@@ -437,7 +440,6 @@ class EventManagementTest extends TestCase
 
     public function test_an_event_admin_can_delete_an_image()
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
 
         $user->type = 'organizzatore';
@@ -463,5 +465,25 @@ class EventManagementTest extends TestCase
         $this->assertFalse($event->getImages()->contains($image1), "l'immagine 1 non è stata eliminata nel DB");
         $this->assertFalse(Storage::exists('/public/images/' . $image1->file_name), "l'immagine 1 non è stata eliminata nel filesystem");
 
+    }
+
+    public function test_a_user_cannot_delete_an_image_of_someone_else()
+    {
+        $user = User::factory()->create();
+        $user->type = 'organizzatore';
+        $user_unauthorized = User::factory()->create();
+
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']);
+
+        $event = Event::factory()->hasImages(1)->create([
+            'author_id' => $user->id
+        ]);
+
+        $image = $event->images->first();
+        $this->actingAs($user_unauthorized)->delete("/image/" . $image->id);
+        $event->refresh();
+        $this->assertNotNull($event->images->first(), "utente non autorizzato ha eliminato l'immagine");
     }
 }

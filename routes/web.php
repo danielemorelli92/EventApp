@@ -75,6 +75,6 @@ Route::get('/user-profile/{user}', [UserController::class, 'show']);
 
 Route::delete('/permissions/{user}', [UserController::class, 'downgrade']); // cancella i permessi dati ad un organizzatore
 
-Route::delete('/image/{image}', [ImageController::class, 'destroy']); // cancella un immagine di un evento
+Route::delete('/image/{image}', [ImageController::class, 'destroy'])->where('image', '[0-9]+'); // cancella un immagine di un evento
 
 require __DIR__ . '/auth.php';
