@@ -115,4 +115,26 @@ class CommentTest extends TestCase
         $response->assertDontSee('some content');
     }
 
+    public function test_replies_to_a_deleted_comment_must_be_deleted()
+    {
+        $event = Event::factory()->create();
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $this->actingAs($user1)->post('/comment/' . $event->id, [
+            'content' => 'some content1'
+        ]); // $user1 scrive un commento
+        $comment = $event->comments->first();
+        $this->actingAs($user2)->post('/comment/' . $event->id . '/' . $comment->id, [
+            'content' => 'some content2'
+        ]); // $user2 risponde al commento di $user1
+
+        // $user1 cancella il suo commento
+        $this->actingAs($user1)->delete('/comment/' . $event->id . '/' . $comment->id);
+
+        $response = $this->get('/event/' . $event->id);
+
+        $response->assertDontSee('some content1'); // il primo commento è stato cancellato?
+        $response->assertDontSee('some content2'); // la risposta al primo commento è stata cancellata in automatico?
+    }
 }
