@@ -7,7 +7,7 @@ use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
 use App\Notifications\TitleChanged;
-use App\Models\{Event, Tag};
+use App\Models\{Comment, Event, Tag};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -350,5 +350,30 @@ class EventController extends Controller
         }
 
         return redirect('/events/manage');
+    }
+
+    public function store_comment(Event $event)
+    {
+        if (!Auth::check()) {
+            abort(401);
+        }
+        $comment = Comment::create([
+            'author_id' => Auth::id(),
+            'content' => request('content'),
+            'event_id' => $event->id
+        ]);
+    }
+
+    public function store_comment_reply(Event $event, Comment $comment)
+    {
+        if (!Auth::check()) {
+            abort(401);
+        }
+        Comment::create([
+            'author_id' => Auth::id(),
+            'content' => request('content'),
+            'event_id' => $event->id,
+            'parent_id' => $comment->id
+        ]);
     }
 }
