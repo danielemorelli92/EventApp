@@ -8,6 +8,15 @@
 
 @section('content')
 
+    <script>
+        function auto_grow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight+1)+"px";
+            element.style.minHeight = (element.scrollHeight+1)+"px";
+            element.style.maxHeight = (element.scrollHeight+1)+"px";
+        }
+    </script>
+
 
     <div class="left-side-column">
         <a href="javascript:history.back()"
@@ -39,27 +48,25 @@
 
         <div class="section-title" style="margin-left: 8px; margin-top: 8px">Commenti</div>
         @if(\Illuminate\Support\Facades\Auth::check())
-            <ul style="list-style-type: none; list-style-position: outside;">
-                <li>
+
                     <p>Inizia una discussione:</p>
                     <form action="/comment/{{$event->id}}" method="POST">
                         @csrf
-                        <textarea name="content" id="new_comment" cols="100" rows="3"
+                        <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: vertical; width: 100%" name="content" id="new_comment"
                                   placeholder="Scrivi un commento..." required></textarea>
                         <br>
                         <input type="submit" value="Invia">
                     </form>
-                </li>
-            </ul>
+
         @endif
 
-        <ul style="list-style-type: none">
+        <div style="list-style-type: none">
             @foreach($event->comments->sortDesc() as $comment)
                 @if($comment->parent_id == null)
                     @include('components.comment')
                 @endif
             @endforeach
-        </ul>
+        </div>
 
     </div>
 
