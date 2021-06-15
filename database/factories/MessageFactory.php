@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Message;
+use App\Models\Chat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MessageFactory extends Factory
@@ -12,7 +12,7 @@ class MessageFactory extends Factory
      *
      * @var string
      */
-    protected $model = Message::class;
+    protected $model = Chat::class;
 
     /**
      * Define the model's default state.

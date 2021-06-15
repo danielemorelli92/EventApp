@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class, 'author_id');
     }
+
+    public function chats(): Relation
+    {
+        return $this->hasMany(Chat::class);
+    }
 }
