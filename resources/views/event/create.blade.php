@@ -7,7 +7,7 @@
 @section('content')
     <div class="main-content-column">
         <div class="big-form-container">
-            <form style="display: flex; flex-direction: column;" method="post" action="/events">
+            <form style="display: flex; flex-direction: column;" method="post" action="/events" enctype="multipart/form-data">
                 @csrf
                 <h2 style="margin-bottom: 20px;">Informazioni dell'evento</h2>
                 <div class="big-form-group">
@@ -41,7 +41,7 @@
 
                     <div class="big-form-column">
                         <label class="big-form-label" style="min-width: 400px" for="registration_link">Carica immagini</label>
-                        <input type="file" name="file" multiple="multiple" accept="image/*" >
+                        <input type="file" name="images"  accept="image/*" >
                     </div>
 
 

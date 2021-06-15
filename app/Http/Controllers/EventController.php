@@ -7,7 +7,7 @@ use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
 use App\Notifications\TitleChanged;
-use App\Models\{Event, Tag};
+use App\Models\{Event, Image, Tag};
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -128,7 +128,9 @@ class EventController extends Controller
             'ticket_office' => 'nullable',
             'website' => 'nullable',
             'registration_link' => 'string',
-            'criteri_accettazione'=> 'nullable'
+            'criteri_accettazione'=> 'nullable',
+
+
         ]);
         if ($validatedData['website'] != "" && !str_contains($validatedData['website'], "http://")  && !str_contains($validatedData['website'], "https://") ) {
             $validatedData['website'] = 'https://'.$validatedData['website'];
@@ -141,9 +143,22 @@ class EventController extends Controller
         if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
             abort(400);
         }
+        if (request()->hasFile('images')) {
+
+            // Save the file locally in the storage/public/ folder under a new folder named /images
+            request()->images->store('images', 'public');
+
+        }
+        request()->validate([
+            'images' => 'nullable|mimes:jpeg,bmp,png'
+        ]);
 
         $event = Event::factory()->create($validatedData);
-
+        $image = new Image([
+            "event_id" => $event->id,
+            "file_name" => request()->images->hashName()
+        ]);
+        $image->save(); // Finally, save the record.
         return redirect('/events/manage', 201);
     }
 
