@@ -44,26 +44,30 @@
 
         <hr> <!-- Linea orizzontale -->
 
-        <div class="section-title" style="margin-left: 8px; margin-top: 8px">Commenti</div>
-        @if(\Illuminate\Support\Facades\Auth::check())
+        <div id="area_commenti" style="margin-left: 8px; margin-right: 8px; display: flex;flex-direction: column">
 
-                    <p>Inizia una discussione:</p>
-                    <form action="/comment/{{$event->id}}" method="POST">
-                        @csrf
-                        <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: none; width: 100%" name="content" id="new_comment"
-                                  placeholder="Scrivi un commento..." required></textarea>
-                        <br>
-                        <input type="submit" value="Invia">
-                    </form>
+            <div class="section-title" style="margin-left: 8px; margin-top: 8px">Commenti</div>
+            @if(\Illuminate\Support\Facades\Auth::check())
+                <form action="/comment/{{$event->id}}" method="POST">
+                    @csrf
+                    <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: none; width: 100%" name="content" id="new_comment"
+                               placeholder="Scrivi un commento..." required></textarea>
+                    <br>
+                    <input type="submit" value="Invia">
+                </form>
 
-        @endif
+            @endif
 
-        <div style="list-style-type: none">
-            @foreach($event->comments->sortDesc() as $comment)
-                @if($comment->parent_id == null)
-                    @include('components.comment')
-                @endif
-            @endforeach
+            <div style="list-style-type: none">
+                @foreach($event->comments->sortDesc() as $comment)
+                    @if($comment->parent_id == null)
+                        <div class="post-container">
+                            @include('components.comment')
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
         </div>
 
     </div>

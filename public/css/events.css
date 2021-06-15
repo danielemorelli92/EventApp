@@ -80,14 +80,25 @@ textarea {
     word-wrap: anywhere;
     font-size: 19px;
 }
+.post-container{
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    border: 0.0px solid #fff;
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.15);
+
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    overflow-y: auto;
+    background: white;
+}
 .comment-container{
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
     border-radius: 12px;
     border: 0.5px solid #bbb;
 
-    margin-top: 16px;
-    margin-bottom: 16px;
     padding: 16px;
 
     overflow-y: auto;
