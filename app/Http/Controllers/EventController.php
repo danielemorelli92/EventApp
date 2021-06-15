@@ -9,6 +9,7 @@ use App\Notifications\EventCanceled;
 use App\Notifications\TitleChanged;
 use App\Models\{Event, Image, Tag};
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -143,22 +144,19 @@ class EventController extends Controller
         if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
             abort(400);
         }
-        if (request()->hasFile('images')) {
-
-            // Save the file locally in the storage/public/ folder under a new folder named /images
-            request()->images->store('images', 'public');
-
-        }
         request()->validate([
-            'images' => 'nullable|mimes:jpeg,bmp,png'
+            'images[]' => 'nullable|mimes:jpeg,bmp,png'
         ]);
 
         $event = Event::factory()->create($validatedData);
-        $image = new Image([
-            "event_id" => $event->id,
-            "file_name" => request()->images->hashName()
-        ]);
-        $image->save(); // Finally, save the record.
+
+        if (request()->hasFile('images')) {
+            // Save the file locally in the storage/public/ folder under a new folder named /images
+            foreach (request()->images as $image) {
+                $image->store('images', 'public');
+                (new Image(["event_id" => $event->id, "file_name" => $image->hashName()]))->save();
+            }
+        }
         return redirect('/events/manage', 201);
     }
 

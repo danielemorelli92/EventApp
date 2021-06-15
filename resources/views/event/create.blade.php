@@ -41,7 +41,7 @@
 
                     <div class="big-form-column">
                         <label class="big-form-label" style="min-width: 400px" for="registration_link">Carica immagini</label>
-                        <input type="file" name="images"  accept="image/*" >
+                        <input type="file" name="images[]" multiple="multiple"  accept="image/*" >
                     </div>
 
 
