@@ -17,7 +17,7 @@
 
     <textarea
             hidden
-            style="width: 100%; resize: none"
+            style="width: 100%; margin-top: 4px; margin-bottom: 4px; resize: none"
             form="update_form_{{ $comment->id }}"
             name="content"
             id="comment_area_{{ $comment->id }}"
@@ -32,9 +32,9 @@
                 }
                 "
         >{{ $comment->content }}
-    </textarea><!-- campo di testo commento-->
+    </textarea><!-- campo di testo modifica commento-->
 
-    <div style="width: auto; display: flex; flex-direction: row;">
+    <div style="width: auto; display: flex; margin-top: 4px; flex-direction: row;">
 
     <div
         class="comment-text"
@@ -62,7 +62,7 @@
             <form
                 id="response_{{$comment->id}}"
                 action="/comment/{{$event->id}}/{{$comment->id}}"
-                style="display: none; flex-direction: row"
+                style="display: none; margin-top: 4px; flex-direction: row"
                 method="POST"
             >
                 @csrf
@@ -73,7 +73,7 @@
                           style="width: 100%; resize: none"
                           placeholder="Rispondi al commento..."
                 ></textarea>                                 <!-- area di testo risposta commento -->
-                <input style="height: 54px; margin-top:4px; margin-left: 8px" type="submit" value="Invia risposta"> <!--bottone invia risposta -->
+                <input style="height: 54px; margin-left: 8px" type="submit" value="Invia risposta"> <!--bottone invia risposta -->
             </form>
         @else <!-- se è autore del commento -->
 
