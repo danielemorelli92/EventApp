@@ -48,12 +48,14 @@
 
             <div class="section-title" style="margin-left: 8px; margin-top: 8px">Commenti</div>
             @if(\Illuminate\Support\Facades\Auth::check())
-                <form action="/comment/{{$event->id}}" method="POST">
+                <form class="post-container" style="padding: 12px" action="/comment/{{$event->id}}" method="POST">
                     @csrf
-                    <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: none; width: 100%" name="content" id="new_comment"
-                               placeholder="Scrivi un commento..." required></textarea>
-                    <br>
-                    <input type="submit" value="Invia">
+                    <strong>Crea un nuovo post</strong>
+                    <div style="display: flex; flex-direction: row; margin-top: 4px">
+                        <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: none; width: 100%;" name="content" id="new_comment"
+                               placeholder="Testo post" required></textarea>
+                        <input style="margin-top: 5px; margin-left: 8px; height: 52px" type="submit" value="Crea">
+                    </div>
                 </form>
 
             @endif

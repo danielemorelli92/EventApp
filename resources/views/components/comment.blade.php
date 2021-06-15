@@ -15,26 +15,26 @@
 
     <div style="width: auto; display: flex; flex-direction: column;">
 
-
     <textarea
-        hidden
-        disabled
-        style="width: auto; resize: none"
-        form="update_form_{{ $comment->id }}"
-        name="content"
-        id="comment_area_{{ $comment->id }}"
-        onfocus="auto_grow(this)"
-        oninput="auto_grow(this)"
-        onchange="
-            let button = document.getElementById('submit_{{ $comment->id }}');
-            if(document.getElementById('comment_area_{{ $comment->id }}').value !== {{ $comment->content }}) {
-            button.hidden = false;
-            } else {
-            button.hidden = true;
-            }
-            "
-                >{{ $comment->content }}
+            hidden
+            style="width: 100%; resize: none"
+            form="update_form_{{ $comment->id }}"
+            name="content"
+            id="comment_area_{{ $comment->id }}"
+            onfocus="auto_grow(this)"
+            oninput="auto_grow(this)"
+            onchange="
+                let button = document.getElementById('submit_{{ $comment->id }}');
+                if(document.getElementById('comment_area_{{ $comment->id }}').value !== {{ $comment->content }}) {
+                button.hidden = false;
+                } else {
+                button.hidden = true;
+                }
+                "
+        >{{ $comment->content }}
     </textarea><!-- campo di testo commento-->
+
+    <div style="width: auto; display: flex; flex-direction: row;">
 
     <div
         class="comment-text"
@@ -45,18 +45,25 @@
     @if(\Illuminate\Support\Facades\Auth::check()) <!-- se è loggato -->
         @if(\Illuminate\Support\Facades\Auth::id() != $comment->author_id) <!-- se non è autore del commento -->
 
-                <button style="height: 40px; margin-left: auto"
+                <button style="height: 40px; margin-left: 8px; margin-top: auto"
                      onclick="
-                         document.getElementById('response_{{$comment->id}}').hidden = !document.getElementById('response_{{$comment->id}}').hidden;
-                         document.getElementById('content-area_{{$comment->id}}').focus();"
+                         if (document.getElementById('response_{{$comment->id}}').style.display === 'none') {
+                            this.innerText = 'Annulla';
+                            document.getElementById('response_{{$comment->id}}').style.display = 'flex';
+                            document.getElementById('content-area_{{$comment->id}}').focus();
+                         } else {
+                            document.getElementById('response_{{$comment->id}}').style.display = 'none';
+                            this.innerText = 'Rispondi';
+                         }"
                 >
                     Rispondi
                 </button> <!-- bottone rispondi -->
+    </div> <!-- chiusura div flex box orizzontale con campo di testo e bottone affianco -->
             <form
                 id="response_{{$comment->id}}"
                 action="/comment/{{$event->id}}/{{$comment->id}}"
+                style="display: none; flex-direction: row"
                 method="POST"
-                hidden
             >
                 @csrf
                 <textarea name="content"
@@ -66,20 +73,37 @@
                           style="width: 100%; resize: none"
                           placeholder="Rispondi al commento..."
                 ></textarea>                                 <!-- area di testo risposta commento -->
-                <input type="submit" value="Invia risposta"> <!--bottone invia risposta -->
+                <input style="height: 54px; margin-top:4px; margin-left: 8px" type="submit" value="Invia risposta"> <!--bottone invia risposta -->
             </form>
         @else <!-- se è autore del commento -->
-                <div style="display: flex; flex-direction: row; margin-left: auto">
+
+            <div style="display: flex; flex-direction: row; margin-left: auto; margin-top: auto">
+            <form id="update_form_{{$comment->id}}"
+                  action="/comment/{{$event->id}}/{{$comment->id}}"
+                  method="POST"
+                  hidden
+            > <!-- bottone applica modifiche -->
+                @csrf
+                @method('PUT')
+                <input style="height:40px; margin-left: 8px; margin-right: 8px" type="submit" value="Applica modifiche">
+            </form>
                     <!-- modifica button-->
-                    <button style="height: 40px; margin-right: 10px;"
+                    <button style="height: 40px; margin-right: 8px;"
                          onclick="
                              let comment_area = document.getElementById('comment_area_{{ $comment->id }}');
                              let comment_div = document.getElementById('comment_div_{{ $comment->id }}');
-                             comment_area.removeAttribute('disabled');
-                             comment_area.hidden = false;
-                             comment_div.hidden = true;
-                             document.getElementById('update_form_{{$comment->id}}').hidden = false;
-                             comment_area.focus();
+                             if (comment_area.hidden) {
+                                this.innerText = 'Annulla';
+                                comment_area.hidden = false;
+                                comment_div.hidden = true;
+                                document.getElementById('update_form_{{$comment->id}}').hidden = false;
+                                comment_area.focus();
+                             } else {
+                                 this.innerText = 'Modifica';
+                                comment_area.hidden = true;
+                                comment_div.hidden = false;
+                                document.getElementById('update_form_{{$comment->id}}').hidden = true;
+                             }
                              "
                     >
                         Modifica
@@ -92,16 +116,7 @@
                     </form>
 
                 </div>
-                <form id="update_form_{{$comment->id}}" action="/comment/{{$event->id}}/{{$comment->id}}"
-                      method="POST"
-                      hidden
-                      onfocusout="document.getElementById('response_{{$comment->id}}').hidden = true;"
-                > <!-- applica modifiche commento -->
-                    @csrf
-                    @method('PUT')
-
-                    <input type="submit" value="Applica modifiche">
-                </form>
+        </div> <!-- chiusura div flex box orizzontale con campo di testo e bottoni affianco -->
         @endif
     @endif
     </div>
