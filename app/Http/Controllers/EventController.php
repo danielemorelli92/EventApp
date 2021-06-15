@@ -294,8 +294,8 @@ class EventController extends Controller
         $start = $event->starting_time;
         $address = $event->address;
 
+        //TODO eliminazione immagini
         $event->delete();
-
         if (now()->isBefore(new Carbon($start))) { // invia la notifica di cancellazione solo se l'evento non è ancora iniziato
             Notification::send($event->registeredUsers, new EventCanceled($title, $start, $address));
         }
