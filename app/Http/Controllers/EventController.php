@@ -145,7 +145,7 @@ class EventController extends Controller
             abort(400);
         }
         request()->validate([
-            'images[]' => 'nullable|mimes:jpeg,bmp,png'
+            'images[]' => 'nullable|mimes:jpg,jpeg,bmp,png'
         ]);
 
         $event = Event::factory()->create($validatedData);
