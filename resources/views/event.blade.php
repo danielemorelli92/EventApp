@@ -37,7 +37,7 @@
 
         <hr> <!-- Linea orizzontale -->
 
-        <h1>Commenti</h1>
+        <div class="section-title" style="margin-left: 8px; margin-top: 8px">Commenti</div>
         @if(\Illuminate\Support\Facades\Auth::check())
             <ul style="list-style-type: none; list-style-position: outside;">
                 <li>
