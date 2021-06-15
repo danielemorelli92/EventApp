@@ -151,10 +151,13 @@ class EventController extends Controller
         $event = Event::factory()->create($validatedData);
 
         if (request()->hasFile('images')) {
-            // Save the file locally in the storage/public/ folder under a new folder named /images
             foreach (request()->images as $image) {
+                // Save the file locally in the storage/public/ folder under a new folder named /images
+                Image::create([
+                    "event_id" => $event->id,
+                    "file_name" => $image->hashName()
+                ]);
                 $image->store('images', 'public');
-                (new Image(["event_id" => $event->id, "file_name" => $image->hashName()]))->save();
             }
         }
         return redirect('/events/manage', 201);
