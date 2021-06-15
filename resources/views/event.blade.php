@@ -11,9 +11,7 @@
     <script>
         function auto_grow(element) {
             element.style.height = "5px";
-            element.style.height = (element.scrollHeight+1)+"px";
-            element.style.minHeight = (element.scrollHeight+1)+"px";
-            element.style.maxHeight = (element.scrollHeight+1)+"px";
+            element.style.height = (element.scrollHeight+1)+"px"
         }
     </script>
 
@@ -52,7 +50,7 @@
                     <p>Inizia una discussione:</p>
                     <form action="/comment/{{$event->id}}" method="POST">
                         @csrf
-                        <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: vertical; width: 100%" name="content" id="new_comment"
+                        <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: none; width: 100%" name="content" id="new_comment"
                                   placeholder="Scrivi un commento..." required></textarea>
                         <br>
                         <input type="submit" value="Invia">
