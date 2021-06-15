@@ -16,14 +16,14 @@
         notifications_popup.className = notifications_popup.className !== 'show' ? 'show' : 'hide';
         if (notifications_popup.className === 'show') {
             notifications_icon.src = "/images/notification-icon-fill.svg";
-            setTimeout(function(){
+            setTimeout(function () {
                 notifications_popup.style.display = 'block';
-            },0); // timed to occur immediately
+            }, 0); // timed to occur immediately
         } else {
             notifications_icon.src = "/images/notification-icon-outline.svg";
-            setTimeout(function(){
+            setTimeout(function () {
                 notifications_popup.style.display = 'none';
-            },200); // timed to match animation-duration
+            }, 200); // timed to match animation-duration
         }
 
     }
@@ -43,11 +43,28 @@
                             class="notification-item-title"
                             @endif
                         >@switch($notification->type)
-                                @case(\App\Notifications\TitleChanged::class)Il titolo di un evento a cui sei registrato è stato modificato!@break
-                                @case(\App\Notifications\DescriptionChanged::class)La descrizione di un evento a cui sei registrato è stata modificata!@break
-                                @case(\App\Notifications\AddressChanged::class)La posizione di un evento a cui sei registrato è stata modificata!@break
-                                @case(\App\Notifications\DateChanged::class)La data di un evento a cui sei registrato è stata modificata!@break
-                                @case(\App\Notifications\EventCanceled::class)Un evento a cui eri registrato è stato cancellato!@break
+                                @case(\App\Notifications\TitleChanged::class)
+                                Il titolo di un evento a cui sei registrato è stato modificato!
+                                @break
+                                @case(\App\Notifications\DescriptionChanged::class)
+                                La descrizione di un evento a cui sei
+                                registrato è stata modificata!
+                                @break
+                                @case(\App\Notifications\AddressChanged::class)
+                                La posizione di un evento a cui sei
+                                registrato è stata modificata!
+                                @break
+                                @case(\App\Notifications\DateChanged::class)
+                                La data di un evento a cui sei registrato è
+                                stata modificata!
+                                @break
+                                @case(\App\Notifications\EventCanceled::class)
+                                Un evento a cui eri registrato è stato
+                                cancellato!
+                                @break
+                                @case(\App\Notifications\ReplyToMe::class)
+                                Qualcuno ha risposto ad un tuo commento! @break
+                                @default Nessuno dei precedenti!
                             @endswitch
                         </div>
                         <div class="notification-item-date">
@@ -105,20 +122,28 @@
         <div style="width: 100%"></div> <!--spacer-->
         @if (Route::has('login'))
             @auth
-                <div class="header-icon-button-container" onclick="toggleNotificationsPopup()" style="margin-left: auto; margin-right: 12px;">
-                    <img id="notifications-icon"  class="header-icon-preview" src="{{ url('/images/notification-icon-outline.svg') }}" alt="">
+                <div class="header-icon-button-container" onclick="toggleNotificationsPopup()"
+                     style="margin-left: auto; margin-right: 12px;">
+                    <img id="notifications-icon" class="header-icon-preview"
+                         src="{{ url('/images/notification-icon-outline.svg') }}" alt="">
                 </div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="header-button" style="margin-left: auto; margin-right: 12px;" type="submit" value="Logout" >Logout</button>
+                    <button class="header-button" style="margin-left: auto; margin-right: 12px;" type="submit"
+                            value="Logout">Logout
+                    </button>
                 </form>
             @else
                 <form action="{{ route('login') }}">
-                    <button class="header-button" style="margin-left: auto; margin-right: 4px;" type="submit" value="Login" >Login</button>
+                    <button class="header-button" style="margin-left: auto; margin-right: 4px;" type="submit"
+                            value="Login">Login
+                    </button>
                 </form>
                 @if (Route::has('register'))
                     <form action="{{ route('register') }}">
-                        <button class="header-button" style="margin-right: 12px;" type="submit" value="Registrati" >Registrati</button>
+                        <button class="header-button" style="margin-right: 12px;" type="submit" value="Registrati">
+                            Registrati
+                        </button>
                     </form>
                 @endif
             @endauth

@@ -42,11 +42,28 @@
                             class="notification-item-title"
                             @endif
                         >@switch($notification->type)
-                                @case(\App\Notifications\TitleChanged::class)Il titolo di un evento a cui sei registrato è stato modificato!@break
-                                @case(\App\Notifications\DescriptionChanged::class)La descrizione di un evento a cui sei registrato è stata modificata!@break
-                                @case(\App\Notifications\AddressChanged::class)La posizione di un evento a cui sei registrato è stata modificata!@break
-                                @case(\App\Notifications\DateChanged::class)La data di un evento a cui sei registrato è stata modificata!@break
-                                @case(\App\Notifications\EventCanceled::class)Un evento a cui eri registrato è stato cancellato!@break
+                                @case(\App\Notifications\TitleChanged::class)
+                                Il titolo di un evento a cui sei registrato è stato modificato!
+                                @break
+                                @case(\App\Notifications\DescriptionChanged::class)
+                                La descrizione di un evento a cui sei
+                                registrato è stata modificata!
+                                @break
+                                @case(\App\Notifications\AddressChanged::class)
+                                La posizione di un evento a cui sei
+                                registrato è stata modificata!
+                                @break
+                                @case(\App\Notifications\DateChanged::class)
+                                La data di un evento a cui sei registrato è
+                                stata modificata!
+                                @break
+                                @case(\App\Notifications\EventCanceled::class)
+                                Un evento a cui eri registrato è stato
+                                cancellato!
+                                @break
+                                @case(\App\Notifications\ReplyToMe::class)
+                                Qualcuno ha risposto ad un tuo commento! @break
+                                @default Nessuno dei precedenti!
                             @endswitch
                         </div>
                         <div class="notification-item-date">
