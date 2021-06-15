@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -90,5 +91,9 @@ Route::post('/comment/{event}', [EventController::class, 'store_comment'])->wher
 Route::delete('/comment/{event}/{comment}', [EventController::class, 'destroy_comment']);
 
 Route::put('/comment/{event}/{comment}', [EventController::class, 'update_comment']);
+
+Route::get('/chats', [MessageController::class, 'index']);
+
+Route::get('/chat/{user}', [MessageController::class, 'show']);
 
 require __DIR__ . '/auth.php';
