@@ -145,7 +145,7 @@ class EventController extends Controller
 
         if($validatedData['starting_time'] <= date(now()))
             {
-            return redirect('/events/create');
+                abort(400);
             }
 
         $event = Event::factory()->create($validatedData);
