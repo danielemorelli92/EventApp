@@ -49,7 +49,7 @@
                                 La descrizione di un evento a cui sei
                                 registrato è stata modificata!
                                 @break
-                                @case(\App\Notifications\AddressChanged::class)
+                                @case(\App\Notifications\CityChanged::class)
                                 La posizione di un evento a cui sei
                                 registrato è stata modificata!
                                 @break

@@ -47,7 +47,7 @@
                             stato modificato!@break
                             @case(\App\Notifications\DescriptionChanged::class)La descrizione di un evento a cui sei
                             registrato è stata modificata!@break
-                            @case(\App\Notifications\AddressChanged::class)La posizione di un evento a cui sei
+                            @case(\App\Notifications\CityChanged::class)La posizione di un evento a cui sei
                             registrato è stata modificata!@break
                             @case(\App\Notifications\DateChanged::class)La data di un evento a cui sei registrato è
                             stata modificata!@break

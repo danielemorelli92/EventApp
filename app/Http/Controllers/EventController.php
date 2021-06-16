@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Notifications\AddressChanged;
+use App\Notifications\CityChanged;
 use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
@@ -282,12 +282,12 @@ class EventController extends Controller
 
         $title = $event->title;
         $start = $event->starting_time;
-        $address = $event->address;
+        $city = $event->city;
 
         $event->delete();
 
         if (now()->isBefore(new Carbon($start))) { // invia la notifica di cancellazione solo se l'evento non è ancora iniziato
-            Notification::send($event->registeredUsers, new EventCanceled($title, $start, $address));
+            Notification::send($event->registeredUsers, new EventCanceled($title, $start, $city));
         }
 
         return redirect('/events/manage');
@@ -336,7 +336,7 @@ class EventController extends Controller
         $old_title = $event->title;
         $old_descr = $event->description;
         $old_start = $event->starting_time;
-        $old_address = $event->address;
+        $old_city = $event->city;
 
         $event->update($validatedData);
 
@@ -351,8 +351,8 @@ class EventController extends Controller
         if ($event->starting_time != $old_start) {
             Notification::send($event->registeredUsers, new DateChanged($event, $old_start));
         }
-        if ($event->address != $old_address) {
-            Notification::send($event->registeredUsers, new AddressChanged($event, $old_address));
+        if ($event->city != $old_city) {
+            Notification::send($event->registeredUsers, new CityChanged($event, $old_city));
         }
 
         return redirect('/events/manage');

@@ -35,7 +35,7 @@
                 @endif
             </div>
             @break
-            @case(\App\Notifications\AddressChanged::class)
+            @case(\App\Notifications\CityChanged::class)
             <div style="border: 2px solid black; width: 700px;">
                 @if($notification->read_at == null)
                     <strong>La posizione di un <a href="/event/{{$notification->data['event_id']}}">evento</a> a cui sei

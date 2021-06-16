@@ -14,12 +14,12 @@ class EventCanceled extends Notification
 
     protected $title;
     protected $start;
-    protected $address;
+    protected $city;
 
-    public function __construct(string $title, string $start, string $address)
+    public function __construct(string $title, string $start, string $city)
     {
         $this->title = $title;
-        $this->address = $address;
+        $this->city = $city;
         $this->start = $start;
     }
 
@@ -33,7 +33,7 @@ class EventCanceled extends Notification
     {
         return [
             'title' => $this->title,
-            'address' => $this->address,
+            'city' => $this->city,
             'starting_time' => $this->start
         ];
     }
