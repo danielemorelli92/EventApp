@@ -118,9 +118,12 @@
                         <label class="info-item-label">{{ $event->ticket_office }}</label>
                     </a>
                 @endif
-            @if ($event->price != null)
+            @if ($event->price != 0)
                     <label class="info-item-title">Prezzo</label>
                     <label class="info-item-label">{{ $event->price }}€</label>
+                @else
+                      <label class="info-item-title">Prezzo</label>
+                      <label class="info-item-label">GRATIS!</label>
                 @endif
             @if (count($event->tags) > 0)
                     <label class="info-item-title">Categoria principale</label>
