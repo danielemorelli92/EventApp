@@ -10,6 +10,7 @@
             <form style="display: flex; flex-direction: column;" method="post" action="/events" enctype="multipart/form-data">
                 @csrf
                 <h2 style="margin-bottom: 20px;">Informazioni dell'evento</h2>
+
                 <div class="big-form-group">
                     <div class="big-form-column"><label class="big-form-label" for="title">Titolo*</label>
                         <input class="big-form-big-field" name="title" type="text" placeholder="..." required></div>
@@ -45,15 +46,13 @@
                         <input type="file" name="images[]" multiple="multiple"  accept="image/*"
                                onchange="
                                var images_flex = document.getElementById('images_flex');
+                               images_flex.innerHTML = '';
                                for (let i = 0; i < files.length; i++) {
-                                   console.log('boh');
-                                    image_temp = document.createElement('img');
-                                    image_temp.style.width = 'calc(25% - 8px)';
-                                    image_temp.style.height = '180px';
-                                    image_temp.style.margin = '4px';
-                                    image_temp.className = 'image-preview';
-                                    images_flex.append(image_temp)
-                                    image_temp.src = window.URL.createObjectURL(this.files[i]);
+                                    image_view_temp = document.createElement('img');
+                                    image_view_temp.className = 'uploaded-image-preview';
+                                    image_view_temp.src = window.URL.createObjectURL(files[i]);
+
+                                    images_flex.append(image_view_temp);
                                }
                             ">
 

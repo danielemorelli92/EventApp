@@ -430,6 +430,17 @@ button:disabled {
     font-size: 22px;
     font-weight: normal;
 }
+.uploaded-image-preview {
+    overflow: hidden;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    object-fit: cover;
+
+    width: calc(25% - 8px);
+    height: 180px;
+    margin: 4px;
+}
 .image-preview {
     overflow: hidden;
     -webkit-border-radius: 8px;
