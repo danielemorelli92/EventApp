@@ -8,6 +8,13 @@
 
 @section('content')
 
+    <script>
+        function auto_grow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight+1)+"px"
+        }
+    </script>
+
 
     <div class="left-side-column">
         <a href="javascript:history.back()"
@@ -37,29 +44,33 @@
 
         <hr> <!-- Linea orizzontale -->
 
-        <h1>Commenti</h1>
-        @if(\Illuminate\Support\Facades\Auth::check())
-            <ul style="list-style-type: none; list-style-position: outside;">
-                <li>
-                    <p>Inizia una discussione:</p>
-                    <form action="/comment/{{$event->id}}" method="POST">
-                        @csrf
-                        <textarea name="content" id="new_comment" cols="100" rows="3"
-                                  placeholder="Scrivi un commento..." required></textarea>
-                        <br>
-                        <input type="submit" value="Invia">
-                    </form>
-                </li>
-            </ul>
-        @endif
+        <div id="area_commenti" style="margin-left: 8px; margin-right: 8px; display: flex;flex-direction: column">
 
-        <ul style="list-style-type: none">
-            @foreach($event->comments->sortDesc() as $comment)
-                @if($comment->parent_id == null)
-                    @include('components.comment')
-                @endif
-            @endforeach
-        </ul>
+            <div class="section-title" style="margin-left: 8px; margin-top: 8px">Commenti</div>
+            @if(\Illuminate\Support\Facades\Auth::check())
+                <form class="post-container" style="padding: 12px" action="/comment/{{$event->id}}" method="POST">
+                    @csrf
+                    <strong>Crea un nuovo post</strong>
+                    <div style="display: flex; flex-direction: row; margin-top: 4px">
+                        <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: none; width: 100%;" name="content" id="new_comment"
+                               placeholder="Testo post" required></textarea>
+                        <input style="margin-left: 8px; height: 52px" type="submit" value="Crea">
+                    </div>
+                </form>
+
+            @endif
+
+            <div style="list-style-type: none">
+                @foreach($event->comments->sortDesc() as $comment)
+                    @if($comment->parent_id == null)
+                        <div class="post-container">
+                            @include('components.comment')
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
+        </div>
 
     </div>
 
