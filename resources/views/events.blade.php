@@ -54,6 +54,10 @@
             <input type="radio" class="radio-selection-item-radio" name="data-max" value="month">
             <label for="data-max" class="radio-selection-item-label">Questo mese</label>
         </div>
+        <div class="radio-selection-item">
+            <input type="radio" class="radio-selection-item-radio" name="data-max" value="future">
+            <label for="data-max" class="radio-selection-item-label">Futuri</label>
+        </div>
 
         <label class="section-title">Filtra per interesse</label>
         <div>
