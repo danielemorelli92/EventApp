@@ -40,7 +40,7 @@ class EventController extends Controller
                 $events = $events->intersect($query->get());
             }
             /*if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
-                //$query->where('address', 'like', $param['luogo']);
+                //$query->where('city', 'like', $param['luogo']);
             }*/
             if (array_key_exists('categories', $param)) {
                 $events_with_tags = collect();
@@ -308,7 +308,7 @@ class EventController extends Controller
         $validatedData = request()->validate([
             'title' => 'string|min:4|max:255',
             'description' => 'string',
-            'address' => 'string',
+            'city' => 'string',
             'type' => 'string|min:4|max:255',
             'starting_time' => 'date',
             'registration_link' => 'string',
