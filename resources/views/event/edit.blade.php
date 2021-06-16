@@ -26,8 +26,14 @@
                                 required
                             @endif
                         ></div>
-                    <div class="big-form-row"><label class="big-form-label" for="starting_time">Data inizio evento</label><input class="big-form-compact-field" type="datetime-local" name="starting_time" value="{{ date('Y-m-d\TH:i:s', strtotime($event->starting_time)) }}" required></div>
-                    <div class="big-form-row"><label class="big-form-label" for="ending_time">Data fine evento</label><input class="big-form-compact-field" type="datetime-local" name="ending_time" value="{{ $event->ending_time != null ? date('Y-m-d\TH:i:s', strtotime($event->ending_time)) : null }}"></div>
+                    <div class="big-form-row"><label class="big-form-label" for="starting_time">Data inizio evento</label>
+                        <input class="big-form-compact-field" type="datetime-local"
+                                                                                                                                 onchange="
+                                                                                                                                 if (document.getElementById('ending_time').value < this.value) {
+                                                                                                                                     document.getElementById('ending_time').value = this.value;
+                                                                                                                                 }
+                                                                                                                                 document.getElementById('ending_time').min = this.value;" min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="starting_time" name="starting_time" value="{{ date('Y-m-d\TH:i:s', strtotime($event->starting_time)) }}" required></div>
+                    <div class="big-form-row"><label class="big-form-label" for="ending_time">Data fine evento</label><input class="big-form-compact-field" type="datetime-local" id="ending_time" name="ending_time" onfocus="this.min = document.getElementById('starting_time').value" value="{{ $event->ending_time != null ? date('Y-m-d\TH:i:s', strtotime($event->ending_time)) : null }}"></div>
                     <div class="big-form-row" style="width: auto">
                         <label class="big-form-label" style="min-width: 400px" for="registration_link">Richiedi registrazione esterna</label>
                         <div class="radio-selection-item" style="flex-grow: 1">
