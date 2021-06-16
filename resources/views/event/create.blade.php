@@ -10,7 +10,7 @@
                 <div class="big-form-group">
                     <div class="big-form-column"><label class="big-form-label" for="title">Titolo</label>
                         <input class="big-form-big-field" name="title" type="text" placeholder="..." required></div>
-                    <div class="big-form-column"><label class="big-form-label" for="description">Descrizione</label><input class="big-form-big-field" type="text" name="description" placeholder="..." required></div>
+                    <div class="big-form-column"><label class="big-form-label" for="description">Descrizione</label><textarea class="big-form-big-field" type="text" name="description" placeholder="..." required></textarea></div>
                     <div class="big-form-column"><label class="big-form-label" for="city">Città</label><input class="big-form-big-field" type="text" name="city" required></div>
                     <div class="big-form-row"><label class="big-form-label" for="type">Tipo evento</label><input class="big-form-compact-field" type="text" name="type" required></div>
                     <div class="big-form-row"><label class="big-form-label" for="max_partecipants">Numero partecipanti</label><input class="big-form-compact-field" type="number" min="0" name="max_partecipants" placeholder=""></div>
