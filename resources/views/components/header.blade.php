@@ -1,7 +1,8 @@
 <div class="header" style="width: 100%">
-    <div class="header-logo-container">
-        <img src="{{ url('/images/logo-header.svg') }}" style="width: 171px; height: 40px;" alt="logo-header">
-    </div>
+
+        <a class="header-logo-container" href="/">
+            <img src="{{ url('/images/logo-header.svg') }}" style="-webkit-filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.25)); filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.25)); width: 171px; height: 40px;" alt="logo-header">
+        </a>
 
 
     @if (\Illuminate\Support\Facades\Route::has('login'))
