@@ -94,6 +94,7 @@
                     </div>
 
 
+                    @if($event->images->isNotEmpty())
                     <div class="big-form-column">
                         <label class="big-form-label" style="min-width: 400px">Immagini presenti</label>
 
@@ -108,7 +109,7 @@
                                         } else {
                                             document.getElementById('image-disabled-transparent-overlay_{{$image->id}}').style.zIndex = 2;
                                         }
-                                    " name="selected_images[]" style="z-index: 3; transform : scale(1.8); position: absolute; right: 8px; top: 8px" value="{{$image->id}}" checked>
+                                    " name="selected_images[]" style="z-index: 3; transform : scale(1.8); position: absolute; right: 5px; top: 8px" value="{{$image->id}}" checked>
                                     <div class="uploaded-image-preview" id="image-disabled-transparent-overlay_{{$image->id}}"
                                          style="z-index: 0; background: rgba(213,213,213,0.5); width: 100%; height: 100%; margin: 0; position: absolute"></div>
                                     <img style="display: block; z-index: 1; width: 100%; height: 100%; margin: 0; position: absolute"
@@ -120,6 +121,7 @@
 
                         </div>
                     </div>
+                    @endif
 
 
                     <div class="big-form-column">
