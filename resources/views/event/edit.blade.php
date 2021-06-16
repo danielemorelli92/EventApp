@@ -96,11 +96,16 @@
 
                     <div class="big-form-column">
                         <label class="big-form-label" style="min-width: 400px">Immagini presenti</label>
+
                         <div id="images_edit_flex" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
 
+
                             @foreach($event->images as $image)
-                                    <img class="uploaded-image-preview" id="image_{{$image->file_name}}" src="/storage/images/{{$image->file_name}}"
+                                <div style="width: 200px; height: 200px">
+                                    <input type="checkbox" name="selected_images[]" value="{{$image->id}}" checked>
+                                    <img class="uploaded-image-preview" id="image_{{$image->id}}" src="/storage/images/{{$image->file_name}}"
                                          alt="image-stock">
+                                </div>
                                 <!-- TODO inserire bottone e logica cancellazione immagine-->
                             @endforeach
 

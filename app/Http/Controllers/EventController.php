@@ -368,6 +368,12 @@ class EventController extends Controller
             Notification::send($event->registeredUsers, new AddressChanged($event, $old_address));
         }
 
+        foreach ($event->images as $image) {
+            if ( !collect(request('selected_images'))->contains($image->id) ) {
+                $image->delete();
+            }
+        }
+
         if (request()->hasFile('added_images')) {
             foreach (request()->added_images as $image) {
                 // Save the file locally in the storage/public/ folder under a new folder named /images

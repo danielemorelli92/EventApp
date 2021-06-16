@@ -14,7 +14,6 @@ class ImageController extends Controller
         if (Auth::id() !== $image->event->author_id) {
             abort(401);
         }
-        Storage::delete('/public/images/' . $image->file_name);
         $image->delete();
     }
 }

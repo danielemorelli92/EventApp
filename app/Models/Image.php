@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Image extends Model
 {
@@ -17,5 +18,11 @@ class Image extends Model
 
     public function event() {
         return $this->belongsTo(Event::class);
+    }
+
+    public function delete()
+    {
+        Storage::delete('/public/images/' . $this->file_name);
+        return parent::delete();
     }
 }
