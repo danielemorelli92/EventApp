@@ -31,7 +31,7 @@ class EventFactory extends Factory
             'price' => $this->faker->numberBetween(0, 50000),
             'ticket_office' => $this->faker->url(),
             'website' => $this->faker->url(),
-            'address' => $this->faker->address(),
+            'city' => $this->faker->city(),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
             'starting_time' => $this->faker->dateTimeBetween('-1 year', '1 year'),

@@ -78,11 +78,7 @@
         <div class="info-box">
             @if ($event->city != null)
                 <label class="info-item-title">Città</label>
-                <label class="info-item-label">Roseto degli Abruzzi</label>
-            @endif
-            @if ($event->address != null)
-                <label class="info-item-title">Indirizzo</label>
-                <label class="info-item-label">{{ $event->address }}</label>
+                <label class="info-item-label">{{ $event->city }}</label>
             @endif
             @if ($event->starting_time != null)
                     <label class="info-item-title">Inizio</label>
