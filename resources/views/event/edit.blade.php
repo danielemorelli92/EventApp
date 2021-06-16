@@ -116,7 +116,6 @@
                                          class="uploaded-image-preview" id="image_{{$image->id}}" src="/storage/images/{{$image->file_name}}"
                                          alt="image-stock">
                                 </div>
-                                <!-- TODO inserire bottone e logica cancellazione immagine-->
                             @endforeach
 
                         </div>
