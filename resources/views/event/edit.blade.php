@@ -101,9 +101,18 @@
 
 
                             @foreach($event->images as $image)
-                                <div style="width: 200px; height: 200px">
-                                    <input type="checkbox" name="selected_images[]" value="{{$image->id}}" checked>
-                                    <img class="uploaded-image-preview" id="image_{{$image->id}}" src="/storage/images/{{$image->file_name}}"
+                                <div style="width: calc(25% - 10px); height: 180px; position: relative; margin: 4px">
+                                    <input type="checkbox" onchange="
+                                        if (this.checked) {
+                                            document.getElementById('image-disabled-transparent-overlay_{{$image->id}}').style.zIndex = 0;
+                                        } else {
+                                            document.getElementById('image-disabled-transparent-overlay_{{$image->id}}').style.zIndex = 2;
+                                        }
+                                    " name="selected_images[]" style="z-index: 3; transform : scale(1.8); position: absolute; right: 8px; top: 8px" value="{{$image->id}}" checked>
+                                    <div class="uploaded-image-preview" id="image-disabled-transparent-overlay_{{$image->id}}"
+                                         style="z-index: 0; background: rgba(213,213,213,0.5); width: 100%; height: 100%; margin: 0; position: absolute"></div>
+                                    <img style="display: block; z-index: 1; width: 100%; height: 100%; margin: 0; position: absolute"
+                                         class="uploaded-image-preview" id="image_{{$image->id}}" src="/storage/images/{{$image->file_name}}"
                                          alt="image-stock">
                                 </div>
                                 <!-- TODO inserire bottone e logica cancellazione immagine-->
