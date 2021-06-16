@@ -81,7 +81,7 @@
 <div class="whole-page-two-columns" style="
     width: 100%;
     height: 100%;
-    grid-template-columns: calc(100% - 300px) 300px;
+    grid-template-columns: auto 300px;
     grid-template-rows: 64px calc(100% - 64px);
 ">
     <div class="header" style="width: 100%">
