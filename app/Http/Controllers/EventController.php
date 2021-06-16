@@ -333,6 +333,9 @@ class EventController extends Controller
             'ticket_office' => 'nullable',
             'website' => 'nullable'
         ]);
+        request()->validate([
+            'added_images[]' => 'nullable|mimes:jpg,jpeg,bmp,png'
+        ]);
 
         if (array_key_exists('registration_link', $validatedData) && $event->fresh()->registration_link != $validatedData['registration_link']) {
             if (!($validatedData['registration_link'] == 'ticket_office' && (array_key_exists('ticket_office', $validatedData) || $event->ticket_office != null))) {
@@ -363,6 +366,17 @@ class EventController extends Controller
         }
         if ($event->address != $old_address) {
             Notification::send($event->registeredUsers, new AddressChanged($event, $old_address));
+        }
+
+        if (request()->hasFile('added_images')) {
+            foreach (request()->added_images as $image) {
+                // Save the file locally in the storage/public/ folder under a new folder named /images
+                Image::create([
+                    "event_id" => $event->id,
+                    "file_name" => $image->hashName()
+                ]);
+                $image->store('images', 'public');
+            }
         }
 
         return redirect('/events/manage');
