@@ -41,13 +41,9 @@
 
 
                     <div class="big-form-column">
-                        <label class="big-form-label" style="min-width: 400px" for="registration_link">Carica immagini</label>
-
-
+                        <label class="big-form-label" style="min-width: 400px" for="upload-label">Carica immagini</label>
                             <div id="images_flex" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
-
                                 <label style="margin-left: auto; margin-top: auto; margin-right: 4px" id="upload-label" class="custom-file-upload">
-
                                     <input type="file" name="images[]" multiple="multiple"  accept="image/*"
                                            onchange="
                                                 var images_flex = document.getElementById('images_flex');
