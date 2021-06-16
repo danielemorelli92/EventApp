@@ -1,18 +1,14 @@
-<div class="chat-area"
+<div
      style="
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         justify-content: flex-start;
         background-color: gray;
-        width: 100%;
-        max-height: 100%;
+        width: auto;
+        height: auto;
+        overflow-y:scroll;
         "
 >
-    <div style="
-            overflow-y:scroll;
-            overflow-x:hidden;
-            height: 100%;"
-    >
         @include('components.my-message')
         @include('components.reply')
         @include('components.my-message')
@@ -32,5 +28,5 @@
         @include('components.my-message')
         @include('components.my-message')
         @include('components.reply')
-    </div>
+
 </div>

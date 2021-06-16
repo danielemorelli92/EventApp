@@ -1,4 +1,4 @@
-<div class="chats-area" style="width: calc(100% + 8px); overflow-y:scroll; overflow-x: hidden;">
+<div class="chats-area" style="width: auto; height: auto; overflow-y:scroll;">
     @include('components.chat-box')
     @include('components.chat-box')
     @include('components.chat-box')
