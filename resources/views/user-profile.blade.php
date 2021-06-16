@@ -16,7 +16,7 @@
                         <div class="event-square-title">{{ $created_event->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $created_event->address }}
+                                {{ $created_event->city }}
                             </div>
                             <div class="event-square-attribute">
                                 {{ substr($created_event->starting_time, 0, -3) }}
@@ -39,7 +39,7 @@
                         <div class="event-square-title">{{ $registered_event_past->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $registered_event_past->address }}
+                                {{ $registered_event_past->city }}
                             </div>
                             <div class="event-square-attribute">
                                 {{ substr($registered_event_past->starting_time, 0, -3) }}

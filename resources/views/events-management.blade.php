@@ -13,7 +13,7 @@
                     <div class="event-rectangle-title">{{ $event->title }}</div>
                     <div class="event-rectangle-attributes-group">
                         <div class="event-rectangle-attribute">
-                            {{ $event->address }}
+                            {{ $event->city }}
                         </div>
                         <form action="/events/{{ $event->id }}" method="POST">
                             @csrf
