@@ -172,6 +172,71 @@ button:disabled {
     display: inline-block;
     font-size: 16px;
 }
+.custom-file-upload {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 22.5px;
+    white-space:nowrap;
+
+    background-color: white;
+    color: #0090E1;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+.custom-file-upload:hover {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 22.5px;
+    white-space:nowrap;
+
+    background-color: #0090E1;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+.custom-file-upload:active {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 22.5px;
+
+    background-color: #0067a0;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+.custom-file-upload:disabled {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #aaa;
+    height: 45px;
+
+    background-color: #bbb;
+    color: #444;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+input[type="file"] {
+    display: none;
+}
 .icon-button-42 {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -435,9 +500,10 @@ button:disabled {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
+    border: 0.5px solid #bbb;
     object-fit: cover;
 
-    width: calc(25% - 8px);
+    width: calc(25% - 10px);
     height: 180px;
     margin: 4px;
 }

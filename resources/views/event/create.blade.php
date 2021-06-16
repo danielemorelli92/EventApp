@@ -43,22 +43,29 @@
                     <div class="big-form-column">
                         <label class="big-form-label" style="min-width: 400px" for="registration_link">Carica immagini</label>
 
-                        <input type="file" name="images[]" multiple="multiple"  accept="image/*"
-                               onchange="
-                               var images_flex = document.getElementById('images_flex');
-                               images_flex.innerHTML = '';
-                               for (let i = 0; i < files.length; i++) {
-                                    image_view_temp = document.createElement('img');
-                                    image_view_temp.className = 'uploaded-image-preview';
-                                    image_view_temp.src = window.URL.createObjectURL(files[i]);
 
-                                    images_flex.append(image_view_temp);
-                               }
-                            ">
+                            <div id="images_flex" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
 
-                        <div id="images_flex" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
+                                <label style="margin-left: auto; margin-top: auto; margin-right: 4px" id="upload-label" class="custom-file-upload">
 
-                        </div>
+                                    <input type="file" name="images[]" multiple="multiple"  accept="image/*"
+                                           onchange="
+                                                var images_flex = document.getElementById('images_flex');
+                                                upload_button = document.getElementById('upload-label');
+                                                images_flex.innerHTML = '';
+                                                for (let i = 0; i < files.length; i++) {
+                                                     image_view_temp = document.createElement('img');
+                                                     image_view_temp.className = 'uploaded-image-preview';
+                                                     image_view_temp.src = window.URL.createObjectURL(files[i]);
+
+                                                     images_flex.append(image_view_temp);
+                                                }
+                                                images_flex.append(upload_button);
+                                           ">
+                                    Scegli immagini da caricare
+                                </label>
+                            </div>
+
 
 
                     </div>
