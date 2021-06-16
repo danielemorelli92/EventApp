@@ -4,72 +4,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url('/css/events.css') }}"
 @endsection
 
-@section('script')
-    <script>
-
-        function imageLoad() {
-            console.log("CIAO");
-
-            var fileUpload = document.getElementById("fileupload");
-
-            fileUpload.onchange = function () {
-
-                if (typeof (FileReader) != "undefined") {
-
-                    var dvPreview = document.getElementById("dvPreview");
-
-                    dvPreview.innerHTML = "";
-
-                    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-
-                    for (var i = 0; i < fileUpload.files.length; i++) {
-
-                        var file = fileUpload.files[i];
-
-                        if (regex.test(file.name.toLowerCase())) {
-
-                            var reader = new FileReader();
-
-                            reader.onload = function (e) {
-
-                                var img = document.createElement("IMG");
-
-                                img.height = "100";
-
-                                img.width = "100";
-
-                                img.src = e.target.result;
-
-                                dvPreview.appendChild(img);
-
-                            }
-
-                            reader.readAsDataURL(file);
-
-                        } else {
-
-                            alert(file.name + " is not a valid image file.");
-
-                            dvPreview.innerHTML = "";
-
-                            return false;
-
-                        }
-
-                    }
-
-                } else {
-
-                    alert("This browser does not support HTML5 FileReader.");
-
-                }
-
-            }
-
-        };
-
-    </script>
-@endsection
 @section('content')
     <div class="main-content-column">
         <div class="big-form-container">
@@ -108,7 +42,25 @@
                     <div class="big-form-column">
                         <label class="big-form-label" style="min-width: 400px" for="registration_link">Carica immagini</label>
 
-                        <input type="file" name="images[]" id="fileupload" onchange="imageLoad()" multiple="multiple"  accept="image/*" >
+                        <input type="file" name="images[]" multiple="multiple"  accept="image/*"
+                               onchange="
+                               var images_flex = document.getElementById('images_flex');
+                               for (let i = 0; i < files.length; i++) {
+                                   console.log('boh');
+                                    image_temp = document.createElement('img');
+                                    image_temp.style.width = 'calc(25% - 8px)';
+                                    image_temp.style.height = '180px';
+                                    image_temp.style.margin = '4px';
+                                    image_temp.className = 'image-preview';
+                                    images_flex.append(image_temp)
+                                    image_temp.src = window.URL.createObjectURL(this.files[i]);
+                               }
+                            ">
+
+                        <div id="images_flex" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
+
+                        </div>
+
 
                     </div>
 
