@@ -1,19 +1,18 @@
 <div class="message"
      style="
-         margin: 10px;
-            min-width: 40%;
-            max-width: 50%;
-            min-height: 20px;
-            align-self: flex-start"
+            -webkit-border-radius: 12px 0 0 0;
+            -moz-border-radius: 12px 0 0 0;
+            border-radius: 12px 0 0 0;
+            border: 1px solid #a3c0db;
+            background-color: #daefff;
+
+            margin: 4px;
+            padding: 12px;
+            min-width: 100px;
+            align-self: flex-end"
 >
-        <textarea style="
-            resize: none;
-            overflow: hidden;
-            font-size:18px;
-            min-height: 1.1em;
-            padding:2px;
-            width: 100%;
-            background-color: lightskyblue;"
-                  readonly>Messaggio inviato da me
-        </textarea>
+        <div style="
+            word-wrap: break-word;
+            font-size:18px;">Messaggio inviato da me
+        </div>
 </div>

@@ -3,7 +3,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        background-color: gray;
+        background-color: #f4f4f4;
         width: auto;
         height: auto;
         overflow-y:scroll;

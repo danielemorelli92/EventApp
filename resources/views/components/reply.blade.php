@@ -1,18 +1,18 @@
 <div class="reply"
      style="
-         margin: 10px;
-            min-width: 40%;
-            max-width: 50%;
-            min-height: 20px;
-            align-self: flex-end"
+            -webkit-border-radius: 0 0 12px 0;
+            -moz-border-radius: 0 0 12px 0;
+            border-radius: 0 0 12px 0;
+            border: 1px solid #cbcbcb;
+            background-color: white;
+
+            margin: 4px;
+            padding: 12px;
+            min-width: 100px;
+            align-self: flex-start;"
 >
-        <textarea style="
-            resize: none;
-            overflow: hidden;
-            font-size:18px;
-            min-height: 1.1em;
-            padding:2px;
-            width: 100%;
-            background-color: white;" readonly>Messaggio inviato da un altro
-        </textarea>
+    <div style="
+            word-wrap: break-word;
+            font-size:18px;">Messaggio inviato da un altro
+    </div>
 </div>
