@@ -8,14 +8,12 @@
      align-items: center;">
 
     <div
-        style="width: 60px;
-          height: 100%;">
+        style="width: 42px;
+          height: 42px;
+                        margin: 4px 16px 4px 12px;">
         <img class="image-preview" src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
              alt="Placeholder immagine utente"
-             style="background: #cdcdcd;
-                        margin: 4px 10px;
-                        height: 42px;
-                         width: 42px; "
+             style="background: #cdcdcd;"
         >
     </div>
     <div>Nome utente con cui stai chattando</div>
