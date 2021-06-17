@@ -9,9 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
-/**
- * @method static find(int|string|null $id)
- */
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -59,20 +57,5 @@ class User extends Authenticatable
     public function comments(): Relation
     {
         return $this->hasMany(Comment::class, 'author_id');
-    }
-
-    public function sent(): Relation
-    {
-        return $this->hasMany(Message::class, 'sender_id');
-    }
-
-    public function received(): Relation
-    {
-        return $this->hasMany(Message::class, 'recipient_id');
-    }
-
-    public function chats(): Collection
-    {
-        return $this->sent->union($this->received);
     }
 }

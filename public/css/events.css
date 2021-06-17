@@ -160,7 +160,7 @@ textarea {
     -moz-border-radius: 4px;
     font-size: 19px;
     box-sizing: border-box;
-    min-height: 36px;
+    min-height: 52px;
 }
 input[type="email"] {
     padding-left: 8px;
@@ -492,12 +492,14 @@ input[type="file"] {
     background-color: rgba(255, 255, 255, 0.15);
 }
 .header-icon-preview {
+    max-width: none;
     object-fit: cover;
 
     width: 30px;
     height: 30px;
 }
 .header-button {
+    font-family: Arial, Helvetica, sans-serif;
     -webkit-border-radius: 0px 12px 0px 0px;
     -moz-border-radius: 0px 12px 0px 0px;
     border-radius: 0px 12px 0px 0px;
@@ -514,6 +516,7 @@ input[type="file"] {
     font-weight: bold;
     display: inline-block;
     font-size: 14px;
+    align-self: center;
 }
 .header-button:hover {
     -webkit-border-radius: 0px 12px 0px 0px;
@@ -531,6 +534,7 @@ input[type="file"] {
     font-weight: bold;
     display: inline-block;
     font-size: 14px;
+    align-self: center;
 }
 .header-button:active {
     -webkit-border-radius: 0px 12px 0px 0px;
@@ -548,6 +552,7 @@ input[type="file"] {
     font-weight: bold;
     display: inline-block;
     font-size: 14px;
+    align-self: center;
 }
 .whole-page-one-columns{
     width: 100%;
@@ -588,7 +593,6 @@ input[type="file"] {
     text-align: center;
     background: #0090E1;
     font-size: 16px;
-    /*TODO bloccare scrolling*/
 }
 .header-logo-container{
     -webkit-border-radius: 6px;
