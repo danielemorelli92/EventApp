@@ -1,1 +1,1 @@
-composer require munafio/chatify & php artisan chatify:install & php artisan migrate
+composer require munafio/chatify & php artisan chatify:install & php artisan migrate & php artisan vendor:publish --tag=chatify-config & php artisan vendor:publish --tag=chatify-views & php artisan vendor:publish --tag=chatify-assets & php artisan vendor:publish --tag=chatify-models & php artisan vendor:publish --tag=chatify-migrations & php artisan vendor:publish --tag=chatify-controllers
