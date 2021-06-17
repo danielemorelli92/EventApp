@@ -5,8 +5,9 @@
     <div class="main-content-column">
         <div class="big-form-container">
 
-            <form style="display: flex; flex-direction: column;" action="/">
+            <form style="display: flex; flex-direction: column;" action="/user" method="POST">
                 @csrf
+                @method('PUT')
 
                 <h2 style="margin-bottom: 20px;">Modifica account</h2>
 
