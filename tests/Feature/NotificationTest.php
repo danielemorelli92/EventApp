@@ -8,6 +8,7 @@ use App\Notifications\AddressChanged;
 use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
+use App\Notifications\ReplyToMe;
 use App\Notifications\TitleChanged;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -115,5 +116,23 @@ class NotificationTest extends TestCase
         self::assertNotNull($notifica, 'l\'utente non riceve la notifica');
         self::assertEquals(EventCanceled::class, $notifica->type, 'l\'utente non riceve la giusta notifica');
         self::assertCount(1, $user->notifications, 'l\'utente riceve più notifiche di quelle attese');
+    }
+
+    public function test_a_user_receives_notifications_for_replies_to_their_comments()
+    {
+        $event = Event::factory()->hasComments(1)->create();
+        $comment = $event->comments->first();
+        $commentator = $comment->author;
+        $responding_user = User::factory()->create();
+
+        $this->actingAs($responding_user)->post('/comment/' . $event->id . '/' . $comment->id, [
+            'content' => 'A new reply!'
+        ]);
+
+        $notifica = $commentator->notifications->first();
+
+        self::assertNotNull($notifica, 'l\'utente non riceve la notifica');
+        self::assertEquals(ReplyToMe::class, $notifica->type, 'l\'utente non riceve la giusta notifica');
+        self::assertCount(1, $commentator->notifications, 'l\'utente riceve più notifiche di quelle attese');
     }
 }

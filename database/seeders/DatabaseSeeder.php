@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\{User,Tag,Event,Image};
+use Illuminate\Support\Facades\DB;
+use App\Models\{Comment, User, Tag, Event, Image};
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,8 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::factory()->create([
+            'email' => 'user@email.com'
+        ]);
+        User::factory()->create([
+            'email' => 'admin@email.com'
+        ]);
+
+        DB::table('users')
+            ->where('email', '=', 'admin@email.com')
+            ->update(['type' => 'admin']);
 
         $events = Event::factory()->hasImages(4)->count(15)->hasAuthor(User::factory()->create())->create();
+
         $events->push(Event::factory()->hasImages(4)->create([
             'latitude' => 42.529336,
             'longitude' => 14.1420603,
@@ -61,6 +73,26 @@ class DatabaseSeeder extends Seeder
                 if (!$event->registeredUsers->contains($user)) {
                     $event->registeredUsers()->attach($user);
                 }
+            }
+            $n = rand(0, 8);
+            $last_comment = null;
+            for ($i = 0; $i < $n; $i++) {
+                $comment = null;
+                if (rand(0, 1) == 0) {
+                    $comment = Comment::factory()->create([
+                        'event_id' => $event->id,
+                        'author_id' => $users[rand(0, 99)]->id,
+                        'parent_id' => $last_comment
+                    ]);
+
+                } else {
+                    $comment = Comment::factory()->create([
+                        'event_id' => $event->id,
+                        'author_id' => $users[rand(0, 99)]->id,
+                        'parent_id' => null
+                    ]);
+                }
+                $last_comment = $comment;
             }
         }
     }

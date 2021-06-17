@@ -25,7 +25,6 @@ class CreateRequestsTable extends Migration
                 'identity card',
                 'passport'
             ]);
-            $table->boolean('accettazione')->default(false);
             $table->timestamps();
         });
     }

@@ -6,8 +6,9 @@ use App\Notifications\AddressChanged;
 use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
+use App\Notifications\ReplyToMe;
 use App\Notifications\TitleChanged;
-use App\Models\{Event, Image, Tag};
+use App\Models\{Comment, Event, Image, Tag, User};
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -294,7 +295,6 @@ class EventController extends Controller
         $start = $event->starting_time;
         $address = $event->address;
 
-        //TODO eliminazione immagini
         $event->delete();
         if (now()->isBefore(new Carbon($start))) { // invia la notifica di cancellazione solo se l'evento non è ancora iniziato
             Notification::send($event->registeredUsers, new EventCanceled($title, $start, $address));
@@ -386,5 +386,73 @@ class EventController extends Controller
         }
 
         return redirect('/events/manage');
+    }
+
+    public function store_comment(Event $event)
+    {
+        if (!Auth::check()) {
+            abort(401);
+        }
+        $comment = Comment::create([
+            'author_id' => Auth::id(),
+            'content' => request('content'),
+            'event_id' => $event->id
+        ]);
+
+        return redirect('/event/' . $event->id);
+    }
+
+    public function store_comment_reply(Event $event, Comment $comment)
+    {
+        if (!Auth::check()) {
+            abort(401);
+        }
+        Comment::create([
+            'author_id' => Auth::id(),
+            'content' => request('content'),
+            'event_id' => $event->id,
+            'parent_id' => $comment->id
+        ]);
+
+        $comment->author->notify(new ReplyToMe($event, User::find(Auth::id())));
+
+        return redirect('/event/' . $event->id);
+    }
+
+    public function destroy_comment(Event $event, Comment $comment)
+    {
+        if (Auth::id() != $comment->author->id) {
+            abort(401);
+        }
+
+        $this->destroy_recursively($comment);
+
+        return redirect('/event/' . $event->id);
+    }
+
+    private function destroy_recursively(Comment $comment)
+    {
+        foreach ($comment->comments as $subcomment) {
+            $this->destroy_recursively($subcomment);
+            $subcomment->delete();
+        }
+        $comment->delete();
+    }
+
+    public function update_comment(Event $event, Comment $comment)
+    {
+        if (Auth::id() != $comment->author->id) {
+            abort(401);
+        }
+
+        if (request('content') == null || blank(request('content'))) {
+            return $this->destroy_comment($event, $comment);
+        }
+
+        $comment->update([
+            'content' => request('content')
+        ]);
+
+        return redirect('/event/' . $event->id);
     }
 }

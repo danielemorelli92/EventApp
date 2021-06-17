@@ -1,8 +1,5 @@
 @extends('layouts.layout-header-one-columns')
 
-@section ('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('/css/events.css') }}"
-@endsection
 
 @section('content')
     <div class="main-content-column">

@@ -38,6 +38,11 @@ class Event extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function getImage()
     {
         $image = $this->images->first();
@@ -72,4 +77,6 @@ class Event extends Model
 
         return acos($dist) / $rad * 60 * 1.853;
     }
+
+
 }

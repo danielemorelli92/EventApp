@@ -1,14 +1,24 @@
 @extends('layouts.layout-header-three-columns')
 
-@section ('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('/css/events.css') }}"
+@section('script')
+    <script>
+    </script>
 @endsection
+
 
 @section('content')
 
+    <script>
+        function auto_grow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight+1)+"px"
+        }
+    </script>
+
 
     <div class="left-side-column">
-        <a href="javascript:history.back()" style="display: flex; align-items: center; height: 32px; flex-direction: row">
+        <a href="javascript:history.back()"
+           style="display: flex; align-items: center; height: 32px; flex-direction: row">
             <div style="width: 18px; height: 18px; margin: 4px">
                 <img class="image-preview" src="{{ url('/images/close-icon.svg') }}" alt="close-icon">
             </div>
@@ -42,17 +52,48 @@
                 <div class="category-oval">{{ $tag->body }}</div>
             @endforeach
         </div>
+
+        <hr> <!-- Linea orizzontale -->
+
+        <div id="area_commenti" style="margin-left: 8px; margin-right: 8px; display: flex;flex-direction: column">
+
+            <div class="section-title" style="margin-left: 8px; margin-top: 8px">Commenti</div>
+            @if(\Illuminate\Support\Facades\Auth::check())
+                <form class="post-container" style="padding: 12px" action="/comment/{{$event->id}}" method="POST">
+                    @csrf
+                    <strong>Crea un nuovo post</strong>
+                    <div style="display: flex; flex-direction: row; margin-top: 4px">
+                        <textarea  oninput="auto_grow(this)" onchange="auto_grow(this)" style="resize: none; width: 100%;" name="content" id="new_comment"
+                               placeholder="Testo post" required></textarea>
+                        <input style="margin-left: 8px; height: 52px" type="submit" value="Crea">
+                    </div>
+                </form>
+
+            @endif
+
+            <div style="list-style-type: none">
+                @foreach($event->comments->sortDesc() as $comment)
+                    @if($comment->parent_id == null)
+                        <div class="post-container">
+                            @include('components.comment')
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
+        </div>
+
     </div>
 
     <div class="right-side-column">
         @if(\Illuminate\Support\Facades\Gate::allows('admin'))
+            <form action="/events/edit/{{ $event->id }}" method="GET">
+                <input type="submit" style="width: 100%;" value="Modifica">
+            </form>
             <form action="/events/{{$event->id}}" method="POST">
                 @csrf
                 @method('delete')
-                <input type="submit" value="Cancella">
-            </form>
-            <form action="/events/edit/{{ $event->id }}" method="GET">
-                <input type="submit" value="Modifica">
+                <input type="submit" style="width: 100%; margin-top: 4px" value="Cancella">
             </form>
         @endif
         <div class="section-title">Informazioni evento</div>
@@ -83,21 +124,25 @@
                 @endif
 
             @if ($event->author_id != null)
+                <a class="clickable-info-item-container" href="/user-profile/{{ $event->author->id}}">
                     <label class="info-item-title">Organizzatore</label>
                     <label class="info-item-label">
-                        <a style="color: #0000FF" href="/user-profile/{{ $event->author->id}}">
-                           {{ $event->author->name }}
-                        </a>
+                            {{ $event->author->name }}
                     </label>
+                </a>
                 @endif
 
             @if ($event->website != null)
-                    <a href="{{ $event->website }}" target="_blank" class="info-item-title">Sito web</a>
-                    <a href="{{ $event->website }}" target="_blank" class="info-item-label">{{ $event->website }}</a>
+                    <a class="clickable-info-item-container" href="{{ $event->website }}" target="_blank">
+                        <label class="info-item-title">Sito web</label>
+                        <label class="info-item-label">{{ $event->website }}</label>
+                    </a>
                 @endif
             @if ($event->ticket_office != null)
-                    <a href="{{ $event->ticket_office }}" target="_blank" class="info-item-title">Biglietti</a>
-                    <a href="{{ $event->ticket_office }}" target="_blank" class="info-item-label">{{ $event->ticket_office }}</a>
+                    <a class="clickable-info-item-container" href="{{ $event->ticket_office }}" target="_blank">
+                        <label class="info-item-title">Biglietti</label>
+                        <label class="info-item-label">{{ $event->ticket_office }}</label>
+                    </a>
                 @endif
             @if ($event->price != null)
                     <label class="info-item-title">Prezzo</label>
