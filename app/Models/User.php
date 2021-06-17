@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
+/**
+ * @method static find(int|string|null $id)
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;

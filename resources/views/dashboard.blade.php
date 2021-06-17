@@ -73,7 +73,9 @@
 
     <div class="right-side-column">
 
-        <button style="width: 100%; margin-bottom: 4px;">Modifica account</button>
+        <a href="/user/edit">
+            <button style="width: 100%; margin-bottom: 4px;">Modifica account</button>
+        </a>
 
         @if (Gate::allows('create-request'))
             <form action="/request" method="get">
