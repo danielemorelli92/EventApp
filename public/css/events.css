@@ -160,7 +160,7 @@ textarea {
     -moz-border-radius: 4px;
     font-size: 19px;
     box-sizing: border-box;
-    min-height: 36px;
+    min-height: 52px;
 }
 input[type="email"] {
     padding-left: 8px;
