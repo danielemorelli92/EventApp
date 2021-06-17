@@ -418,14 +418,11 @@ class EventManagementTest extends TestCase
         ]);
 
         $this->assertTrue($event->getImages()->contains($image1), "l'immagine 1 non è stata caricata nel DB");
-        $this->assertTrue(Storage::exists('/public/images/' . $image1->file_name), "l'immagine 1 non è stata caricata nel filesystem");
 
         $this->actingAs($user)->delete("/image/" . $image1->id); // ROUTE chiamata dall'organizzatore, per fare in modo che cancelli una immagine
         $event->refresh();
 
         $this->assertFalse($event->getImages()->contains($image1), "l'immagine 1 non è stata eliminata nel DB");
-        $this->assertFalse(Storage::exists('/public/images/' . $image1->file_name), "l'immagine 1 non è stata eliminata nel filesystem");
-
     }
 
     public function test_a_user_cannot_delete_an_image_of_someone_else()
