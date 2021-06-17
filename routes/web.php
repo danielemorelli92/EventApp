@@ -92,8 +92,4 @@ Route::delete('/comment/{event}/{comment}', [EventController::class, 'destroy_co
 
 Route::put('/comment/{event}/{comment}', [EventController::class, 'update_comment']);
 
-Route::get('/chats', [MessageController::class, 'index']);
-
-Route::get('/chat/{user}', [MessageController::class, 'show']);
-
 require __DIR__ . '/auth.php';
