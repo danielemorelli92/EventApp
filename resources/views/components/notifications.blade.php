@@ -49,6 +49,8 @@
                                 cancellato!@break
                                 @case(\App\Notifications\ReplyToMe::class)
                                 Qualcuno ha risposto ad un tuo commento! @break
+                                @case(\App\Notifications\MessageToMe::class)
+                                Qualcuno ti ha mandato un messaggio! @break
                             @endswitch
                         </div>
                         <div class="notification-item-date">
