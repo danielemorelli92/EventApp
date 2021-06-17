@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\vendor\Chatify;
 
+use App\Notifications\MessageToMe;
 use App\Notifications\ReplyToMe;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
