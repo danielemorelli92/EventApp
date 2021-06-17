@@ -43,16 +43,35 @@ class UserController extends Controller
 
     public function upgrade(User $user)
     {
-
         if (Gate::denies('admin')) {
             abort('401');
         }
 
-        if($user->type === 'normale'){
+        if ($user->type === 'normale') {
             $user->type = 'organizzatore';
             $user->update(['type' => 'organizzatore']);
         }
 
         return redirect('/admin_page');
+    }
+
+    public function edit()
+    {
+        return view('user.edit');
+    }
+
+    public function update()
+    {
+        $validated_data = request()->validate([
+            'name' => 'string|nullable',
+            'birthday' => 'date|before:today|nullable',
+            'email' => 'email|unique:App\Models\User,email',
+            'numero_telefono' => 'numeric|nullable',
+            'sito_web' => 'string|nullable'
+        ]);
+
+        $user = User::find(Auth::id());
+
+        $user->update($validated_data);
     }
 }

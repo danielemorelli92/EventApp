@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @method static find(int|string|null $id)
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;

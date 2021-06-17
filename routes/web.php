@@ -91,4 +91,8 @@ Route::delete('/comment/{event}/{comment}', [EventController::class, 'destroy_co
 
 Route::put('/comment/{event}/{comment}', [EventController::class, 'update_comment']);
 
+Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
+
+Route::put('/user', [UserController::class, 'update'])->name('user.update');
+
 require __DIR__ . '/auth.php';
