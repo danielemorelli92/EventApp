@@ -1,8 +1,10 @@
 <div class="message-area"
      style="
-     background-color: red;
-     width: calc(100% - 44px);
-     height: 50px;
-     padding: 5px 25px 5px 25px;">
-    <input style="width: calc(100% - 10px);" type="text" placeholder="Scrivi un messaggio">
+     background-color: white;
+     border-top: 1.5px solid #bbb;
+     width: auto;
+     padding: 8px;
+    ">
+
+    <input style="width: 100%;" type="text" placeholder="Scrivi un messaggio">
 </div>

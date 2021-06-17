@@ -1,32 +1,41 @@
-<div class="chat-box"
-     style="
-        display: flex;
-        flex-direction: row;
-        background: lightgoldenrodyellow;
-        width: auto;
-        height: auto;
-        border-right-width: 0;
-        border-left-width: 0;
-        padding: 10px;
-        align-items: flex-start;
-        border-color: gray;
-        border-style: solid;
-            "
->
+<div style="
+    display: flex;
+    flex-direction: column;
+    height: 74px">
+    <div class="contacts-list-item" >
 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-         alt="Placeholder immagine utente"
-         style=" width: 20%;
-          height: auto;
-          margin: 0 10px 0 10px;
-          display: block;"
-    >
-    <div class="content" style="display: flex; flex-direction: column">
-        <div style="margin-left: 10px">
-            <p><strong>Nome utente</strong></p>
+        <div
+            style="width: 60px;
+          height: 100%;">
+            <img class="image-preview" style="background: #cdcdcd" src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+                 alt="Placeholder immagine utente"
+
+            >
         </div>
-        <div style="margin-left: 10px">
-            <p>Ultimo messaggio</p>
+        <div class="content" style="height: 100%; width: calc(100% - 70px); margin-left: 10px; display: flex; flex-direction: column">
+            <div style="
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-all;
+            margin-top: 2px;
+             margin-bottom: 4px;
+            -webkit-line-clamp: 1; /* number of lines to show */
+            text-overflow: ellipsis;">
+                Nome utente
+            </div>
+            <div style="
+            overflow-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* number of lines to show */
+            -webkit-box-orient: vertical;">
+                Ultimo messaggio
+            </div>
         </div>
+    </div>
+    <div
+        style="width: auto; margin-left: 8px; margin-right: 8px; height: 1px; background: #bbbbbb;">
     </div>
 </div>

@@ -6,7 +6,7 @@
             border: 1px solid #cbcbcb;
             background-color: white;
 
-            margin: 4px;
+            margin: 4px 8px;
             padding: 12px;
             min-width: 100px;
             align-self: flex-start;"

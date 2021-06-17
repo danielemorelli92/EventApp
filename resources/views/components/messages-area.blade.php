@@ -6,7 +6,7 @@
         background-color: #f4f4f4;
         width: auto;
         height: auto;
-        overflow-y:scroll;
+        overflow-y:auto;
         "
 >
         @include('components.my-message')
