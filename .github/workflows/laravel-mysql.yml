@@ -62,6 +62,7 @@ jobs:
         run: |
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
+          php artisan storage:link
       - name: Clear Config
         run: php artisan config:clear
       - name: Run Migration
