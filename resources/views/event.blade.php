@@ -89,11 +89,7 @@
         <div class="info-box">
             @if ($event->city != null)
                 <label class="info-item-title">Città</label>
-                <label class="info-item-label">Roseto degli Abruzzi</label>
-            @endif
-            @if ($event->address != null)
-                <label class="info-item-title">Indirizzo</label>
-                <label class="info-item-label">{{ $event->address }}</label>
+                <label class="info-item-label">{{ $event->city }}</label>
             @endif
             @if ($event->starting_time != null)
                     <label class="info-item-title">Inizio</label>
@@ -133,9 +129,12 @@
                         <label class="info-item-label">{{ $event->ticket_office }}</label>
                     </a>
                 @endif
-            @if ($event->price != null)
+            @if ($event->price != 0)
                     <label class="info-item-title">Prezzo</label>
                     <label class="info-item-label">{{ $event->price }}€</label>
+                @else
+                      <label class="info-item-title">Prezzo</label>
+                      <label class="info-item-label">GRATIS!</label>
                 @endif
             @if (count($event->tags) > 0)
                     <label class="info-item-title">Categoria principale</label>

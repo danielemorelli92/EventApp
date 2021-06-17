@@ -9,12 +9,12 @@
                 @foreach($interesting_events as $interesting_event)
                     <a name="event" class="event-square" href="/event/{{ $interesting_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="{{ $interesting_event->getImage() }}" alt="image-stock">
+                            <img class="image-preview" src="{{ $interesting_event->getImage() }}" alt="/images/stock.svg">
                         </div>
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $interesting_event->address }}
+                                {{ $interesting_event->city }}
                             </div>
                             <div class="event-square-attribute">
                                 {{ substr($interesting_event->starting_time, 0, -3) }}
@@ -32,12 +32,12 @@
                     <a class="event-square" href="/event/{{ $registered_event_future->id }}">
                         <div class="event-square-image-container">
                             <img class="image-preview" src="{{ $registered_event_future->getImage() }}"
-                                 alt="image-stock">
+                                 alt="/images/stock.svg">
                         </div>
                         <div class="event-square-title">{{ $registered_event_future->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $registered_event_future->address }}
+                                {{ $registered_event_future->city }}
                             </div>
                             <div class="event-square-attribute">
                                 {{ substr($registered_event_future->starting_time, 0, -3) }}
@@ -53,12 +53,12 @@
                 @foreach($registered_events_past as $registered_event_past)
                     <a class="event-square" href="/event/{{ $registered_event_past->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-small" src="{{ $registered_event_past->getImage() }}" alt="image-stock">
+                            <img class="image-small" src="{{ $registered_event_past->getImage() }}" alt="/images/stock.svg">
                         </div>
                         <div class="event-square-title">{{ $registered_event_past->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $registered_event_past->address }}
+                                {{ $registered_event_past->city }}
                             </div>
                             <div class="event-square-attribute">
                                 {{ substr($registered_event_past->starting_time, 0, -3) }}

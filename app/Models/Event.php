@@ -49,7 +49,7 @@ class Event extends Model
         if ($image != null) {
             return $image->url;
         } else {
-            return url('/images/event-stock.jpg');
+            return url('/images/stock.svg');
         }
     }
 

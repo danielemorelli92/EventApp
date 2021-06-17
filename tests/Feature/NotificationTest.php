@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Event;
 use App\Models\User;
-use App\Notifications\AddressChanged;
+use App\Notifications\CityChanged;
 use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
@@ -80,25 +80,6 @@ class NotificationTest extends TestCase
         self::assertCount(1, $user->notifications, 'l\'utente riceve più notifiche di quelle attese');
     }
 
-    public function test_a_user_registered_for_an_event_receives_a_notification_if_the_address_is_changed()
-    {
-        $event = Event::factory()->create();
-        $user = User::factory()->create();
-        $event->registeredUsers()->attach($user);
-        $admin = User::factory()->create();
-        DB::table('users')->where('id', $admin->id)->update(['type' => 'admin']);
-
-        $this->actingAs($admin)->put('/events/' . $event->id, [
-            'address' => 'new address'
-        ]);
-
-        $notifica = $user->notifications->first();
-
-        self::assertNotNull($notifica, 'l\'utente non riceve la notifica');
-        self::assertEquals(AddressChanged::class, $notifica->type, 'l\'utente non riceve la giusta notifica');
-        self::assertCount(1, $user->notifications, 'l\'utente riceve più notifiche di quelle attese');
-    }
-
     public function test_a_user_registered_for_an_event_receives_a_notification_if_the_event_is_deleted()
     {
         $event = Event::factory()->create([
@@ -135,4 +116,23 @@ class NotificationTest extends TestCase
         self::assertEquals(ReplyToMe::class, $notifica->type, 'l\'utente non riceve la giusta notifica');
         self::assertCount(1, $commentator->notifications, 'l\'utente riceve più notifiche di quelle attese');
     }
+
+    public function test_a_user_registered_for_an_event_receives_a_notification_if_the_city_is_changed()
+  {
+      $event = Event::factory()->create();
+      $user = User::factory()->create();
+      $event->registeredUsers()->attach($user);
+      $admin = User::factory()->create();
+      DB::table('users')->where('id', $admin->id)->update(['type' => 'admin']);
+
+      $this->actingAs($admin)->put('/events/' . $event->id, [
+          'city' => 'new city'
+      ]);
+
+      $notifica = $user->notifications->first();
+
+      self::assertNotNull($notifica, 'l\'utente non riceve la notifica');
+      self::assertEquals(CityChanged::class, $notifica->type, 'l\'utente non riceve la giusta notifica');
+      self::assertCount(1, $user->notifications, 'l\'utente riceve più notifiche di quelle attese');
+  }
 }
