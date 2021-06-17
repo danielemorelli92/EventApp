@@ -2,13 +2,13 @@
 
 
 @section('content')
-    <div class="main-content-column" style="max-height: 100vh; width: auto;">
+    <div class="main-content-column">
         <div class="section-title" style="margin-left: 12px">Eventi in base ai filtri</div>
         <div class="events-list">
             @foreach($events as $event)
                 <a name="event" class="event-rectangle" href="/event/{{ $event->id }}">
                     <div class="event-rectangle-image-container">
-                        <img class="image-preview" src="{{ $event->getImage() }}"
+                        <img class="image-preview" src="/storage/images/{{$event->getImage()}}"
                              alt="/images/stock.svg">
                     </div>
                     <div class="event-rectangle-title">{{ $event->title }}</div>

@@ -8,7 +8,7 @@
             @foreach($events as $event)
                 <a name="event" class="event-rectangle" href="/event/{{ $event->id }}">
                     <div class="event-rectangle-image-container">
-                        <img class="image-preview" src="{{ $event->getImage() }}"
+                        <img class="image-preview" src="/storage/images/{{$event->getImage()}}"
                              alt="/images/stock.svg">
                     </div>
                     <div class="event-rectangle-title">{{ $event->title }}</div>

@@ -47,10 +47,14 @@ class Event extends Model
     {
         $image = $this->images->first();
         if ($image != null) {
-            return $image->url;
+            return $image->file_name;
         } else {
-            return url('/images/stock.svg');
+            return 'stock.svg';
         }
+    }
+    public function getImages()
+    {
+        return $this->images;
     }
 
     public function getDistanceToMe(): float

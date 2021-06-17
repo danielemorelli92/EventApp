@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
-use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -91,6 +91,8 @@ Route::post('/comment/{event}', [EventController::class, 'store_comment'])->wher
 Route::delete('/comment/{event}/{comment}', [EventController::class, 'destroy_comment']);
 
 Route::put('/comment/{event}/{comment}', [EventController::class, 'update_comment']);
+
+Route::delete('/image/{image}', [ImageController::class, 'destroy'])->where('image', '[0-9]+'); // cancella un immagine di un evento
 
 Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
 

@@ -4,12 +4,14 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\EventController;
 use App\Models\Event;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class EventManagementTest extends TestCase
@@ -394,5 +396,52 @@ class EventManagementTest extends TestCase
         $event->refresh();
 
         $this->assertEquals('questi sono i criteri', $event->criteri_accettazione, 'sono stati modificati i criteri');
+    }
+
+
+    public function test_an_event_admin_can_delete_an_image()
+    {
+        $user = User::factory()->create();
+
+        $user->type = 'organizzatore';
+
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']);
+
+        $event = Event::factory()->create([
+            'author_id' => $user->id
+        ]);
+
+        $image1 = Image::factory()->create([
+            'event_id' => $event->id
+        ]);
+
+        $this->assertTrue($event->getImages()->contains($image1), "l'immagine 1 non è stata caricata nel DB");
+
+        $this->actingAs($user)->delete("/image/" . $image1->id); // ROUTE chiamata dall'organizzatore, per fare in modo che cancelli una immagine
+        $event->refresh();
+
+        $this->assertFalse($event->getImages()->contains($image1), "l'immagine 1 non è stata eliminata nel DB");
+    }
+
+    public function test_a_user_cannot_delete_an_image_of_someone_else()
+    {
+        $user = User::factory()->create();
+        $user->type = 'organizzatore';
+        $user_unauthorized = User::factory()->create();
+
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']);
+
+        $event = Event::factory()->hasImages(1)->create([
+            'author_id' => $user->id
+        ]);
+
+        $image = $event->images->first();
+        $this->actingAs($user_unauthorized)->delete("/image/" . $image->id);
+        $event->refresh();
+        $this->assertNotNull($event->images->first(), "utente non autorizzato ha eliminato l'immagine");
     }
 }

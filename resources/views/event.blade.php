@@ -26,7 +26,18 @@
         </a>
         <div class="section-title">Immagini</div>
         <div class="event-images-list">
-            <div class="event-images-item"></div>
+
+
+            @foreach($event->images as $image)
+                <div class="event-images-item">
+                    <img class="image-preview" src="/storage/images/{{$image->file_name}}"
+                         alt="image-stock">
+                </div>
+            @endforeach
+
+
+
+
         </div>
     </div>
 

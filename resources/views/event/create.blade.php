@@ -4,7 +4,8 @@
 @section('content')
     <div class="main-content-column">
         <div class="big-form-container">
-            <form style="display: flex; flex-direction: column;" method="post" action="/events">
+            <form style="display: flex; flex-direction: column;" method="post" action="/events"
+                  enctype="multipart/form-data">
                 @csrf
                 <h2 style="margin-bottom: 20px;">Informazioni dell'evento</h2>
                 <div class="big-form-group">
@@ -38,14 +39,49 @@
                             <input onclick="document.getElementById('website').required = true; document.getElementById('ticket_office').required = false" type="radio" class="radio-selection-item-radio" name="registration_link" value="website">
                             <label for="registration_link" class="radio-selection-item-label" >Dal sito web</label>
                         </div>
+
+
+                        <div class="big-form-column">
+                            <label class="big-form-label" style="min-width: 400px" for="upload-label">Carica
+                                immagini</label>
+                            <div id="images_flex"
+                                 style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
+                                <label style="margin-left: auto; margin-top: auto; margin-right: 4px" id="upload-label"
+                                       class="custom-file-upload">
+                                    <input type="file" name="images[]" multiple="multiple" accept="image/*"
+                                           onchange="
+                                                var images_flex = document.getElementById('images_flex');
+                                                upload_button = document.getElementById('upload-label');
+                                                images_flex.innerHTML = '';
+                                                for (let i = 0; i < files.length; i++) {
+                                                     image_view_temp = document.createElement('img');
+                                                     image_view_temp.className = 'uploaded-image-preview';
+                                                     image_view_temp.src = window.URL.createObjectURL(files[i]);
+
+                                                     images_flex.append(image_view_temp);
+                                                }
+                                                images_flex.append(upload_button);
+                                           ">
+                                    Scegli immagini da caricare
+                                </label>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="big-form-column">
+                            <label class="big-form-label" for="criteri_accettazione" style="min-width: 400px">Criteri di
+                                accettazione</label>
+                            <textarea class="big-form-big-field" id="" name="criteri_accettazione"
+                                      style="resize: vertical;"></textarea>
+                        </div>
+                        <button class="big-form-submit-button" type="submit" value="Crea evento">Crea evento</button>
                     </div>
 
+                    <div style="display: flex; flex-direction: column">
 
-                    <label for="criteri_accettazione">Criteri accettazione:</label>
-                        <textarea id="" name="criteri_accettazione">
-                        </textarea>
-
-                    <button class="big-form-submit-button" type="submit" value="Crea evento">Crea evento</button>
+                    </div>
                 </div>
             </form>
 

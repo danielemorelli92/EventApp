@@ -8,8 +8,9 @@ use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
 use App\Notifications\ReplyToMe;
 use App\Notifications\TitleChanged;
-use App\Models\{Comment, Event, Tag, User};
+use App\Models\{Comment, Event, Image, Tag, User};
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -129,7 +130,9 @@ class EventController extends Controller
             'ticket_office' => 'nullable',
             'website' => 'nullable',
             'registration_link' => 'string',
-            'criteri_accettazione'=> 'nullable'
+            'criteri_accettazione'=> 'nullable',
+
+
         ]);
         if ($validatedData['website'] != "" && !str_contains($validatedData['website'], "http://")  && !str_contains($validatedData['website'], "https://") ) {
             $validatedData['website'] = 'https://'.$validatedData['website'];
@@ -142,6 +145,9 @@ class EventController extends Controller
         if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
             abort(400);
         }
+        request()->validate([
+            'images[]' => 'nullable|mimes:jpg,jpeg,bmp,png'
+        ]);
 
         if($validatedData['starting_time'] <= date(now()))
             {
@@ -150,6 +156,16 @@ class EventController extends Controller
 
         $event = Event::factory()->create($validatedData);
 
+        if (request()->hasFile('images')) {
+            foreach (request()->images as $image) {
+                // Save the file locally in the storage/public/ folder under a new folder named /images
+                Image::create([
+                    "event_id" => $event->id,
+                    "file_name" => $image->hashName()
+                ]);
+                $image->store('images', 'public');
+            }
+        }
         return redirect('/events/manage', 201);
     }
 
@@ -285,7 +301,6 @@ class EventController extends Controller
         $city = $event->city;
 
         $event->delete();
-
         if (now()->isBefore(new Carbon($start))) { // invia la notifica di cancellazione solo se l'evento non è ancora iniziato
             Notification::send($event->registeredUsers, new EventCanceled($title, $start, $city));
         }
@@ -323,6 +338,9 @@ class EventController extends Controller
             'ticket_office' => 'nullable',
             'website' => 'nullable'
         ]);
+        request()->validate([
+            'added_images[]' => 'nullable|mimes:jpg,jpeg,bmp,png'
+        ]);
 
         if (array_key_exists('registration_link', $validatedData) && $event->fresh()->registration_link != $validatedData['registration_link']) {
             if (!($validatedData['registration_link'] == 'ticket_office' && (array_key_exists('ticket_office', $validatedData) || $event->ticket_office != null))) {
@@ -353,6 +371,23 @@ class EventController extends Controller
         }
         if ($event->city != $old_city) {
             Notification::send($event->registeredUsers, new CityChanged($event, $old_city));
+        }
+
+        foreach ($event->images as $image) {
+            if ( !collect(request('selected_images'))->contains($image->id) ) {
+                $image->delete();
+            }
+        }
+
+        if (request()->hasFile('added_images')) {
+            foreach (request()->added_images as $image) {
+                // Save the file locally in the storage/public/ folder under a new folder named /images
+                Image::create([
+                    "event_id" => $event->id,
+                    "file_name" => $image->hashName()
+                ]);
+                $image->store('images', 'public');
+            }
         }
 
         return redirect('/events/manage');
