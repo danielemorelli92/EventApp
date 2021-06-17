@@ -94,4 +94,8 @@ Route::put('/comment/{event}/{comment}', [EventController::class, 'update_commen
 
 Route::delete('/image/{image}', [ImageController::class, 'destroy'])->where('image', '[0-9]+'); // cancella un immagine di un evento
 
+Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
+
+Route::put('/user', [UserController::class, 'update'])->name('user.update');
+
 require __DIR__ . '/auth.php';

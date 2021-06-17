@@ -24,7 +24,7 @@ class CreateEventsTable extends Migration
             $table->string('ticket_office', 2083)->nullable();
             $table->string('website', 2083)->nullable();
             $table->enum('registration_link', ['none', 'ticket_office', 'website'])->default('none');
-            $table->text('address');
+            $table->text('city');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->dateTime('starting_time');

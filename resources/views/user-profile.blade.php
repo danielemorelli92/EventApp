@@ -11,12 +11,12 @@
                 @foreach($created_events as $created_event)
                     <a class="event-square" href="/event/{{ $created_event->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="/storage/images/{{$created_event->getImage()}}" alt="image-stock">
+                            <img class="image-preview" src="/storage/images/{{$created_event->getImage()}}" alt="/images/stock.svg">
                         </div>
                         <div class="event-square-title">{{ $created_event->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $created_event->address }}
+                                {{ $created_event->city }}
                             </div>
                             <div class="event-square-attribute">
                                 {{ substr($created_event->starting_time, 0, -3) }}
@@ -34,12 +34,12 @@
                 @foreach($registered_events_past as $registered_event_past)
                     <a class="event-square" href="/event/{{ $registered_event_past->id }}">
                         <div class="event-square-image-container">
-                            <img class="image-preview" src="/storage/images/{{$registered_event_past->getImage()}}" alt="image-stock">
+                            <img class="image-preview" src="/storage/images/{{$registered_event_past->getImage()}}" alt="/images/stock.svg">
                         </div>
                         <div class="event-square-title">{{ $registered_event_past->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $registered_event_past->address }}
+                                {{ $registered_event_past->city }}
                             </div>
                             <div class="event-square-attribute">
                                 {{ substr($registered_event_past->starting_time, 0, -3) }}

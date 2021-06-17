@@ -9,12 +9,12 @@
                 <a name="event" class="event-rectangle" href="/event/{{ $event->id }}">
                     <div class="event-rectangle-image-container">
                         <img class="image-preview" src="/storage/images/{{$event->getImage()}}"
-                             alt="image-stock">
+                             alt="/images/stock.svg">
                     </div>
                     <div class="event-rectangle-title">{{ $event->title }}</div>
                     <div class="event-rectangle-attributes-group">
                         <div class="event-rectangle-attribute">
-                            {{ $event->address }}
+                            {{ $event->city }}
                         </div>
                         <div class="event-rectangle-attribute" style="min-width: fit-content;">
                             {{ substr($event->starting_time, 0, -3) }}
@@ -53,6 +53,10 @@
         <div class="radio-selection-item">
             <input type="radio" class="radio-selection-item-radio" name="data-max" value="month">
             <label for="data-max" class="radio-selection-item-label">Questo mese</label>
+        </div>
+        <div class="radio-selection-item">
+            <input type="radio" class="radio-selection-item-radio" name="data-max" value="future">
+            <label for="data-max" class="radio-selection-item-label">Futuri</label>
         </div>
 
         <label class="section-title">Filtra per interesse</label>

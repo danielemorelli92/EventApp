@@ -162,6 +162,34 @@ textarea {
     box-sizing: border-box;
     min-height: 36px;
 }
+input[type="email"] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    min-height: 36px;
+}
+input[type="tel"] {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px solid #bbb;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 0 #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 19px;
+    box-sizing: border-box;
+    min-height: 36px;
+}
 input[type="number"] {
     padding-left: 8px;
     padding-right: 8px;
@@ -563,14 +591,18 @@ input[type="file"] {
     /*TODO bloccare scrolling*/
 }
 .header-logo-container{
-    -webkit-filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.25));
-    filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.25));
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 
     margin-bottom: 2px;
     margin-right: 16px;
     margin-left: 16px;
     width: 175px;
     height: 40px;
+}
+.header-logo-container:hover{
+    background-color: rgba(255, 255, 255, 0.10);
 }
 .header-tabs{
     /*TODO stile dei bottoni per cambio tab*/

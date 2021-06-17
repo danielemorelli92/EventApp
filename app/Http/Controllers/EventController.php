@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Notifications\AddressChanged;
+use App\Notifications\CityChanged;
 use App\Notifications\DateChanged;
 use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
@@ -41,7 +41,7 @@ class EventController extends Controller
                 $events = $events->intersect($query->get());
             }
             /*if (array_key_exists('luogo', $param) and !blank($param['luogo'])) {
-                //$query->where('address', 'like', $param['luogo']);
+                //$query->where('city', 'like', $param['luogo']);
             }*/
             if (array_key_exists('categories', $param)) {
                 $events_with_tags = collect();
@@ -121,7 +121,7 @@ class EventController extends Controller
         $validatedData = request()->validate([
             'title' => 'required|string|min:4|max:255',
             'description' => 'required',
-            'address' => 'required|string',
+            'city' => 'required|string',
             'type' => 'required|string|min:4|max:255',
             'starting_time' => 'required|date',
             'ending_time' => 'nullable|date',
@@ -148,6 +148,11 @@ class EventController extends Controller
         request()->validate([
             'images[]' => 'nullable|mimes:jpg,jpeg,bmp,png'
         ]);
+
+        if($validatedData['starting_time'] <= date(now()))
+            {
+                abort(400);
+            }
 
         $event = Event::factory()->create($validatedData);
 
@@ -293,11 +298,11 @@ class EventController extends Controller
 
         $title = $event->title;
         $start = $event->starting_time;
-        $address = $event->address;
+        $city = $event->city;
 
         $event->delete();
         if (now()->isBefore(new Carbon($start))) { // invia la notifica di cancellazione solo se l'evento non è ancora iniziato
-            Notification::send($event->registeredUsers, new EventCanceled($title, $start, $address));
+            Notification::send($event->registeredUsers, new EventCanceled($title, $start, $city));
         }
 
         return redirect('/events/manage');
@@ -323,7 +328,7 @@ class EventController extends Controller
         $validatedData = request()->validate([
             'title' => 'string|min:4|max:255',
             'description' => 'string',
-            'address' => 'string',
+            'city' => 'string',
             'type' => 'string|min:4|max:255',
             'starting_time' => 'date',
             'registration_link' => 'string',
@@ -349,7 +354,7 @@ class EventController extends Controller
         $old_title = $event->title;
         $old_descr = $event->description;
         $old_start = $event->starting_time;
-        $old_address = $event->address;
+        $old_city = $event->city;
 
         $event->update($validatedData);
 
@@ -364,8 +369,8 @@ class EventController extends Controller
         if ($event->starting_time != $old_start) {
             Notification::send($event->registeredUsers, new DateChanged($event, $old_start));
         }
-        if ($event->address != $old_address) {
-            Notification::send($event->registeredUsers, new AddressChanged($event, $old_address));
+        if ($event->city != $old_city) {
+            Notification::send($event->registeredUsers, new CityChanged($event, $old_city));
         }
 
         foreach ($event->images as $image) {

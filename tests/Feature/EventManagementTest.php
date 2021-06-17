@@ -69,7 +69,7 @@ class EventManagementTest extends TestCase
             'ticket_office' => 'http://www.ticket-office.com/',
             'website' => 'http://www.best-website-ever.com/',
             'registration_link' => 'none',
-            'address' => 'Via di casa mia, 77',
+            'city' => 'Roseto',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
         ]; // crea un evento locale
@@ -98,7 +98,7 @@ class EventManagementTest extends TestCase
             'ticket_office' => 'http://www.ticket-office.com/',
             'website' => 'http://www.best-website-ever.com/',
             'registration_link' => 'none',
-            'address' => 'Via di casa mia, 77',
+            'city' => 'Roseto',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
         ];
@@ -135,7 +135,7 @@ class EventManagementTest extends TestCase
             'ticket_office' => '',
             'website' => 'http://www.best-website-ever.com/',
             'external_registration' => 'ticket_office',
-            'address' => 'Via di casa mia, 77',
+            'city' => 'Roseto',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
         ]; // crea un evento locale
@@ -156,7 +156,7 @@ class EventManagementTest extends TestCase
             'ticket_office' => 'http://www.best-website-ever.com/buy',
             'website' => '',
             'external_registration' => 'website',
-            'address' => 'Via di casa mia, 77',
+            'city' => 'Roseto',
             'starting_time' => '2021-09-11 12:30',
             'ending_time' => null
         ]; // crea un evento locale
@@ -202,7 +202,7 @@ class EventManagementTest extends TestCase
             'price' => 10.0,
             'ticket_office' => 'old url',
             'website' => 'old url',
-            'address' => 'old address',
+            'city' => 'old city',
             'starting_time' => date(now()),
             'ending_time' => date(now()),
             'author_id' => $user->id,
@@ -251,10 +251,10 @@ class EventManagementTest extends TestCase
         self::assertEquals('new url', $updated_event->website, "il sito web dell'evento non è stato modificato");
 
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
-            'address' => 'new address'
+            'city' => 'new city'
         ]);
         $updated_event->refresh();
-        self::assertEquals('new address', $updated_event->address, "l'indirizzo dell'evento non è stato modificato");
+        self::assertEquals('new city', $updated_event->city, "l'indirizzo dell'evento non è stato modificato");
 
         $new_date = date(now()->addWeek());
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
@@ -284,7 +284,7 @@ class EventManagementTest extends TestCase
             'price' => 10.0,
             'ticket_office' => 'old url',
             'website' => 'old url',
-            'address' => 'old address',
+            'city' => 'old city',
             'starting_time' => date(now()),
             'ending_time' => date(now())
         ]);
@@ -313,7 +313,7 @@ class EventManagementTest extends TestCase
             'website' => 'new url'
         ]);
         $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, [
-            'address' => 'new address'
+            'city' => 'new city'
         ]);
         $new_date = date(now()->addWeek());
         $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, [
