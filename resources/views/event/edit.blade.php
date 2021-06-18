@@ -64,7 +64,7 @@
 
 
                     @if($event->images->isNotEmpty())
-                    <div class="big-form-column">
+                    <div class="big-form-column" style="margin-top: 8px">
                         <label class="big-form-label" style="min-width: 400px">Immagini presenti</label>
 
                         <div id="images_edit_flex" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
@@ -92,7 +92,7 @@
                     @endif
 
 
-                    <div class="big-form-column">
+                    <div class="big-form-column" style="margin-top: 8px">
                         <label class="big-form-label" style="min-width: 400px" for="upload-label">Carica nuove
                             immagini</label>
                         <div id="images_add_flex" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap">
@@ -117,22 +117,68 @@
                         </div>
 
 
-                        @foreach($event->tags->sortBy('body') as $tag)
-                            <div style="display: flex; flex-direction: row" class="checkbox-selection-item">
-                                <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]"
-                                       value="{{ $tag->id }}"
-                                       checked onchange="document.getElementById('preferences').submit()">
-                                <label class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label>
+                        <div class="big-form-column" style="margin-top: 8px">
+                            <label class="big-form-label" style="min-width: 400px" for="upload-label">Seleziona categorie</label>
+                            <div style="display: flex; flex-direction: row; flex-wrap: wrap; margin-bottom: 8px" >
+                                @foreach($event->tags->sortBy('body') as $tag)
+
+                                    <div style="display: flex; flex-direction: row; color: #0090E1; border: 2px solid #0090E1" class="category-oval" id="oval_{{ $tag->id }}"
+                                         onclick="
+                                             oval = document.getElementById('oval_{{ $tag->id }}');
+                                             checkbox = document.getElementById('checkbox_{{ $tag->id }}');
+                                             if (!checkbox.hasAttribute('checked')) {
+                                             checkbox.setAttribute('checked', 'checked');
+                                             oval.style.color = '#0090E1'
+                                             oval.style.border = '2px solid #0090E1';
+                                             } else {
+                                             checkbox.removeAttribute('checked');
+                                             oval.style.color = '#000000'
+                                             oval.style.border = '2px solid #000000';
+                                             }
+                                             "
+                                    >
+                                        <input type="checkbox" hidden class="checkbox-selection-item-checkbox" name="categories[]"
+                                               id="checkbox_{{ $tag->id }}"
+                                               value="{{ $tag->id }}"
+                                               onchange="document.getElementById('preferences').submit()" checked>
+                                        <label style="margin-right: 3px; -moz-user-select: none;-khtml-user-select: none;-webkit-user-select: none;-ms-user-select: none;
+                                                    user-select: none;"
+                                               class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label>
+                                    </div>
+
+                                @endforeach
+
+                                @foreach(\App\Models\Tag::orderBy('body')->get()->diff($event->tags) as $tag)
+
+                                        <div style="display: flex; flex-direction: row; border: 2px solid #000000" class="category-oval" id="oval_{{ $tag->id }}"
+                                             onclick="
+                                                 oval = document.getElementById('oval_{{ $tag->id }}');
+                                                 checkbox = document.getElementById('checkbox_{{ $tag->id }}');
+                                                 if (!checkbox.hasAttribute('checked')) {
+                                                 checkbox.setAttribute('checked', 'checked');
+                                                 oval.style.color = '#0090E1'
+                                                 oval.style.border = '2px solid #0090E1';
+                                                 } else {
+                                                 checkbox.removeAttribute('checked');
+                                                 oval.style.color = '#000000'
+                                                 oval.style.border = '2px solid #000000';
+                                                 }
+                                                 "
+                                        >
+                                            <input type="checkbox" hidden class="checkbox-selection-item-checkbox" name="categories[]"
+                                                   id="checkbox_{{ $tag->id }}"
+                                                   value="{{ $tag->id }}"
+                                                   onchange="document.getElementById('preferences').submit()">
+                                            <label style="margin-right: 3px; -moz-user-select: none;-khtml-user-select: none;-webkit-user-select: none;-ms-user-select: none;
+                                                    user-select: none;"
+                                                   class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label>
+                                        </div>
+
+                                @endforeach
+
                             </div>
-                        @endforeach
-                        @foreach(collect(\App\Models\Tag::orderBy('body')->get())->diff($event->tags) as $tag)
-                            <div class="checkbox-selection-item">
-                                <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]"
-                                       value="{{ $tag->id }}"
-                                       onchange="document.getElementById('preferences').submit()">
-                                <label class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label><br>
-                            </div>
-                        @endforeach
+
+
 
 
                         <button class="big-form-submit-button" type="submit" value="Applica modifiche">Applica
