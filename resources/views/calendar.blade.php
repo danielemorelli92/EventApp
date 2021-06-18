@@ -77,7 +77,7 @@
                     <td class="active-day-box" style=" border: 2px solid gray; color: black; max-width: 30px;">
                         <p style="margin: 0;">{{$date->day}}</p>
                         <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                            @foreach($events->toQuery()->whereDay('starting_time', $date->day)->whereMonth('starting_time', $month)->get() as $event)
+                            @foreach($events->toQuery()->whereDay('starting_time', $date->day)->get() as $event)
                                 <form action="/event/{{$event->id}}">
                                     <button style="background-color: rgba(172,200,255,0.77);"
                                             type="submit">{{ $event->title }}</button>
