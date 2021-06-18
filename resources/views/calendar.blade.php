@@ -24,7 +24,7 @@
     }
 @endphp
 <h1>{{ monthName($month) }}
-    <form style="display: inline;" action="/fullcalender/@php
+    <form style="display: inline;" action="/calendar/@php
         $newMonth = $month - 1;
         $newYear = $year;
         if($newMonth == 0) {
@@ -36,7 +36,7 @@
         ">
         <button>←</button>
     </form>
-    <form style="display: inline;" action="/fullcalender/@php
+    <form style="display: inline;" action="/calendar/@php
         $newMonth = $month + 1;
         $newYear = $year;
         if($newMonth == 13) {
@@ -49,10 +49,10 @@
         <button>→</button>
     </form>
     {{ $year }}
-    <form style="display: inline;" action="/fullcalender/{{ $year - 1 }}-{{ $month }}">
+    <form style="display: inline;" action="/calendar/{{ $year - 1 }}-{{ $month }}">
         <button>←</button>
     </form>
-    <form style="display: inline;" action="/fullcalender/{{ $year + 1 }}-{{ $month }}">
+    <form style="display: inline;" action="/calendar/{{ $year + 1 }}-{{ $month }}">
         <button>→</button>
     </form>
 </h1>
