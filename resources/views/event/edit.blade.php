@@ -29,7 +29,7 @@
                     <div class="big-form-row"><label class="big-form-label" for="starting_time">Data inizio evento</label>
                         <input class="big-form-compact-field" type="datetime-local"
                                                                                                                                  onchange="
-                                                                                                                                 if (document.getElementById('ending_time').value < this.value) {
+                                                                                                                                 if (document.getElementById('ending_time').value < this.value && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value !=='') {
                                                                                                                                      document.getElementById('ending_time').value = this.value;
                                                                                                                                  }
                                                                                                                                  document.getElementById('ending_time').min = this.value;" min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="starting_time" name="starting_time" value="{{ date('Y-m-d\TH:i:s', strtotime($event->starting_time)) }}" required></div>

@@ -45,7 +45,7 @@
                         <label class="big-form-label" for="starting_time">Data inizio evento</label>
                         <input class="big-form-compact-field" type="datetime-local" onchange="
 
-                         if (document.getElementById('ending_time').value < this.value) {
+                         if (document.getElementById('ending_time').value < this.value && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value !=='') {
                               document.getElementById('ending_time').value = this.value;
                           }
                           document.getElementById('ending_time').min = this.value;"
