@@ -79,6 +79,9 @@
                 <th>Data sottomissione</th>
                 <th>Nome richiedente</th>
                 <th>Cognome richiedente</th>
+                <th>Data di nascita</th>
+                <th>Codice documento</th>
+                <th>Tipo Documento</th>
                 <th style="width: 110px">Stato</th>
                 <th style="width: 160px;">Controlli</th>
             </tr>
@@ -89,6 +92,9 @@
                     <td>{{$request->created_at}}</td>
                     <td>{{$request->nome}}</td>
                     <td>{{$request->cognome}}</td>
+                    <td>{{$request->data_nascita}}</td>
+                    <td>{{$request->codice_documento}}</td>
+                    <td>{{$request->tipo_documento}}</td>
                     <td>Pending</td>
                     <th style="display: flex; flex-direction: row">
 
