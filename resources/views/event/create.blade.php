@@ -100,6 +100,15 @@
 
                         </div>
 
+                    @foreach(collect(\App\Models\Tag::orderBy('body')->get()) as $tag)
+                        <div style="display: flex; flex-direction: row" class="checkbox-selection-item">
+                            <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]"
+                                   value="{{ $tag->id }}"
+                                   onchange="document.getElementById('preferences').submit()">
+                            <label class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label>
+                        </div>
+                    @endforeach
+
 
                         <div class="big-form-column">
                             <label class="big-form-label" for="criteri_accettazione" style="min-width: 400px">Criteri di

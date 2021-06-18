@@ -117,6 +117,24 @@
                         </div>
 
 
+                        @foreach($event->tags->sortBy('body') as $tag)
+                            <div style="display: flex; flex-direction: row" class="checkbox-selection-item">
+                                <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]"
+                                       value="{{ $tag->id }}"
+                                       checked onchange="document.getElementById('preferences').submit()">
+                                <label class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label>
+                            </div>
+                        @endforeach
+                        @foreach(collect(\App\Models\Tag::orderBy('body')->get())->diff($event->tags) as $tag)
+                            <div class="checkbox-selection-item">
+                                <input type="checkbox" class="checkbox-selection-item-checkbox" name="categories[]"
+                                       value="{{ $tag->id }}"
+                                       onchange="document.getElementById('preferences').submit()">
+                                <label class="checkbox-selection-item-label" for="categories[]">{{ $tag->body }}</label><br>
+                            </div>
+                        @endforeach
+
+
                         <button class="big-form-submit-button" type="submit" value="Applica modifiche">Applica
                             modifiche
                         </button>
