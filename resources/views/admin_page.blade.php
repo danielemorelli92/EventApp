@@ -94,7 +94,19 @@
                     <td>{{$request->cognome}}</td>
                     <td>{{$request->data_nascita}}</td>
                     <td>{{$request->codice_documento}}</td>
-                    <td>{{$request->tipo_documento}}</td>
+                    <td>
+                        @switch($request->tipo_documento)
+                        @case ('identity card')
+                            Carta identità
+                            @break
+                        @case ('driving license')
+                             Patente
+                            @break
+                        @case ('passport')
+                            Passaporto
+                            @break
+                        @endswitch
+                           </td>
                     <td>Pending</td>
                     <th style="display: flex; flex-direction: row">
 
