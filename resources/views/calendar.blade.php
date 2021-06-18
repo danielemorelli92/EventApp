@@ -67,20 +67,24 @@
         <th style="color: #dc0000;">DOM</th>
     </tr>
     @for($i = 1; $i <= 6; $i++)
-        <tr>
+        <tr style="vertical-align: top;">
             @for($j = 1; $j <= 7; $j++)
                 @if($date->month != $month)
-                    <td class="inactive-day-box" style="color: rgba(128,128,128,0.49); border: 1px solid gray;">
+                    <td class="inactive-day-box" style=" color: rgba(128,128,128,0.49); border: 1px solid gray;">
                         {{$date->day}}
                     </td>
                 @else
-                    <td class="active-day-box" style="border: 2px solid gray; color: black;">
-                        {{$date->day}}
-                        @foreach($events as $event)
+                    <td class="active-day-box" style=" border: 2px solid gray; color: black; max-width: 30px;">
+                        <p style="margin: 0;">{{$date->day}}</p>
+                        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                            @foreach($events->toQuery()->whereDay('starting_time', $date->day)->whereMonth('starting_time', $month)->get() as $event)
+                                <form action="/event/{{$event->id}}">
+                                    <button style="background-color: rgba(172,200,255,0.77);"
+                                            type="submit">{{ $event->title }}</button>
+                                </form>
+                            @endforeach
+                        </div>
 
-                            {{ 'test event' }}
-                            {{ $event->title }}
-                        @endforeach
                     </td>
                 @endif
                 @php

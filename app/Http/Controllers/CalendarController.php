@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class FullCalenderController extends Controller
+class CalendarController extends Controller
 {
 
     public function init()
@@ -16,17 +17,21 @@ class FullCalenderController extends Controller
 
     public function index(int $year, int $month)
     {
+        if (!Auth::check()) {
+            abort(401);
+        }
+
         $date = \Illuminate\Support\Carbon::create($year, $month, 1);
 
         while (!$date->isMonday()) {
             $date = $date->subDay();
         }
 
-        $events = \App\Models\User::find(24)->registeredEvents;
 
-        ddd($events);
+        $events = Auth::user()->registeredEvents;
 
-        return view('fullcalender', [
+
+        return view('calendar', [
             'date' => $date,
             'month' => $month,
             'year' => $year,
