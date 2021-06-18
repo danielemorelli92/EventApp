@@ -14,9 +14,6 @@
                         <div class="event-square-title">{{ $interesting_event->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $interesting_event->city }}
-                            </div>
-                            <div class="event-square-attribute">
                                 {{ substr($interesting_event->starting_time, 0, -3) }}
                             </div>
                         </div>
@@ -37,9 +34,6 @@
                         <div class="event-square-title">{{ $registered_event_future->title }}</div>
                         <div class="event-square-attributes-group">
                             <div class="event-square-attribute">
-                                {{ $registered_event_future->city }}
-                            </div>
-                            <div class="event-square-attribute">
                                 {{ substr($registered_event_future->starting_time, 0, -3) }}
                             </div>
                         </div>
@@ -57,9 +51,6 @@
                         </div>
                         <div class="event-square-title">{{ $registered_event_past->title }}</div>
                         <div class="event-square-attributes-group">
-                            <div class="event-square-attribute">
-                                {{ $registered_event_past->city }}
-                            </div>
                             <div class="event-square-attribute">
                                 {{ substr($registered_event_past->starting_time, 0, -3) }}
 
