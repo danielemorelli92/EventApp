@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RequestController;
@@ -97,5 +98,10 @@ Route::delete('/image/{image}', [ImageController::class, 'destroy'])->where('ima
 Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
 
 Route::put('/user', [UserController::class, 'update'])->name('user.update');
+
+
+Route::get('/calendar', [CalendarController::class, 'init']);
+
+Route::get('/calendar/{year}-{month}', [CalendarController::class, 'index']);
 
 require __DIR__ . '/auth.php';

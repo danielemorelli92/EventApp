@@ -33,9 +33,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function registeredEvents(): Relation
+    public function registeredEvents()
     {
-        return $this->belongsToMany(Event::class, 'event_user', 'event_id', 'user_id');
+        return $this->belongsToMany(Event::class, 'registrations', 'user_id', 'event_id');
     }
 
     public function tags(): Relation
