@@ -980,6 +980,12 @@ input[type="file"] {
     width: 100%;
     padding-bottom: 4px;
     font-size: 18px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    word-break: break-all;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    text-overflow: ellipsis;
 }
 
 .notification-item {
