@@ -111,7 +111,7 @@
                     <label class="info-item-label">{{ substr($event->ending_time, 0, -3) }}</label>
                 @endif
             @if ($event->registeredUsers != null)
-                    <label class="info-item-title">Partecipanti</label>
+                    <label class="info-item-title">Persone registrate</label>
                     <label class="info-item-label">{{ count($event->registeredUsers) }}</label>
                 @endif
             @if ($event->max_partecipants != null && $event->registeredUsers != null)
