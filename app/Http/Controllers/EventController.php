@@ -92,7 +92,7 @@ class EventController extends Controller
 
         return view('events', [
             'events' => $events->unique('id'), //$query->get()
-            'tags' => Tag::all()
+            'tags' => Tag::orderBy('body')->get()
         ]);
     }
 
@@ -285,7 +285,7 @@ class EventController extends Controller
             'registered_events_future' => $registered_events_future->unique('id'),
             'registered_events_past' => $registered_events_past->unique('id'),
             'interesting_events' => $interesting_events->unique('id'),
-            'tags' => Tag::all()
+            'tags' => Tag::orderBy('body')->get()
         ]);
 
     }
