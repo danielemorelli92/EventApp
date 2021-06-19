@@ -15,6 +15,10 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('event_id');
+            $table->date('start');
+            $table->date('end');
+            $table->float('discount');
             $table->timestamps();
         });
     }
