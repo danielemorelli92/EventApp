@@ -37,31 +37,33 @@
             }
         @endphp
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-            <form style="display: inline;" action="/calendar/@php
-                $newMonth = $month - 1;
-                $newYear = $year;
-                if($newMonth == 0) {
-                    $newMonth = 12;
-                    $newYear = $year - 1;
-                }
-                echo $newYear . '-' . $newMonth
-            @endphp
-                ">
-                <button class="circle-button">←</button>
-            </form>
-            <h2>{{ monthName($month) }}</h2>
-            <form style="display: inline;" action="/calendar/@php
-                $newMonth = $month + 1;
-                $newYear = $year;
-                if($newMonth == 13) {
-                    $newMonth = 1;
-                    $newYear = $year + 1;
-                }
-                echo $newYear . '-' . $newMonth
-            @endphp
-                ">
-                <button class="circle-button">→</button>
-            </form>
+            <div style="width: 184px; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                <form style="display: inline;" action="/calendar/@php
+                    $newMonth = $month - 1;
+                    $newYear = $year;
+                    if($newMonth == 0) {
+                        $newMonth = 12;
+                        $newYear = $year - 1;
+                    }
+                    echo $newYear . '-' . $newMonth
+                @endphp
+                    ">
+                    <button class="circle-button" style="margin-left: 0;">←</button>
+                </form>
+                <h2 style="margin-left: auto; margin-right: auto">{{ monthName($month) }}</h2>
+                <form style="display: inline;" action="/calendar/@php
+                    $newMonth = $month + 1;
+                    $newYear = $year;
+                    if($newMonth == 13) {
+                        $newMonth = 1;
+                        $newYear = $year + 1;
+                    }
+                    echo $newYear . '-' . $newMonth
+                @endphp
+                    ">
+                    <button class="circle-button">→</button>
+                </form>
+            </div>
             <form style="margin-left: auto; display: inline;" action="/calendar/{{ $year - 1 }}-{{ $month }}">
                 <button class="circle-button">←</button>
             </form>
