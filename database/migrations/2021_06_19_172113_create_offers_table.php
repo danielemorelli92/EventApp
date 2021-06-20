@@ -18,7 +18,7 @@ class CreateOffersTable extends Migration
             $table->foreignId('event_id');
             $table->date('start');
             $table->date('end');
-            $table->float('discount');
+            $table->integer('discount');
             $table->timestamps();
         });
     }
