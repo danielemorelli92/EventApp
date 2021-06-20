@@ -36,7 +36,7 @@
                 }
             }
         @endphp
-        <h2>
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
             <form style="display: inline;" action="/calendar/@php
                 $newMonth = $month - 1;
                 $newYear = $year;
@@ -47,9 +47,9 @@
                 echo $newYear . '-' . $newMonth
             @endphp
                 ">
-                <button>←</button>
+                <button class="circle-button">←</button>
             </form>
-            {{ monthName($month) }}
+            <h2>{{ monthName($month) }}</h2>
             <form style="display: inline;" action="/calendar/@php
                 $newMonth = $month + 1;
                 $newYear = $year;
@@ -60,16 +60,16 @@
                 echo $newYear . '-' . $newMonth
             @endphp
                 ">
-                <button>→</button>
+                <button class="circle-button">→</button>
             </form>
-            <form style="display: inline;" action="/calendar/{{ $year - 1 }}-{{ $month }}">
-                <button>←</button>
+            <form style="margin-left: auto; display: inline;" action="/calendar/{{ $year - 1 }}-{{ $month }}">
+                <button class="circle-button">←</button>
             </form>
-            {{ $year }}
+            <h2>{{ $year }}</h2>
             <form style="display: inline;" action="/calendar/{{ $year + 1 }}-{{ $month }}">
-                <button>→</button>
+                <button class="circle-button">→</button>
             </form>
-        </h2>
+        </div>
         <table style="box-shadow: none; width: 100%; height: 100%"> <!-- calendario -->
             <tr>
                 <th>LUN</th>

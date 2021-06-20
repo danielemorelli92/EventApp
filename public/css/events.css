@@ -253,39 +253,7 @@ button {
     display: inline-block;
     font-size: 16px;
 }
-input[type="submit"] {
-    -webkit-border-radius: 0px 0px 12px 0px;
-    -moz-border-radius: 0px 0px 12px 0px;
-    border-radius: 0px 0px 12px 0px;
-    border: 2px solid #0090E1;
-    height: 45px;
-    white-space:nowrap;
-
-    background-color: white;
-    color: #0090E1;
-    padding: 8px 12px;
-    text-align: center;
-    font-weight: bold;
-    display: inline-block;
-    font-size: 16px;
-}
 button:hover {
-    -webkit-border-radius: 0px 0px 12px 0px;
-    -moz-border-radius: 0px 0px 12px 0px;
-    border-radius: 0px 0px 12px 0px;
-    border: 2px solid #0090E1;
-    height: 45px;
-    white-space:nowrap;
-
-    background-color: #0090E1;
-    color: white;
-    padding: 8px 12px;
-    text-align: center;
-    font-weight: bold;
-    display: inline-block;
-    font-size: 16px;
-}
-input[type="submit"]:hover {
     -webkit-border-radius: 0px 0px 12px 0px;
     -moz-border-radius: 0px 0px 12px 0px;
     border-radius: 0px 0px 12px 0px;
@@ -316,21 +284,6 @@ button:active {
     display: inline-block;
     font-size: 16px;
 }
-input[type="submit"]:active {
-    -webkit-border-radius: 0px 0px 12px 0px;
-    -moz-border-radius: 0px 0px 12px 0px;
-    border-radius: 0px 0px 12px 0px;
-    border: 2px solid #0090E1;
-    height: 45px;
-
-    background-color: #0067a0;
-    color: white;
-    padding: 8px 12px;
-    text-align: center;
-    font-weight: bold;
-    display: inline-block;
-    font-size: 16px;
-}
 button:disabled {
     -webkit-border-radius: 0px 0px 12px 0px;
     -moz-border-radius: 0px 0px 12px 0px;
@@ -340,6 +293,121 @@ button:disabled {
 
     background-color: #bbb;
     color: #444;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+
+
+.circle-button {
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+    border: none;
+    height: 32px;
+    width: 32px;
+
+    background-color: white;
+    color: #0090E1;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+.circle-button:hover {
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+    border: none;
+    height: 32px;
+    width: 32px;
+
+    background-color: #d4d4d4;
+    color: #0090E1;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+.circle-button:active {
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+    border: none;
+    height: 32px;
+    width: 32px;
+
+    background-color: #bfbfbf;
+    color: #0090E1;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+.circle-button:disabled {
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+    border: none;
+    height: 32px;
+    width: 32px;
+
+    background-color: #bbb;
+    color: #444;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+
+
+input[type="submit"] {
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+    border: 2px solid #0090E1;
+    height: 45px;
+    white-space:nowrap;
+
+    background-color: white;
+    color: #0090E1;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+input[type="submit"]:hover {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 45px;
+    white-space:nowrap;
+
+    background-color: #0090E1;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+input[type="submit"]:active {
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
+    border: 2px solid #0090E1;
+    height: 45px;
+
+    background-color: #0067a0;
+    color: white;
     padding: 8px 12px;
     text-align: center;
     font-weight: bold;
