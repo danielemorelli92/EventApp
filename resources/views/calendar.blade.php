@@ -1,8 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>EventApp Calendar</title>
-</head>
+@extends('layouts.layout-header-one-columns')
+
+@section('script')
+    <script>
+    </script>
+@endsection
+
+
+@section('content')
 <body>
 @php
     function monthName(int $month) {
@@ -98,3 +102,4 @@
 </body>
 
 </html>
+@endsection
