@@ -96,7 +96,7 @@
                                 <p style="margin: 0;">{{$date->day}}</p>
                                 <div style="width: 100%; display: flex; flex-direction: column; align-items: flex-start;">
                                     @foreach($events->toQuery()->whereDay('starting_time', $date->day)->whereMonth('starting_time', $month)->get() as $event)
-                                        <form style="width: calc(100% - 2px); height: auto" action="/event/{{$event->id}}">
+                                        <form style="width: calc(100% - 1.5px); height: auto" action="/event/{{$event->id}}">
                                             <button class="calendar-event-clickable-item"
                                                     type="submit">{{ $event->title }}</button>
                                         </form>
