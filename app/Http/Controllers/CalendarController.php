@@ -28,7 +28,7 @@ class CalendarController extends Controller
         }
 
 
-        $events = Auth::user()->registeredEvents;
+        $events = Auth::user()->registeredEvents->toQuery()->whereMonth('starting_time', $month)->whereYear('starting_time', $year)->get();
 
 
         return view('calendar', [

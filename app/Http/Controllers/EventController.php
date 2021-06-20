@@ -92,7 +92,7 @@ class EventController extends Controller
 
         return view('events', [
             'events' => $events->unique('id'), //$query->get()
-            'tags' => Tag::all()
+            'tags' => Tag::orderBy('body')->get()
         ]);
     }
 
@@ -117,6 +117,8 @@ class EventController extends Controller
         if (Gate::denies('create-event')) {
             abort(401);
         }
+
+        $param = request()->request->all();
 
         $validatedData = request()->validate([
             'title' => 'required|string|min:4|max:255',
@@ -155,6 +157,16 @@ class EventController extends Controller
             }
 
         $event = Event::factory()->create($validatedData);
+
+
+        if (array_key_exists('categories', $param)) {
+            $new_tags = collect($param['categories']);
+            $event->tags()->sync($new_tags);
+        } else {
+            $event->tags()->sync(collect());
+        }
+
+
 
         if (request()->hasFile('images')) {
             foreach (request()->images as $image) {
@@ -285,7 +297,7 @@ class EventController extends Controller
             'registered_events_future' => $registered_events_future->unique('id'),
             'registered_events_past' => $registered_events_past->unique('id'),
             'interesting_events' => $interesting_events->unique('id'),
-            'tags' => Tag::all()
+            'tags' => Tag::orderBy('body')->get()
         ]);
 
     }
@@ -324,6 +336,7 @@ class EventController extends Controller
         if (Gate::denies('edit-event', $event)) {
             abort(401);
         }
+        $param = request()->request->all();
 
         $validatedData = request()->validate([
             'title' => 'string|min:4|max:255',
@@ -358,7 +371,17 @@ class EventController extends Controller
 
         $event->update($validatedData);
 
+        if (array_key_exists('categories', $param)) {
+            $new_tags = collect($param['categories']);
+            $event->tags()->sync($new_tags);
+        } else {
+            $event->tags()->sync(collect());
+        }
+
         $event->refresh();
+
+
+
 
         if ($event->title != $old_title) {
             Notification::send($event->registeredUsers, new TitleChanged($event, $old_title));

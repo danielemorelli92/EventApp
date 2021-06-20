@@ -78,5 +78,8 @@ class Event extends Model
         return acos($dist) / $rad * 60 * 1.853;
     }
 
-
+    public function offer()
+    {
+        return $this->hasOne(Offer::class);
+    }
 }

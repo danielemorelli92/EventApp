@@ -48,7 +48,7 @@
             {{ $event->description }}
         </div>
         <div style="width: auto; height: min-content; display: flex; flex-wrap: wrap; margin: 8px">
-            @foreach($event->tags as $tag)
+            @foreach($event->tags->sortBy('body') as $tag)
                 <div class="category-oval">{{ $tag->body }}</div>
             @endforeach
         </div>
@@ -111,7 +111,7 @@
                     <label class="info-item-label">{{ substr($event->ending_time, 0, -3) }}</label>
                 @endif
             @if ($event->registeredUsers != null)
-                    <label class="info-item-title">Partecipanti</label>
+                    <label class="info-item-title">Persone registrate</label>
                     <label class="info-item-label">{{ count($event->registeredUsers) }}</label>
                 @endif
             @if ($event->max_partecipants != null && $event->registeredUsers != null)
@@ -146,10 +146,6 @@
                 @else
                       <label class="info-item-title">Prezzo</label>
                       <label class="info-item-label">GRATIS!</label>
-                @endif
-            @if (count($event->tags) > 0)
-                    <label class="info-item-title">Categoria principale</label>
-                    <label class="info-item-label">{{ $event->tags[0]->body }}</label>
                 @endif
             @if ($event->host != null)
                     <label class="info-item-title">Organizzatore</label>
