@@ -70,32 +70,31 @@
                 <button class="circle-button">→</button>
             </form>
         </div>
-        <table style="box-shadow: none; width: 100%; height: 100%"> <!-- calendario -->
-            <tr>
-                <th>LUN</th>
-                <th>MAR</th>
-                <th>MER</th>
-                <th>GIO</th>
-                <th>VEN</th>
-                <th style="color: #dc0000;">SAB</th>
-                <th style="color: #dc0000;">DOM</th>
+        <table style="-webkit-border-radius:0; -moz-border-radius:0; border-radius:0; box-shadow: none; width: 100%; height: 100%; border-collapse: collapse; border-spacing: 0;" > <!-- calendario -->
+            <tr     style="height: 20px">
+                <th style="height: 20px">LUN</th>
+                <th style="height: 20px">MAR</th>
+                <th style="height: 20px">MER</th>
+                <th style="height: 20px">GIO</th>
+                <th style="height: 20px">VEN</th>
+                <th style="height: 20px; color: #0090E1;">SAB</th>
+                <th style="height: 20px; color: #0090E1;">DOM</th>
             </tr>
 
             @for($i = 1; $i <= 6; $i++)
                 <tr style="vertical-align: top;">
                     @for($j = 1; $j <= 7; $j++)
                         @if($date->month != $month)
-                            <td class="inactive-day-box"
-                                style=" color: rgba(128,128,128,0.49); border: 1px solid gray;">
+                            <td class="calendar-day-inactive-box" >
                                 {{$date->day}}
                             </td>
                         @else
-                            <td class="active-day-box" style=" border: 2px solid gray; color: black; max-width: 30px;">
+                            <td class="calendar-day-active-box">
                                 <p style="margin: 0;">{{$date->day}}</p>
-                                <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                                <div style="width: 100%; display: flex; flex-direction: column; align-items: flex-start;">
                                     @foreach($events->toQuery()->whereDay('starting_time', $date->day)->whereMonth('starting_time', $month)->get() as $event)
-                                        <form action="/event/{{$event->id}}">
-                                            <button style="background-color: rgba(172,200,255,0.77);"
+                                        <form style="width: 98.5%; height: auto" action="/event/{{$event->id}}">
+                                            <button class="calendar-event-clickable-item"
                                                     type="submit">{{ $event->title }}</button>
                                         </form>
                                     @endforeach
