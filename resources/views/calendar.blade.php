@@ -88,21 +88,24 @@
                 <tr style="vertical-align: top;">
                     @for($j = 1; $j <= 7; $j++)
                         @if($date->month != $month)
-                            <td class="calendar-day-inactive-box" >
+                            <td class="calendar-day-inactive-box">
                                 {{$date->day}}
                             </td>
                         @else
                             <td class="calendar-day-active-box">
                                 <p style="margin: 0;">{{$date->day}}</p>
-                                <div style="width: 100%; display: flex; flex-direction: column; align-items: flex-start;">
-                                    @foreach($query_events->whereDay('starting_time', $date->day)->get() as $event)
-                                        <form style="width: calc(100% - 1.5px); height: auto" action="/event/{{$event->id}}">
-                                            <button class="calendar-event-clickable-item"
-                                                    type="submit">{{ $event->title }}</button>
-                                        </form>
+                                <div
+                                    style="width: 100%; display: flex; flex-direction: column; align-items: flex-start;">
+                                    @foreach($events as $event)
+                                        @if($event->isThisDay($date->day))
+                                            <form style="width: calc(100% - 1.5px); height: auto"
+                                                  action="/event/{{$event->id}}">
+                                                <button class="calendar-event-clickable-item"
+                                                        type="submit" value="Placeholder">{{ $event->title }}</button>
+                                            </form>
+                                        @endif
                                     @endforeach
                                 </div>
-
                             </td>
                         @endif
                         @php
