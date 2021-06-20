@@ -368,13 +368,13 @@ button:disabled {
 
 .calendar-day-inactive-box {
     background: rgb(232, 232, 232);
-    border: 0.5px solid #c9c9c9;
+    border: 1px solid #c9c9c9;
     padding: 1px;
     color: rgba(64, 64, 64, 0.49);
 }
 .calendar-day-active-box {
     padding: 1px;
-    border: 0.5px solid #c9c9c9;
+    border: 1px solid #c9c9c9;
     color: black;
     max-width: 30px;
 }
