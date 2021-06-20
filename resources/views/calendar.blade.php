@@ -72,7 +72,8 @@
                 <button class="circle-button">→</button>
             </form>
         </div>
-        <table style="-webkit-border-radius:0; -moz-border-radius:0; border-radius:0; box-shadow: none; width: 100%; height: 100%; border-collapse: collapse; border-spacing: 0;" > <!-- calendario -->
+        <table
+            style="margin: 1px; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; box-shadow: none; width: calc(100% - 2px); height: calc(100% - 2px); border-collapse: collapse; border-spacing: 0;" > <!-- calendario -->
             <tr     style="height: 20px">
                 <th style="height: 20px">LUN</th>
                 <th style="height: 20px">MAR</th>
@@ -95,7 +96,7 @@
                                 <p style="margin: 0;">{{$date->day}}</p>
                                 <div style="width: 100%; display: flex; flex-direction: column; align-items: flex-start;">
                                     @foreach($events->toQuery()->whereDay('starting_time', $date->day)->whereMonth('starting_time', $month)->get() as $event)
-                                        <form style="width: 98.5%; height: auto" action="/event/{{$event->id}}">
+                                        <form style="width: calc(100% - 2px); height: auto" action="/event/{{$event->id}}">
                                             <button class="calendar-event-clickable-item"
                                                     type="submit">{{ $event->title }}</button>
                                         </form>
