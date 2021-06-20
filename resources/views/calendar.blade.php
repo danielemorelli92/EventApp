@@ -18,24 +18,21 @@
 
 
             @php
-            function monthName(int $month) {
-                switch($month) {
-                    case 1: return 'Gennaio';
-                    case 2: return 'Febbraio';
-                    case 3: return 'Marzo';
-                    case 4: return 'Aprile';
-                    case 5: return 'Maggio';
-                    case 6: return 'Giugno';
-                    case 7: return 'Luglio';
-                    case 8: return 'Agosto';
-                    case 9: return 'Settembre';
-                    case 10: return 'Ottobre';
-                    case 11: return 'Novembre';
-                    case 12: return 'Dicembre';
-
-                }
-            }
-        @endphp
+                $monthName = [
+                    1 => 'Gennaio',
+                    2 => 'Febbraio',
+                    3 => 'Marzo',
+                    4 => 'Aprile',
+                    5 => 'Maggio',
+                    6 => 'Giugno',
+                    7 => 'Luglio',
+                    8 => 'Agosto',
+                    9 => 'Settembre',
+                    10 => 'Ottobre',
+                    11 => 'Novembre',
+                    12 => 'Dicembre'
+                ]
+            @endphp
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
             <div style="width: 184px; display: flex; flex-direction: row; align-items: center; justify-content: center;">
                 <form style="display: inline;" action="/calendar/@php
@@ -50,7 +47,7 @@
                     ">
                     <button class="circle-button" style="margin-left: 0;">←</button>
                 </form>
-                <h2 style="margin-left: auto; margin-right: auto">{{ monthName($month) }}</h2>
+                <h2 style="margin-left: auto; margin-right: auto">{{ $monthName[$month] }}</h2>
                 <form style="display: inline;" action="/calendar/@php
                     $newMonth = $month + 1;
                     $newYear = $year;
