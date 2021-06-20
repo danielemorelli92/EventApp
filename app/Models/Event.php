@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Traits\Creator;
 use Database\Factories\UserFactory;
 use Faker\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Event extends Model
 {
@@ -52,6 +54,7 @@ class Event extends Model
             return 'stock.svg';
         }
     }
+
     public function getImages()
     {
         return $this->images;
@@ -81,5 +84,46 @@ class Event extends Model
     public function offer()
     {
         return $this->hasOne(Offer::class);
+    }
+
+    /**
+     *
+     * @param string|Carbon $date La data fornita
+     *
+     * @return bool :true: se l'evento inizia prima della data fornita, altrimenti :false:
+     */
+    public function start_before($date)
+    {
+        return (new Carbon($this->starting_time))->isBefore(new Carbon($date));
+    }
+
+    /**
+     * @param string|Carbon $date La data fornita
+     * @return bool :true: se l'evento inizia dopo della data fornita, altrimenti :false:
+     */
+    public function start_after($date)
+    {
+        return (new Carbon($this->starting_time))->isAfter(new Carbon($date));
+    }
+
+    /**
+     * Restituisce true se l'evento inizia tra le due date fornite.
+     *
+     * @param string|Carbon $first_date La prima data fornita
+     * @param string|Carbon $second_date La seconda data fornita
+     * @return bool :true: se l'evento inizia in mezzo alle due date fornite, :false: altrimenti
+     */
+    public function start_between($first_date, $second_date)
+    {
+        return $this->start_after($first_date) && $this->start_before($second_date);
+    }
+
+    /**
+     * @param int $day Il giorno fornito
+     * @return bool :true: se l'evento inizia in quel giorno, :false: altrimenti
+     */
+    public function isThisDay(int $day)
+    {
+        return (new Carbon($this->starting_time))->day == $day;
     }
 }
