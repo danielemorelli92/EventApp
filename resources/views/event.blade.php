@@ -141,12 +141,19 @@
                     </a>
                 @endif
             @if ($event->price != 0)
-                    <label class="info-item-title">Prezzo</label>
-                    <label class="info-item-label">{{ $event->price }}€</label>
-                @else
+                @if($offer->discount != 0 && $offer->start < date($event->starting_time) && $offer->end > date($offer->start) && $offer->end < date($event->starting_time))
+                        <label class="info-item-title">Prezzo</label>
+                        <label class="info-item-label">
+                            <del>{{ $event->price }}€</del> {{$offer->discount}}
+                        </label>
+                  @else
+                        <label class="info-item-title">Prezzo</label>
+                        <label class="info-item-label">{{ $event->price }}€</label>
+                  @endif
+            @else
                       <label class="info-item-title">Prezzo</label>
                       <label class="info-item-label">GRATIS!</label>
-                @endif
+            @endif
             @if ($event->host != null)
                     <label class="info-item-title">Organizzatore</label>
                     <label class="info-item-label">{{ $event->host->name }}</label>

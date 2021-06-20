@@ -8,7 +8,7 @@ use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
 use App\Notifications\ReplyToMe;
 use App\Notifications\TitleChanged;
-use App\Models\{Comment, Event, Image, Tag, User};
+use App\Models\{Comment, Event, Image, Offer, Tag, User};
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -98,8 +98,10 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
+        $offer = Offer::all()->where('id', '=', 'event_id');
         return view('event', [
-            'event' => $event
+            'event' => $event,
+            'offer' => $offer
         ]);
     }
 
