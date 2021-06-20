@@ -168,7 +168,14 @@ class EventController extends Controller
             $event->tags()->sync(collect());
         }
 
-
+        if (request()->has('offer_discount')) { //TODO fix
+            Offer::create([
+                "event_id" => $event->id,
+                "start" => request()->offer_start,
+                "end" => request()->offer_end,
+                "discount" => request()->offer_discount,
+            ]);
+        }
 
         if (request()->hasFile('images')) {
             foreach (request()->images as $image) {
@@ -381,6 +388,15 @@ class EventController extends Controller
         }
 
         $event->refresh();
+
+
+        $event->offer()->sync(Offer::factory([ //TODO fix
+                "event_id" => $event->id,
+                "start" => request()->offer_start,
+                "end" => request()->offer_end,
+                "discount" => request()->offer_discount,
+        ]));
+
 
 
 
