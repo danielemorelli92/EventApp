@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
@@ -12,7 +13,7 @@ class CalendarController extends Controller
 
     public function init()
     {
-        return $this->index(\Illuminate\Support\Carbon::now()->year, \Illuminate\Support\Carbon::now()->month);
+        return $this->index(Carbon::now()->year, Carbon::now()->month);
     }
 
     public function index(int $year, int $month)
@@ -21,24 +22,25 @@ class CalendarController extends Controller
             abort(401);
         }
 
-        $date = \Illuminate\Support\Carbon::create($year, $month, 1);
+        $date = Carbon::create($year, $month, 1);
+        $first_day = Carbon::create($year, $month, 1)->firstOfMonth();
+        $last_day = Carbon::create($year, $month, 1)->lastOfMonth();
+
 
         while (!$date->isMonday()) {
             $date = $date->subDay();
         }
 
-        if (Auth::user()->registeredEvents->isNotEmpty()) {
-            $query = Auth::user()->registeredEvents->toQuery()->whereMonth('starting_time', $month)->whereYear('starting_time', $year);
-        } else {
-            $query = Event::query()->where('id', '=', -1);
-        }
-
+        $events = Auth::user()->registeredEvents
+            ->filter(function ($event) use ($last_day, $first_day) {
+                return $event->start_between($first_day, $last_day);
+            });
 
         return view('calendar', [
             'date' => $date,
             'month' => $month,
             'year' => $year,
-            'query_events' => $query
+            'events' => $events
         ]);
 
     }
