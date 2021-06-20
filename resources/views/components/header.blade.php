@@ -22,6 +22,9 @@
                     </form>
                 @endauth
             @endif
+                <form action="/calendar" style="margin-block-end: 0;">
+                    <button class="header-button" type="submit" value="Area personale">Calendario</button>
+                </form>
             <form action="{{ route('dashboard') }}" style="margin-block-end: 0;">
                 <button class="header-button" type="submit" value="Area personale">Area personale</button>
             </form>
