@@ -98,10 +98,8 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        $offer = Offer::all()->where('id', '=', 'event_id');
         return view('event', [
-            'event' => $event,
-            'offer' => $offer
+            'event' => $event
         ]);
     }
 
