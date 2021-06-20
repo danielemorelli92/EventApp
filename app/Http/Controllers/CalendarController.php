@@ -27,15 +27,18 @@ class CalendarController extends Controller
             $date = $date->subDay();
         }
 
-
-        $events = Auth::user()->registeredEvents->toQuery()->whereMonth('starting_time', $month)->whereYear('starting_time', $year)->get();
+        if (Auth::user()->registeredEvents->isNotEmpty()) {
+            $query = Auth::user()->registeredEvents->toQuery()->whereMonth('starting_time', $month)->whereYear('starting_time', $year);
+        } else {
+            $query = Event::query()->where('id', '=', -1);
+        }
 
 
         return view('calendar', [
             'date' => $date,
             'month' => $month,
             'year' => $year,
-            'events' => $events
+            'query_events' => $query
         ]);
 
     }
