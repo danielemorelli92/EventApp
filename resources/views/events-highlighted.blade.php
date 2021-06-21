@@ -6,8 +6,11 @@
         <div class="section-title" style="margin-left: 12px">Eventi prossimi</div>
         <div class="events-list">
             @foreach($events as $event)
-                @include('components.event-rectangle-container')
-
+                @if ($event->offer != null)
+                    @include('components.event-rectangle-promoted-container')
+                @else
+                    @include('components.event-rectangle-container')
+                @endif
                 @endforeach
             </div>
     </div>
