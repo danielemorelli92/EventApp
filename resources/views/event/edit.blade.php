@@ -80,9 +80,9 @@
                                     }
                                "
                                id="offer_start" name="offer_start"
-                               value="{{ $event->offer->start != null ? date('Y-m-d\TH:i:s', strtotime($event->offer->start)) : null }}"
+                               value="{{ ( $event->offer != null && $event->offer->start != null) ? date('Y-m-d\TH:i:s', strtotime($event->offer->start)) : null }}"
 
-                               @if( $event->offer->discount != null || $event->offer->start != null )
+                               @if( $event->offer != null && ($event->offer->discount != null || $event->offer->start != null) )
                                     required
                                @endif
                         >
@@ -90,7 +90,7 @@
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_end">Data fine offerta</label>
                         <input class="big-form-compact-field" type="datetime-local" id="offer_end" name="offer_end"
-                               value="{{ $event->offer->end != null ? date('Y-m-d\TH:i:s', strtotime($event->offer->end)) : null }}">
+                               value="{{ ( $event->offer != null && $event->offer->end != null) ? date('Y-m-d\TH:i:s', strtotime($event->offer->end)) : null }}">
                     </div>
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_end">Offerta al %</label>
@@ -104,8 +104,10 @@
                                 document.getElementById('offer_start').removeAttribute('required');
                             }
                          "
-                               value="{{ $event->offer->discount }}"
-                               @if( $event->offer->discount != null || $event->offer->start != null )
+                               @if($event->offer != null)
+                                    value="{{ $event->offer->discount }}"
+                               @endif
+                               @if( $event->offer != null && ($event->offer->discount != null || $event->offer->start != null ))
                                    required
                                @endif
                         >
