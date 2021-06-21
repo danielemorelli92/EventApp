@@ -167,7 +167,10 @@ class EventController extends Controller
 
 
         if (request()->has('offer_discount')) {
-            if ((request()->offer_start != null && request()->offer_discount == null) ||
+            if (
+                (request()->offer_start != null && request()->offer_start > request()->starting_time) ||
+                (request()->offer_start != null && request()->offer_end != null && request()->offer_end < request()->offer_start) ||
+                (request()->offer_start != null && request()->offer_discount == null) ||
                 (request()->offer_start == null && request()->offer_discount != null)
             ) {
                 abort(400);
@@ -395,7 +398,10 @@ class EventController extends Controller
 
 
         if (request()->has('offer_discount')) {
-            if ((request()->offer_start != null && request()->offer_discount == null) ||
+            if (
+                (request()->starting_time != null && request()->offer_start != null && strtotime(request()->offer_start) > strtotime(request()->starting_time) ) ||
+                (request()->offer_start != null && request()->offer_end != null && strtotime(request()->offer_end) < strtotime(request()->offer_start)) ||
+                (request()->offer_start != null && request()->offer_discount == null) ||
                 (request()->offer_start == null && request()->offer_discount != null)
             ) {
                 abort(400);
