@@ -10,23 +10,23 @@
                 <h2 style="margin-bottom: 20px;">Informazioni dell'evento</h2>
                 <div class="big-form-group">
                     <div class="big-form-column">
-                        <label class="big-form-label" for="title">Titolo</label>
+                        <label class="big-form-label" for="title">Titolo*</label>
                         <input class="big-form-big-field" name="title" type="text" placeholder="..." required>
                     </div>
                     <div class="big-form-column">
-                        <label class="big-form-label" for="description">Descrizione</label>
+                        <label class="big-form-label" for="description">Descrizione*</label>
                         <textarea style="resize: vertical;" class="big-form-big-field" type="text" name="description" placeholder="..." required ></textarea>
                     </div>
                     <div class="big-form-column">
-                        <label class="big-form-label" for="city">Città</label>
+                        <label class="big-form-label" for="city">Città*</label>
                         <input class="big-form-big-field" type="text" name="city" required>
                     </div>
-                    <div class="big-form-row">
-                        <label class="big-form-label" for="type">Tipo evento</label>
-                        <input class="big-form-compact-field" type="text" name="type" required>
+                    <div class="big-form-row" style="display: none">
+                        <label style="display: none" class="big-form-label" for="type">Tipo evento*</label>
+                        <input style="display: none" class="big-form-compact-field" type="text" name="type" value="type">
                     </div>
                     <div class="big-form-row">
-                        <label class="big-form-label" for="max_partecipants">Numero partecipanti</label>
+                        <label class="big-form-label" for="max_partecipants">Numero posti</label>
                         <input class="big-form-compact-field" type="number" min="0" name="max_partecipants" placeholder="">
                     </div>
                     <div class="big-form-row">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="big-form-row">
-                        <label class="big-form-label" for="starting_time">Data inizio evento</label>
+                        <label class="big-form-label" for="starting_time">Data inizio evento*</label>
                         <input class="big-form-compact-field" type="datetime-local" onchange="
 
                          if (document.getElementById('ending_time').value !=='' && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value < this.value) {
@@ -77,6 +77,19 @@
 
 
                     <div class="big-form-row">
+                        <label class="big-form-label" for="offer_end">Offerta al %</label>
+                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="0" max="100"
+                               onchange="
+                            if (this.value !== '') {
+                                this.setAttribute('required', 'required');
+                                document.getElementById('offer_start').setAttribute('required', 'required');
+                            } else if (document.getElementById('offer_start').value === '') {
+                                this.removeAttribute('required');
+                                document.getElementById('offer_start').removeAttribute('required');
+                            }
+                         ">
+                    </div>
+                    <div class="big-form-row">
                         <label class="big-form-label" for="offer_start">Data inizio offerta</label>
                         <input class="big-form-compact-field" type="datetime-local" onchange="
                          if (document.getElementById('offer_end').value !=='' && document.getElementById('offer_end').value != null && document.getElementById('offer_end').value < this.value) {
@@ -95,19 +108,6 @@
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_end">Data fine offerta</label>
                         <input class="big-form-compact-field" type="datetime-local" id="offer_end" name="offer_end">
-                    </div>
-                    <div class="big-form-row">
-                        <label class="big-form-label" for="offer_end">Offerta al %</label>
-                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="0" max="100"
-                         onchange="
-                            if (this.value !== '') {
-                                this.setAttribute('required', 'required');
-                                document.getElementById('offer_start').setAttribute('required', 'required');
-                            } else if (document.getElementById('offer_start').value === '') {
-                                this.removeAttribute('required');
-                                document.getElementById('offer_start').removeAttribute('required');
-                            }
-                         ">
                     </div>
 
 
