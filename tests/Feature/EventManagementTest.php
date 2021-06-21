@@ -316,6 +316,43 @@ class EventManagementTest extends TestCase
         self::assertEquals($new_date, $updated_event->ending_time, "la data di fine evento non è stata modificata");
     }
 
+    public function test_a_user_can_edit_event_offer()
+    {
+        $user = User::factory()->create();
+
+        $event = Event::factory()->create([
+            'title' => 'old title',
+            'description' => 'old description',
+            'type' => 'old type',
+            'max_partecipants' => 10,
+            'price' => 10.0,
+            'ticket_office' => 'old url',
+            'website' => 'old url',
+            'city' => 'old city',
+            'starting_time' => '2031-09-09 12:30',
+            'ending_time' => '2031-09-10 12:30',
+            'author_id' => $user->id,
+        ]);
+
+        Offer::create([
+            'event_id' => $event->id,
+            'start' => '2021-09-09 12:30',
+            'end' => '2021-09-11 12:30',
+            'discount' => 70
+        ]);
+        $request = $this->actingAs($user)->put('/events/' . $event->id, [
+            'offer_start' => '2031-08-09 12:30',
+            'offer_end' => '2031-08-11 12:30',
+            'offer_discount' => 50
+        ]);
+        $updated_event = $event->fresh();
+
+        $this->assertNotNull(Event::all()->first()->offer, 'creazione offerta fallita');
+        $this->assertEquals('2031-08-09 12:30:00', Event::all()->first()->offer->start, "l'offerta non ha il valore di inizio corretto");
+        $this->assertEquals('2031-08-11 12:30:00', Event::all()->first()->offer->end, "l'offerta non ha il valore di fine corretto");
+        $this->assertEquals(50, Event::all()->first()->offer->discount, "l'offerta non ha il valore di sconto corretto");
+    }
+
     public function test_a_user_cannot_edit_a_event_of_someone_else()
     {
         $user_without_events = User::factory()->create();
