@@ -1,4 +1,4 @@
-<a name="event" class="event-rectangle" href="/event/{{ $event->id }}">
+<a id="event-rectangle" class="event-rectangle" href="/event/{{ $event->id }}">
     <div class="event-rectangle-image-container">
         <img class="image-preview" src="/storage/images/{{$event->getImage()}}" alt="/images/stock.svg">
     </div>

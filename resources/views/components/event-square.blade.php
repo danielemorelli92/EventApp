@@ -1,4 +1,4 @@
-<a class="event-square" href="/event/{{ $event->id }}">
+<a id="event-square" class="event-square" href="/event/{{ $event->id }}">
     <div class="event-square-image-container">
         <img class="image-preview" src="/storage/images/{{$event->getImage()}}"
              alt="/images/stock.svg">
