@@ -8,13 +8,13 @@
 
 @section('content')
 
+
     <script>
         function auto_grow(element) {
             element.style.height = "5px";
             element.style.height = (element.scrollHeight+1)+"px"
         }
     </script>
-
 
     <div class="left-side-column">
         <a href="javascript:history.back()"
@@ -143,7 +143,7 @@
             @if ($event->price != 0)
                     <label class="info-item-title">Prezzo</label>
                 @if($event->offer != null
-                    &&    ((!($event->offer->end == null || $event->offer->end == '') &&\Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) && \Illuminate\Support\Carbon::parse($event->offer->end)->isAfter(date(now())))
+                    &&    ((!($event->offer->end == null || $event->offer->end == '') && \Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) && \Illuminate\Support\Carbon::parse($event->offer->end)->isAfter(date(now())))
                     ||  ( ($event->offer->end == null || $event->offer->end == '' ) && \Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) ))
                     )
                         <label class="info-item-label">

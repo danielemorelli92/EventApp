@@ -55,28 +55,60 @@
                     </div>
                     <div class="big-form-row"><label class="big-form-label" for="starting_time">Data inizio evento</label>
                         <input class="big-form-compact-field" type="datetime-local"
-                                                                                                                                 onchange="
-                                                                                                                                 if (document.getElementById('ending_time').value < this.value && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value !=='') {
-                                                                                                                                     document.getElementById('ending_time').value = this.value;
-                                                                                                                                 }
-                                                                                                                                 document.getElementById('ending_time').min = this.value;" min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="starting_time" name="starting_time" value="{{ date('Y-m-d\TH:i:s', strtotime($event->starting_time)) }}" required></div>
-                    <div class="big-form-row"><label class="big-form-label" for="ending_time">Data fine evento</label><input class="big-form-compact-field" type="datetime-local" id="ending_time" name="ending_time" onfocus="this.min = document.getElementById('starting_time').value" value="{{ $event->offer->end != null ? date('Y-m-d\TH:i:s', strtotime($event->offer->end)) : null }}"></div>
+                            onchange="
+                            if (document.getElementById('ending_time').value < this.value && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value !=='') {
+                                document.getElementById('ending_time').value = this.value;
+                            }
+                            document.getElementById('ending_time').min = this.value;" id="starting_time" name="starting_time" value="{{ date('Y-m-d\TH:i:s', strtotime($event->starting_time)) }}" required></div>
+                    <div class="big-form-row"><label class="big-form-label" for="ending_time">Data fine evento</label><input class="big-form-compact-field" type="datetime-local" id="ending_time" name="ending_time" onfocus="this.min = document.getElementById('starting_time').value" value="{{ $event->ending_time != null ? date('Y-m-d\TH:i:s', strtotime($event->ending_time)) : null }}"></div>
 
-
-                    <div class="big-form-row"><label class="big-form-label" for="offer_start">Data inizio offerta</label>
-                        <input class="big-form-compact-field" type="datetime-local"
-                                                                                                                                 onchange="
-                                                                                                                                 if (document.getElementById('offer_end').value < this.value && document.getElementById('offer_end').value != null && document.getElementById('offer_end').value !=='') {
-                                                                                                                                     document.getElementById('offer_end').value = this.value;
-                                                                                                                                 }
-                                                                                                                                 document.getElementById('offer_end').min = this.value;" min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="offer_start" name="offer_start" value="{{ date('Y-m-d\TH:i:s', strtotime($event->offer_start)) }}"></div>
-                    <div class="big-form-row"><label class="big-form-label" for="offer_end">Data fine offerta</label><input class="big-form-compact-field" type="datetime-local" id="offer_end" name="offer_end" onfocus="this.min = document.getElementById('offer_start').value" value="{{ $event->offer->end != null ? date('Y-m-d\TH:i:s', strtotime($event->offer->end)) : null }}"></div>
 
                     <div class="big-form-row">
+                        <label class="big-form-label" for="offer_start">Data inizio offerta</label>
+                        <input class="big-form-compact-field" type="datetime-local"
+                               onfocus="this.max = document.getElementById('starting_time').value"
+                               onchange="
+                                    if (document.getElementById('offer_end').value !== '' && document.getElementById('offer_end').value != null && document.getElementById('offer_end').value < this.value) {
+                                         document.getElementById('offer_end').value = this.value;
+                                    } document.getElementById('offer_end').min = this.value;
+                                    if (this.value !== '') {
+                                        this.setAttribute('required', 'required');
+                                        document.getElementById('offer_discount').setAttribute('required', 'required');
+                                    } else if (document.getElementById('offer_discount').value === '') {
+                                        this.removeAttribute('required');
+                                        document.getElementById('offer_discount').removeAttribute('required');
+                                    }
+                               "
+                               id="offer_start" name="offer_start"
+                               value="{{ $event->offer->start != null ? date('Y-m-d\TH:i:s', strtotime($event->offer->start)) : null }}"
+
+                               @if( $event->offer->discount != null || $event->offer->start != null )
+                                    required
+                               @endif
+                        >
+                    </div>
+                    <div class="big-form-row">
+                        <label class="big-form-label" for="offer_end">Data fine offerta</label>
+                        <input class="big-form-compact-field" type="datetime-local" id="offer_end" name="offer_end"
+                               value="{{ $event->offer->end != null ? date('Y-m-d\TH:i:s', strtotime($event->offer->end)) : null }}">
+                    </div>
+                    <div class="big-form-row">
                         <label class="big-form-label" for="offer_end">Offerta al %</label>
-                        <input class="big-form-compact-field" type="number" id="offer_end" name="offer_discount" placeholder="%" min="0" max="100" value="
-                            {{ $event->offer->discount }}
-                            ">
+                        <input class="big-form-compact-field" type="number" id="offer_end" id="offer_discount" name="offer_discount" placeholder="%" min="0" max="100"
+                               onchange="
+                            if (this.value !== '') {
+                                this.setAttribute('required', 'required');
+                                document.getElementById('offer_start').setAttribute('required', 'required');
+                            } else if (document.getElementById('offer_start').value === '') {
+                                this.removeAttribute('required');
+                                document.getElementById('offer_start').removeAttribute('required');
+                            }
+                         "
+                               value="{{ $event->offer->discount }}"
+                               @if( $event->offer->discount != null || $event->offer->start != null )
+                                   required
+                               @endif
+                        >
                     </div>
 
 

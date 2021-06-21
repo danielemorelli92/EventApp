@@ -60,10 +60,14 @@
                         <label class="big-form-label" for="starting_time">Data inizio evento</label>
                         <input class="big-form-compact-field" type="datetime-local" onchange="
 
-                         if (document.getElementById('ending_time').value < this.value && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value !=='') {
+                         if (document.getElementById('ending_time').value !=='' && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value < this.value) {
                               document.getElementById('ending_time').value = this.value;
                           }
-                          document.getElementById('ending_time').min = this.value;"
+                          document.getElementById('ending_time').min = this.value;
+                         if (document.getElementById('offer_start').value !=='' && document.getElementById('offer_start').value != null && document.getElementById('offer_start').value > this.value) {
+                              document.getElementById('offer_start').value = this.value;
+                         }
+                          document.getElementById('offer_start').max = this.value;"
                           min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="starting_time" name="starting_time" required >
                     </div>
                     <div class="big-form-row">
@@ -75,12 +79,18 @@
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_start">Data inizio offerta</label>
                         <input class="big-form-compact-field" type="datetime-local" onchange="
-
-                         if (document.getElementById('offer_end').value < this.value && document.getElementById('offer_end').value != null && document.getElementById('offer_end').value !=='') {
+                         if (document.getElementById('offer_end').value !=='' && document.getElementById('offer_end').value != null && document.getElementById('offer_end').value < this.value) {
                               document.getElementById('offer_end').value = this.value;
-                          }
-                          document.getElementById('offer_end').min = this.value;"
-                          min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="offer_start" name="offer_start" >
+                         } document.getElementById('offer_end').min = this.value;
+                         if (this.value !== '') {
+                             this.setAttribute('required', 'required');
+                             document.getElementById('offer_discount').setAttribute('required', 'required');
+                         } else if (document.getElementById('offer_discount').value === '') {
+                             this.removeAttribute('required');
+                             document.getElementById('offer_discount').removeAttribute('required');
+                         }
+                         "
+                         id="offer_start" name="offer_start" >
                     </div>
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_end">Data fine offerta</label>
@@ -88,7 +98,16 @@
                     </div>
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_end">Offerta al %</label>
-                        <input class="big-form-compact-field" type="number" id="offer_end" name="offer_discount" placeholder="%" min="0" max="100" >
+                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="0" max="100"
+                         onchange="
+                            if (this.value !== '') {
+                                this.setAttribute('required', 'required');
+                                document.getElementById('offer_start').setAttribute('required', 'required');
+                            } else if (document.getElementById('offer_start').value === '') {
+                                this.removeAttribute('required');
+                                document.getElementById('offer_start').removeAttribute('required');
+                            }
+                         ">
                     </div>
 
 
