@@ -146,9 +146,16 @@
                     &&    ((!($event->offer->end == null || $event->offer->end == '') && \Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) && \Illuminate\Support\Carbon::parse($event->offer->end)->isAfter(date(now())))
                     ||  ( ($event->offer->end == null || $event->offer->end == '' ) && \Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) ))
                     )
-                        <label class="info-item-label">
-                            <del>{{ $event->price }}</del> {{ $event->price * $event->offer->discount / 100 }}€
-                        </label>
+                        <div style="display: inline-block">
+                            <del style="color: #6d6d6d">{{ $event->price }}</del>
+                            <label class="info-item-label" style="
+                                font-weight: bold;
+                                background: radial-gradient(circle at top left, #00a9dc, #007fe1);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;">
+                                {{ $event->price * $event->offer->discount / 100 }}€
+                            </label>
+                        </div>
                   @else
                         <label class="info-item-label">{{ $event->price }}€</label>
                   @endif
