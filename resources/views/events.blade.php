@@ -6,7 +6,7 @@
         <div class="section-title" style="margin-left: 12px">Eventi in base ai filtri</div>
         <div class="events-list">
             @foreach($events as $event)
-                @include('components.event-rectangle')
+                @include('components.event-rectangle-container')
             @endforeach
         </div>
     </div>
