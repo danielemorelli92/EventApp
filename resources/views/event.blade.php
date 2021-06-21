@@ -141,18 +141,17 @@
                     </a>
                 @endif
             @if ($event->price != 0)
-                @if($offer->discount != 0 && $offer->start < date($event->starting_time) && $offer->end > date($offer->start) && $offer->end < date($event->starting_time))
-                        <label class="info-item-title">Prezzo</label>
+                    <label class="info-item-title">Prezzo</label>
+                @if($event->offer != null
+                    &&    ((!($event->offer->end == null || $event->offer->end == '') &&\Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) && \Illuminate\Support\Carbon::parse($event->offer->end)->isAfter(date(now())))
+                    ||  ( ($event->offer->end == null || $event->offer->end == '' ) && \Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) ))
+                    )
                         <label class="info-item-label">
-                            <del>{{ $event->price }}€</del> {{$offer->discount}}
+                            <del>{{ $event->price }}</del> {{ $event->price * $event->offer->discount / 100 }}€
                         </label>
                   @else
-                        <label class="info-item-title">Prezzo</label>
                         <label class="info-item-label">{{ $event->price }}€</label>
                   @endif
-            @else
-                      <label class="info-item-title">Prezzo</label>
-                      <label class="info-item-label">GRATIS!</label>
             @endif
             @if ($event->host != null)
                     <label class="info-item-title">Organizzatore</label>
