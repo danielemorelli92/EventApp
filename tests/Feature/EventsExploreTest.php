@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\{ExternalRegistration, User, Event, Tag};
+use App\Models\{ExternalRegistration, Offer, User, Event, Tag};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -279,5 +279,25 @@ class EventsExploreTest extends TestCase
         $response = $this->get('/event/' . $event->id);
         $response->assertSee($event->author->name);
         $response->assertSee('/user-profile/' . $event->author->id);
+    }
+
+    public function test_a_user_can_view_an_offer_price_in_event_page()
+    {
+        $event = Event::factory()->create([
+            'price' => 200,
+            'starting_time' =>  '2022-10-14 12:30',
+            'ending_time' =>  '2022-10-16 12:30'
+        ]);
+
+        $offer = Offer::create([
+            'event_id' => $event->id,
+            'start' => '2022-09-11 12:30',
+            'end' => '2022-10-13 12:30',
+            'discount' => 70
+        ]);
+
+        $response = $this->get('/event/' . $event->id);
+        $response->assertSee($event->price * $offer->discount / 100);
+
     }
 }
