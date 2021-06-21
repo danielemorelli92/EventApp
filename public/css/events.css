@@ -309,7 +309,7 @@ button:disabled {
     height: 32px;
     width: 32px;
 
-    background-color: white;
+    background-color: #fbfbfb;
     color: #0090E1;
     padding: 0;
     text-align: center;
@@ -325,7 +325,7 @@ button:disabled {
     height: 32px;
     width: 32px;
 
-    background-color: #d4d4d4;
+    background-color: #e5e5e5;
     color: #0090E1;
     padding: 0;
     text-align: center;
@@ -341,7 +341,7 @@ button:disabled {
     height: 32px;
     width: 32px;
 
-    background-color: #bfbfbf;
+    background-color: #c9c9c9;
     color: #0090E1;
     padding: 0;
     text-align: center;
@@ -454,9 +454,9 @@ button:disabled {
 
 
 input[type="submit"] {
-    -webkit-border-radius: 24px;
-    -moz-border-radius: 24px;
-    border-radius: 24px;
+    -webkit-border-radius: 0px 0px 12px 0px;
+    -moz-border-radius: 0px 0px 12px 0px;
+    border-radius: 0px 0px 12px 0px;
     border: 2px solid #0090E1;
     height: 45px;
     white-space:nowrap;
@@ -901,9 +901,10 @@ input[type="file"] {
     flex-grow: 1;
     display: grid;
     grid-template-areas: "image-rectangle title-rectangle"
+    "image-rectangle promo-rectangle"
     "image-rectangle attributes-rectangle";
     grid-template-columns: 180px auto;
-    grid-template-rows: 136px 44px;
+    grid-template-rows: 136px 0 44px;
     width: 550px;
     height: 180px;
     background: #ffffff;
@@ -914,6 +915,35 @@ input[type="file"] {
 }
 .event-rectangle:active {
     background: rgb(236, 236, 236);
+}
+.event-rectangle-promoted{
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    min-width: 550px;
+    max-width: 800px;
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.15);
+    border: double 4px transparent;
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #00cbfa, #007fe1);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+    flex-grow: 1;
+    display: grid;
+    grid-template-areas: "image-rectangle title-rectangle"
+    "image-rectangle promo-rectangle"
+    "image-rectangle attributes-rectangle";
+    grid-template-columns: 180px auto;
+    grid-template-rows: 114px 22px 44px;
+    width: 550px;
+    height: 180px;
+    margin: 4px;
+}
+.event-rectangle-promoted:hover {
+    background-image: linear-gradient(#F8F8F8, #F8F8F8), radial-gradient(circle at top left, #00e2af, #0695ff);
+}
+.event-rectangle-promoted:active {
+    background-image: linear-gradient(#ECECEC, #ECECEC), radial-gradient(circle at top left, #00e2af, #0695ff);
 }
 .event-images-list{
     display: flex;
@@ -955,6 +985,20 @@ input[type="file"] {
     margin: 8px;
     font-size: 20px;
     font-weight: 550;
+}
+.event-rectangle-promo-attribute{
+    background: radial-gradient(circle at top left, #00a9dc, #007fe1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-size: 18px;
+    width: fit-content;
+    grid-area: promo-rectangle;
+    font-weight: bold;
+    align-self: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 .event-rectangle-attributes-group{
     display: flex;

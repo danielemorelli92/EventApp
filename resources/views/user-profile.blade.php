@@ -8,19 +8,8 @@
         <section id="organized_events">
             <div class="section-title">Eventi organizzati</div>
             <div class="events-list">
-                @foreach($created_events as $created_event)
-                    <a class="event-square" href="/event/{{ $created_event->id }}">
-                        <div class="event-square-image-container">
-                            <img class="image-preview" src="/storage/images/{{$created_event->getImage()}}" alt="/images/stock.svg">
-                        </div>
-                        <div class="event-square-title">{{ $created_event->title }}</div>
-                        <div class="event-square-attributes-group">
-                            <div class="event-square-attribute">
-                                {{ substr($created_event->starting_time, 0, -3) }}
-
-                            </div>
-                        </div>
-                    </a>
+                @foreach($created_events as $event)
+                    @include('components.event-square')
                 @endforeach
             </div>
         </section>
@@ -28,19 +17,8 @@
         <section id="registered_events_past">
             <div class="section-title">Eventi a cui ha partecipato</div>
             <div class="events-list">
-                @foreach($registered_events_past as $registered_event_past)
-                    <a class="event-square" href="/event/{{ $registered_event_past->id }}">
-                        <div class="event-square-image-container">
-                            <img class="image-preview" src="/storage/images/{{$registered_event_past->getImage()}}" alt="/images/stock.svg">
-                        </div>
-                        <div class="event-square-title">{{ $registered_event_past->title }}</div>
-                        <div class="event-square-attributes-group">
-                            <div class="event-square-attribute">
-                                {{ substr($registered_event_past->starting_time, 0, -3) }}
-
-                            </div>
-                        </div>
-                    </a>
+                @foreach($registered_events_past as $event)
+                    @include('components.event-square')
                 @endforeach
             </div>
         </section>

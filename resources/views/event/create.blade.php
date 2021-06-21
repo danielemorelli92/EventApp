@@ -41,20 +41,6 @@
                         <label class="big-form-label" for="website">Sito web</label>
                         <input class="big-form-compact-field" type="text" id="website" name="website">
                     </div>
-                    <div class="big-form-row">
-                        <label class="big-form-label" for="starting_time">Data inizio evento</label>
-                        <input class="big-form-compact-field" type="datetime-local" onchange="
-
-                         if (document.getElementById('ending_time').value < this.value && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value !=='') {
-                              document.getElementById('ending_time').value = this.value;
-                          }
-                          document.getElementById('ending_time').min = this.value;"
-                          min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="starting_time" name="starting_time" required >
-                    </div>
-                    <div class="big-form-row">
-                        <label class="big-form-label" for="ending_time">Data fine evento</label>
-                        <input class="big-form-compact-field" type="datetime-local" id="ending_time" name="ending_time">
-                    </div>
                     <div class="big-form-row" style="width: auto">
                         <label class="big-form-label" style="min-width: 400px" for="registration_link">Richiedi registrazione da sito esterno</label>
                         <div class="radio-selection-item" style="flex-grow: 1">
@@ -69,6 +55,59 @@
                             <input onclick="document.getElementById('website').required = true; document.getElementById('ticket_office').required = false" type="radio" class="radio-selection-item-radio" name="registration_link" value="website">
                             <label for="registration_link" class="radio-selection-item-label" >Dal sito web</label>
                         </div>
+                    </div>
+                    <div class="big-form-row">
+                        <label class="big-form-label" for="starting_time">Data inizio evento</label>
+                        <input class="big-form-compact-field" type="datetime-local" onchange="
+
+                         if (document.getElementById('ending_time').value !=='' && document.getElementById('ending_time').value != null && document.getElementById('ending_time').value < this.value) {
+                              document.getElementById('ending_time').value = this.value;
+                          }
+                          document.getElementById('ending_time').min = this.value;
+                         if (document.getElementById('offer_start').value !=='' && document.getElementById('offer_start').value != null && document.getElementById('offer_start').value > this.value) {
+                              document.getElementById('offer_start').value = this.value;
+                         }
+                          document.getElementById('offer_start').max = this.value;"
+                          min="{{str_replace(" ", "T",substr(date(now()), 0, 16))}}" id="starting_time" name="starting_time" required >
+                    </div>
+                    <div class="big-form-row">
+                        <label class="big-form-label" for="ending_time">Data fine evento</label>
+                        <input class="big-form-compact-field" type="datetime-local" id="ending_time" name="ending_time">
+                    </div>
+
+
+                    <div class="big-form-row">
+                        <label class="big-form-label" for="offer_start">Data inizio offerta</label>
+                        <input class="big-form-compact-field" type="datetime-local" onchange="
+                         if (document.getElementById('offer_end').value !=='' && document.getElementById('offer_end').value != null && document.getElementById('offer_end').value < this.value) {
+                              document.getElementById('offer_end').value = this.value;
+                         } document.getElementById('offer_end').min = this.value;
+                         if (this.value !== '') {
+                             this.setAttribute('required', 'required');
+                             document.getElementById('offer_discount').setAttribute('required', 'required');
+                         } else if (document.getElementById('offer_discount').value === '') {
+                             this.removeAttribute('required');
+                             document.getElementById('offer_discount').removeAttribute('required');
+                         }
+                         "
+                         id="offer_start" name="offer_start" >
+                    </div>
+                    <div class="big-form-row">
+                        <label class="big-form-label" for="offer_end">Data fine offerta</label>
+                        <input class="big-form-compact-field" type="datetime-local" id="offer_end" name="offer_end">
+                    </div>
+                    <div class="big-form-row">
+                        <label class="big-form-label" for="offer_end">Offerta al %</label>
+                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="0" max="100"
+                         onchange="
+                            if (this.value !== '') {
+                                this.setAttribute('required', 'required');
+                                document.getElementById('offer_start').setAttribute('required', 'required');
+                            } else if (document.getElementById('offer_start').value === '') {
+                                this.removeAttribute('required');
+                                document.getElementById('offer_start').removeAttribute('required');
+                            }
+                         ">
                     </div>
 
 

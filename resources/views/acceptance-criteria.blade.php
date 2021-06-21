@@ -1,17 +1,35 @@
-@extends('layouts.layout-header-three-columns')
+@extends('layouts.layout-header-one-columns')
 
 
 @section('content')
 
-    <form action="/registration" method="post">
-        @csrf
+    <div class="main-content-column">
+        <div class="big-form-container">
 
-        <div class="">{{ $event->criteri_accettazione }}</div>
+            <h2 style="margin-bottom: 20px;">Termini di contratto</h2>
+
+            <div class="big-form-group">
+
+                <div style="margin-top: 1px; background: white; padding: 4px; border-radius: 6px; border: 1px solid #aaa; font-size: 18px">{{ $event->criteri_accettazione }}</div>
 
 
-        <button type="submit" name="event" value="{{ $event->id }}"
-                style="width: 100%">Accetta e registrati
-        </button>
-    </form>
+                <div style="margin-top: 16px; display: flex; flex-direction: row;" class="big-form-submit-button">
+
+                    <form action="/event/{{$event->id}}">
+                        <button style="margin-right: 4px;" type="submit">Annulla</button>
+                    </form>
+                    <form action="/registration" method="post">
+                        @csrf
+                        <button type="submit" name="event" value="{{ $event->id }}"
+                        >Accetta e registrati
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
 
 @endsection

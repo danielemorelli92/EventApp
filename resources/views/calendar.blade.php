@@ -64,7 +64,7 @@
             <form style="margin-left: auto; display: inline;" action="/calendar/{{ $year - 1 }}-{{ $month }}">
                 <button class="circle-button">←</button>
             </form>
-            <h2>{{ $year }}</h2>
+            <h2 style="margin-left: 6px; margin-right: 6px">{{ $year }}</h2>
             <form style="display: inline;" action="/calendar/{{ $year + 1 }}-{{ $month }}">
                 <button class="circle-button">→</button>
             </form>

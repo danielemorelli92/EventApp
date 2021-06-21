@@ -8,7 +8,7 @@ use App\Notifications\DescriptionChanged;
 use App\Notifications\EventCanceled;
 use App\Notifications\ReplyToMe;
 use App\Notifications\TitleChanged;
-use App\Models\{Comment, Event, Image, Tag, User};
+use App\Models\{Comment, Event, Image, Offer, Tag, User};
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -132,29 +132,28 @@ class EventController extends Controller
             'ticket_office' => 'nullable',
             'website' => 'nullable',
             'registration_link' => 'string',
-            'criteri_accettazione'=> 'nullable',
+            'criteri_accettazione' => 'nullable',
 
 
         ]);
-        if ($validatedData['website'] != "" && !str_contains($validatedData['website'], "http://")  && !str_contains($validatedData['website'], "https://") ) {
-            $validatedData['website'] = 'https://'.$validatedData['website'];
+        if ($validatedData['website'] != "" && !str_contains($validatedData['website'], "http://") && !str_contains($validatedData['website'], "https://")) {
+            $validatedData['website'] = 'https://' . $validatedData['website'];
         }
-        if ($validatedData['ticket_office'] != "" && !str_contains($validatedData['ticket_office'], "http://")  && !str_contains($validatedData['ticket_office'], "https://") ) {
-            $validatedData['ticket_office'] = 'https://'.$validatedData['ticket_office'];
+        if ($validatedData['ticket_office'] != "" && !str_contains($validatedData['ticket_office'], "http://") && !str_contains($validatedData['ticket_office'], "https://")) {
+            $validatedData['ticket_office'] = 'https://' . $validatedData['ticket_office'];
         }
 
         $validatedData['author_id'] = Auth::id();
-        if ( ($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") ||  ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "") ) {
+        if (($validatedData['registration_link'] == 'ticket_office' && $validatedData['ticket_office'] == "") || ($validatedData['registration_link'] == 'website' && $validatedData['website'] == "")) {
             abort(400);
         }
         request()->validate([
             'images[]' => 'nullable|mimes:jpg,jpeg,bmp,png'
         ]);
 
-        if($validatedData['starting_time'] <= date(now()))
-            {
-                abort(400);
-            }
+        if ($validatedData['starting_time'] <= date(now())) {
+            abort(400);
+        }
 
         $event = Event::factory()->create($validatedData);
 
@@ -166,7 +165,14 @@ class EventController extends Controller
             $event->tags()->sync(collect());
         }
 
-
+        if (request()->has('offer_discount')) {
+            Offer::create([
+                "event_id" => $event->id,
+                "start" => request()->offer_start,
+                "end" => request()->offer_end,
+                "discount" => request()->offer_discount,
+            ]);
+        }
 
         if (request()->hasFile('images')) {
             foreach (request()->images as $image) {
@@ -210,25 +216,25 @@ class EventController extends Controller
                             $query = $query->where('starting_time', '<', $dateMax);
                             break;
                         case 'today':
-                            $selected_date_filter='today';
+                            $selected_date_filter = 'today';
                             $dateMin = date(now()->setHour(0)->setMinute(0)->setSecond(0));
                             $dateMax = date(now()->setHour(23)->setMinute(59)->setSecond(59));
                             $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
                             break;
                         case 'tomorrow':
-                            $selected_date_filter='tomorrow';
+                            $selected_date_filter = 'tomorrow';
                             $dateMin = date(now()->addDay()->setHour(0)->setMinute(0)->setSecond(0));
                             $dateMax = date(now()->addDay()->setHour(23)->setMinute(59)->setSecond(59));
                             $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
                             break;
                         case 'week':
-                            $selected_date_filter='week';
+                            $selected_date_filter = 'week';
                             $dateMin = date(now()->setHour(0)->setMinute(0)->setSecond(0));
                             $dateMax = date(now()->addWeek()->setHour(23)->setMinute(59)->setSecond(59));
                             $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
                             break;
                         case 'month':
-                            $selected_date_filter='month';
+                            $selected_date_filter = 'month';
                             $dateMin = date(now()->setHour(0)->setMinute(0)->setSecond(0));
                             $dateMax = date(now()->addMonth()->setHour(23)->setMinute(59)->setSecond(59));
                             $query = $query->whereBetween('starting_time', [$dateMin, $dateMax]);
@@ -238,7 +244,7 @@ class EventController extends Controller
                     }
                     $my_events = $my_events->intersect($query->get());
                 } else {
-                    $selected_date_filter='any';
+                    $selected_date_filter = 'any';
                 }
             }
         }
@@ -381,6 +387,25 @@ class EventController extends Controller
         $event->refresh();
 
 
+        if (request()->has('offer_discount')) {
+            if ($event->offer == null) {
+                Offer::create([
+                    "event_id" => $event->id,
+                    "start" => request()->offer_start,
+                    "end" => request()->offer_end,
+                    "discount" => request()->offer_discount,
+                ]);
+            } else {
+                $event->offer->update([
+                    "event_id" => $event->id,
+                    "start" => request()->offer_start,
+                    "end" => request()->offer_end,
+                    "discount" => request()->offer_discount,
+                ]);
+            }
+        } else if ($event->offer != null) {
+            $event->offer->delete();
+        }
 
 
         if ($event->title != $old_title) {
@@ -397,7 +422,7 @@ class EventController extends Controller
         }
 
         foreach ($event->images as $image) {
-            if ( !collect(request('selected_images'))->contains($image->id) ) {
+            if (!collect(request('selected_images'))->contains($image->id)) {
                 $image->delete();
             }
         }

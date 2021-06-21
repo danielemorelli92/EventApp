@@ -8,13 +8,13 @@
 
 @section('content')
 
+
     <script>
         function auto_grow(element) {
             element.style.height = "5px";
             element.style.height = (element.scrollHeight+1)+"px"
         }
     </script>
-
 
     <div class="left-side-column">
         <a href="javascript:history.back()"
@@ -142,11 +142,24 @@
                 @endif
             @if ($event->price != 0)
                     <label class="info-item-title">Prezzo</label>
-                    <label class="info-item-label">{{ $event->price }}€</label>
-                @else
-                      <label class="info-item-title">Prezzo</label>
-                      <label class="info-item-label">GRATIS!</label>
-                @endif
+                @if($event->offer != null
+                    &&    ((!($event->offer->end == null || $event->offer->end == '') && \Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) && \Illuminate\Support\Carbon::parse($event->offer->end)->isAfter(date(now())))
+                    ||  ( ($event->offer->end == null || $event->offer->end == '' ) && \Illuminate\Support\Carbon::parse($event->offer->start)->isBefore(date(now())) ))
+                    )
+                        <div style="display: inline-block">
+                            <del style="color: #6d6d6d">{{ $event->price }}</del>
+                            <label class="info-item-label" style="
+                                font-weight: bold;
+                                background: radial-gradient(circle at top left, #00a0d8, #007fe1);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;">
+                                {{ $event->price * $event->offer->discount / 100 }}€
+                            </label>
+                        </div>
+                  @else
+                        <label class="info-item-label">{{ $event->price }}€</label>
+                  @endif
+            @endif
             @if ($event->host != null)
                     <label class="info-item-title">Organizzatore</label>
                     <label class="info-item-label">{{ $event->host->name }}</label>
