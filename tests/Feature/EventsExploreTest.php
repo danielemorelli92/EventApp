@@ -283,16 +283,17 @@ class EventsExploreTest extends TestCase
 
     public function test_a_user_can_view_an_offer_price_in_event_page()
     {
+        $this->withoutExceptionHandling();
         $event = Event::factory()->create([
             'price' => 200,
-            'starting_time' =>  '2022-10-14 12:30',
-            'ending_time' =>  '2022-10-16 12:30'
+            'starting_time' =>  '2032-10-14 12:30:00',
+            'ending_time' =>  '2032-10-16 12:30:00'
         ]);
 
         $offer = Offer::create([
             'event_id' => $event->id,
-            'start' => '2022-09-11 12:30',
-            'end' => '2022-10-13 12:30',
+            'start' => '2021-06-11 12:30:00',
+            'end' => '2032-10-13 12:30:00',
             'discount' => 70
         ]);
 
