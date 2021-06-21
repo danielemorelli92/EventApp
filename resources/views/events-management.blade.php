@@ -6,7 +6,7 @@
         <div class="section-title" style="margin-left: 12px">I miei eventi</div>
         <div class="events-list">
             @foreach($my_events as $event)
-                @include('components.event-rectangle-editable')
+                @include('components.event-rectangle')
             @endforeach
         </div>
     </div>
