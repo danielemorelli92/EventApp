@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Http\Controllers\EventController;
 use App\Models\Event;
 use App\Models\Image;
+use App\Models\Offer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -80,6 +81,51 @@ class EventManagementTest extends TestCase
 
         $this->assertCount(1, Event::all());
         $this->assertEquals($user->id, Event::all()->first()->author_id);
+    }
+    public function test_a_organizer_can_create_a_valid_offer_for_event()
+    {
+        $this->withoutExceptionHandling();
+        $user = User::create([
+            'email' => 'test@test.com',
+            'password' => bcrypt('password'),
+            'name' => 'Giovanni Giorgio'
+        ]); // crea l'utente
+
+        $user->type = 'organizzatore'; // upgrade locale a organizzatore
+        DB::table('users')
+            ->where('email', $user->email)
+            ->update(['type' => 'organizzatore']); // upgrade sul database a organizzatore
+
+        $event = [
+            'title' => 'A fake event!',
+            'description' => 'A very very very fake event...',
+            'author_id' => $user->id,
+            'type' => 'Concert',
+            'max_partecipants' => '250',
+            'price' => 100,
+            'latitude' => 56.72932400,
+            'longitude' => -20.48122800,
+            'ticket_office' => 'http://www.ticket-office.com/',
+            'website' => 'http://www.best-website-ever.com/',
+            'registration_link' => 'none',
+            'city' => 'Roseto',
+            'starting_time' => '2021-09-11 12:30',
+            'ending_time' => null,
+
+            'offer_start' => '2021-09-09 12:30',
+            'offer_end' => '2021-09-11 12:30',
+            'offer_discount' => 70
+        ]; // crea un evento locale
+
+        $this->assertCount(0, Event::all());
+
+        $request = $this->actingAs($user)->post('/events', $event);
+
+        $this->assertCount(1, Event::all(), 'creazione evento fallita');
+        $this->assertNotNull(Event::all()->first()->offer, 'creazione offerta fallita');
+        $this->assertEquals('2021-09-09 12:30:00', Event::all()->first()->offer->start, "l'offerta non ha il valore di inizio corretto");
+        $this->assertEquals('2021-09-11 12:30:00', Event::all()->first()->offer->end, "l'offerta non ha il valore di fine corretto");
+        $this->assertEquals(70, Event::all()->first()->offer->discount, "l'offerta non ha il valore di sconto corretto");
     }
 
     public function test_a_normal_user_cannot_create_an_event()
