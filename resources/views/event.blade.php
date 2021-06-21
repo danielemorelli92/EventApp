@@ -150,7 +150,7 @@
                             <del style="color: #6d6d6d">{{ $event->price }}</del>
                             <label class="info-item-label" style="
                                 font-weight: bold;
-                                background: radial-gradient(circle at top left, #00a9dc, #007fe1);
+                                background: radial-gradient(circle at top left, #00a0d8, #007fe1);
                                 -webkit-background-clip: text;
                                 -webkit-text-fill-color: transparent;">
                                 {{ $event->price * $event->offer->discount / 100 }}€
