@@ -309,7 +309,7 @@ button:disabled {
     height: 32px;
     width: 32px;
 
-    background-color: white;
+    background-color: #fbfbfb;
     color: #0090E1;
     padding: 0;
     text-align: center;
@@ -325,7 +325,7 @@ button:disabled {
     height: 32px;
     width: 32px;
 
-    background-color: #d4d4d4;
+    background-color: #e5e5e5;
     color: #0090E1;
     padding: 0;
     text-align: center;
@@ -341,7 +341,7 @@ button:disabled {
     height: 32px;
     width: 32px;
 
-    background-color: #bfbfbf;
+    background-color: #c9c9c9;
     color: #0090E1;
     padding: 0;
     text-align: center;
