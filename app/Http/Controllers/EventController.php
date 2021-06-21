@@ -165,13 +165,23 @@ class EventController extends Controller
             $event->tags()->sync(collect());
         }
 
+
         if (request()->has('offer_discount')) {
-            Offer::create([
-                "event_id" => $event->id,
-                "start" => request()->offer_start,
-                "end" => request()->offer_end,
-                "discount" => request()->offer_discount,
-            ]);
+            if (
+                (request()->offer_start != null && request()->offer_start > request()->starting_time) ||
+                (request()->offer_start != null && request()->offer_end != null && request()->offer_end < request()->offer_start) ||
+                (request()->offer_start != null && request()->offer_discount == null) ||
+                (request()->offer_start == null && request()->offer_discount != null)
+            ) {
+                abort(400);
+            } else {
+                Offer::create([
+                    "event_id" => $event->id,
+                    "start" => request()->offer_start,
+                    "end" => request()->offer_end,
+                    "discount" => request()->offer_discount,
+                ]);
+            }
         }
 
         if (request()->hasFile('images')) {
@@ -388,20 +398,29 @@ class EventController extends Controller
 
 
         if (request()->has('offer_discount')) {
-            if ($event->offer == null) {
-                Offer::create([
-                    "event_id" => $event->id,
-                    "start" => request()->offer_start,
-                    "end" => request()->offer_end,
-                    "discount" => request()->offer_discount,
-                ]);
+            if (
+                (request()->starting_time != null && request()->offer_start != null && strtotime(request()->offer_start) > strtotime(request()->starting_time) ) ||
+                (request()->offer_start != null && request()->offer_end != null && strtotime(request()->offer_end) < strtotime(request()->offer_start)) ||
+                (request()->offer_start != null && request()->offer_discount == null) ||
+                (request()->offer_start == null && request()->offer_discount != null)
+            ) {
+                abort(400);
             } else {
-                $event->offer->update([
-                    "event_id" => $event->id,
-                    "start" => request()->offer_start,
-                    "end" => request()->offer_end,
-                    "discount" => request()->offer_discount,
-                ]);
+                if ($event->offer == null) {
+                    Offer::create([
+                        "event_id" => $event->id,
+                        "start" => request()->offer_start,
+                        "end" => request()->offer_end,
+                        "discount" => request()->offer_discount,
+                    ]);
+                } else {
+                    $event->offer->update([
+                        "event_id" => $event->id,
+                        "start" => request()->offer_start,
+                        "end" => request()->offer_end,
+                        "discount" => request()->offer_discount,
+                    ]);
+                }
             }
         } else if ($event->offer != null) {
             $event->offer->delete();
