@@ -78,7 +78,7 @@
                             }
                          "
                                @if($event->offer != null)
-                               value="{{ $event->offer->discount }}"
+                                value="{{ 100 - $event->offer->discount }}"
                                @endif
                                @if( $event->offer != null && ($event->offer->discount != null || $event->offer->start != null ))
                                required
