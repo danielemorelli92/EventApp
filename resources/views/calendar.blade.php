@@ -81,7 +81,7 @@
                 <th style="height: 20px; color: #0090E1;">DOM</th>
             </tr>
 
-            @for($i = 1; $i <= 6; $i++)
+            @for($i = 1; $i <= 5; $i++)
                 <tr style="vertical-align: top;">
                     @for($j = 1; $j <= 7; $j++)
                         @if($date->month != $month)
