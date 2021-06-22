@@ -11,15 +11,15 @@
                 <div class="big-form-group">
                     <div class="big-form-column">
                         <label class="big-form-label" for="title">Titolo*</label>
-                        <input class="big-form-big-field" name="title" type="text" placeholder="..." required>
+                        <input class="big-form-big-field" name="title" type="text" placeholder="titolo" required>
                     </div>
                     <div class="big-form-column">
                         <label class="big-form-label" for="description">Descrizione*</label>
-                        <textarea style="resize: vertical;" class="big-form-big-field" type="text" name="description" placeholder="..." required ></textarea>
+                        <textarea style="resize: vertical;" class="big-form-big-field" type="text" name="description" placeholder="descrizione" required ></textarea>
                     </div>
                     <div class="big-form-column">
                         <label class="big-form-label" for="city">Città*</label>
-                        <input class="big-form-big-field" type="text" name="city" required>
+                        <input class="big-form-big-field" type="text" name="city" placeholder="città" required>
                     </div>
                     <div class="big-form-row" style="display: none">
                         <label style="display: none" class="big-form-label" for="type">Tipo evento*</label>
@@ -27,19 +27,19 @@
                     </div>
                     <div class="big-form-row">
                         <label class="big-form-label" for="max_partecipants">Numero posti</label>
-                        <input class="big-form-compact-field" type="number" min="0" name="max_partecipants" placeholder="">
+                        <input class="big-form-compact-field" type="number" min="0" name="max_partecipants" placeholder="n. posti">
                     </div>
                     <div class="big-form-row">
-                        <label class="big-form-label" for="price">Prezzo</label>
-                        <input class="big-form-compact-field" type="number" min="0" step="0.01" name="price" placeholder="">
+                        <label class="big-form-label" for="price">Prezzo €</label>
+                        <input class="big-form-compact-field" type="number" min="0.01" step="0.01" id="price" name="price" placeholder="prezzo €">
                     </div>
                     <div class="big-form-row">
                         <label class="big-form-label" for="ticket_office">Biglietteria</label>
-                        <input class="big-form-compact-field" type="text" id="ticket_office" name="ticket_office">
+                        <input class="big-form-compact-field" type="text" id="ticket_office" name="ticket_office" placeholder="https://sito.biglietteria.it/">
                     </div>
                     <div class="big-form-row">
                         <label class="big-form-label" for="website">Sito web</label>
-                        <input class="big-form-compact-field" type="text" id="website" name="website">
+                        <input class="big-form-compact-field" type="text" id="website" name="website" placeholder="https://sito.web.it/">
                     </div>
                     <div class="big-form-row" style="width: auto">
                         <label class="big-form-label" style="min-width: 400px" for="registration_link">Richiedi registrazione da sito esterno</label>
@@ -78,13 +78,15 @@
 
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_discount">Sconto del %</label>
-                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="1" max="100"
+                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="sconto %" min="1" max="100"
                                onchange="
                             if (this.value !== '') {
                                 this.setAttribute('required', 'required');
+                                document.getElementById('price').setAttribute('required', 'required');
                                 document.getElementById('offer_start').setAttribute('required', 'required');
                             } else if (document.getElementById('offer_start').value === '') {
                                 this.removeAttribute('required');
+                                document.getElementById('price').removeAttribute('required');
                                 document.getElementById('offer_start').removeAttribute('required');
                             }
                          ">
@@ -97,9 +99,11 @@
                          } document.getElementById('offer_end').min = this.value;
                          if (this.value !== '') {
                              this.setAttribute('required', 'required');
+                             document.getElementById('price').setAttribute('required', 'required');
                              document.getElementById('offer_discount').setAttribute('required', 'required');
                          } else if (document.getElementById('offer_discount').value === '') {
                              this.removeAttribute('required');
+                             document.getElementById('price').removeAttribute('required');
                              document.getElementById('offer_discount').removeAttribute('required');
                          }
                          "
@@ -172,7 +176,7 @@
                             <label class="big-form-label" for="criteri_accettazione" style="min-width: 400px">Criteri di
                                 accettazione</label>
                             <textarea class="big-form-big-field" id="" name="criteri_accettazione"
-                                      style="resize: vertical;"></textarea>
+                                      style="resize: vertical;" placeholder="testo criteri di accettazione"></textarea>
                         </div>
                         <button class="big-form-submit-button" type="submit" value="Crea evento">Crea evento</button>
                     </div>

@@ -9,19 +9,19 @@
                 @method('PUT')
                 <h2 style="margin-bottom: 20px;">Informazioni dell'evento</h2>
                 <div class="big-form-group">
-                    <div class="big-form-column"><label class="big-form-label" for="title">Titolo*</label><input class="big-form-big-field" name="title" type="text" placeholder="..." value="{{ $event->title }}" required></div>
-                    <div class="big-form-column"><label class="big-form-label" for="description">Descrizione*</label><textarea class="big-form-big-field" style="resize: vertical;" type="text" name="description" placeholder="..." required>{{ $event->description }}</textarea></div>
-                    <div class="big-form-column"><label class="big-form-label" for="city">Città*</label><input class="big-form-big-field" type="text" name="city" value="{{ $event->city }}" required></div>
+                    <div class="big-form-column"><label class="big-form-label" for="title">Titolo*</label><input class="big-form-big-field" name="title" type="text" placeholder="titolo" value="{{ $event->title }}" required></div>
+                    <div class="big-form-column"><label class="big-form-label" for="description">Descrizione*</label><textarea class="big-form-big-field" style="resize: vertical;" type="text" name="description" placeholder="descrizione" required>{{ $event->description }}</textarea></div>
+                    <div class="big-form-column"><label class="big-form-label" for="city">Città*</label><input class="big-form-big-field" type="text" name="city" value="{{ $event->city }}" placeholder="città"  required></div>
                     <div class="big-form-row" style="display: none"><label style="display: none" class="big-form-label" for="type">Tipo evento*</label><input style="display: none" class="big-form-compact-field" type="text" name="type" value="type" ></div>
-                    <div class="big-form-row"><label class="big-form-label" for="max_partecipants">Numero posti</label><input class="big-form-compact-field" type="number" min="0" name="max_partecipants" value="{{ $event->max_partecipants }}" placeholder=""></div>
-                    <div class="big-form-row"><label class="big-form-label" for="price">Prezzo</label><input class="big-form-compact-field" type="number" min="0" step="0.01" name="price" value="{{ $event->price }}" placeholder=""></div>
-                    <div class="big-form-row"><label class="big-form-label" for="ticket_office">Biglietteria</label><input class="big-form-compact-field" type="text" id="ticket_office" name="ticket_office" value="{{ $event->ticket_office }}"
+                    <div class="big-form-row"><label class="big-form-label" for="max_partecipants">Numero posti</label><input class="big-form-compact-field" type="number" min="0" name="max_partecipants" value="{{ $event->max_partecipants }}" placeholder="n. posti"></div>
+                    <div class="big-form-row"><label class="big-form-label" for="price">Prezzo €</label><input class="big-form-compact-field" type="number" min="0.01" step="0.01" id="price" name="price" value="{{ $event->price }}" placeholder="prezzo €"></div>
+                    <div class="big-form-row"><label class="big-form-label" for="ticket_office">Biglietteria</label><input class="big-form-compact-field" type="text" id="ticket_office" name="ticket_office" placeholder="https://sito.biglietteria.it/" value="{{ $event->ticket_office }}"
                             @if ($event->registration_link == 'ticket_office')
                                 required
                             @endif
                         >
                     </div>
-                    <div class="big-form-row"><label class="big-form-label" for="website">Sito web</label><input class="big-form-compact-field" type="text" id="website" name="website" value="{{ $event->website }}"
+                    <div class="big-form-row"><label class="big-form-label" for="website">Sito web</label><input class="big-form-compact-field" type="text" id="website" name="website" placeholder="https://sito.web.it/" value="{{ $event->website }}"
                             @if ($event->registration_link == 'website')
                                 required
                             @endif
@@ -65,13 +65,15 @@
 
                     <div class="big-form-row">
                         <label class="big-form-label" for="offer_end">Sconto del %</label>
-                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="1" max="100"
+                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="sconto %" min="1" max="100"
                                onchange="
                             if (this.value !== '') {
                                 this.setAttribute('required', 'required');
+                                document.getElementById('price').setAttribute('required', 'required');
                                 document.getElementById('offer_start').setAttribute('required', 'required');
                             } else if (document.getElementById('offer_start').value === '') {
                                 this.removeAttribute('required');
+                                document.getElementById('price').removeAttribute('required');
                                 document.getElementById('offer_start').removeAttribute('required');
                             }
                          "
@@ -93,9 +95,11 @@
                                     } document.getElementById('offer_end').min = this.value;
                                     if (this.value !== '') {
                                         this.setAttribute('required', 'required');
+                                        document.getElementById('price').setAttribute('required', 'required');
                                         document.getElementById('offer_discount').setAttribute('required', 'required');
                                     } else if (document.getElementById('offer_discount').value === '') {
                                         this.removeAttribute('required');
+                                        document.getElementById('price').setAttribute('required', 'required');
                                         document.getElementById('offer_discount').removeAttribute('required');
                                     }
                                "
