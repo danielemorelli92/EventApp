@@ -164,9 +164,8 @@ class EventManagementTest extends TestCase
 
         $request = $this->actingAs($user)->post('/events', $valid_data);
 
-        $this->assertCount(1, Event::all(), 'creazione evento fallita');
-        $this->assertNull(Event::all()->first()->offer, 'creata offerta non valida');
-        if (Event::all()->first()->offer != null) {
+        $this->assertCount(0, Event::all(), 'creato evento invalido');
+        if (Event::all()->first() != null && Event::all()->first()->offer != null) {
             $this->assertNotEquals('2051-09-09 12:30:00', Event::all()->first()->offer->start, "l'offerta ha un valore di inizio invalido");
             $this->assertEquals('2031-09-11 12:30', Event::all()->first()->offer->end, "l'offerta ha un valore di fine invalido");
             $this->assertNotEquals(120, Event::all()->first()->offer->discount, "l'offerta ha un valore di sconto non valido");
