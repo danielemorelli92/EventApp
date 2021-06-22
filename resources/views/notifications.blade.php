@@ -64,11 +64,11 @@
             @case(\App\Notifications\EventCanceled::class)
             <div style="border: 2px solid black; width: 700px;">
                 @if($notification->read_at == null)
-                    <strong>Un <a href="/event/{{$notification->data['event_id']}}">evento</a> a cui eri registrato è
+                    <strong>Un evento a cui eri registrato è
                         stato cancellato!<br><br>
                         Data notifica: {{ $notification->created_at }}</strong>
                 @else
-                    Un <a href="/event/{{$notification->data['event_id']}}">evento</a> a cui eri registrato è stato
+                    Un evento cui eri registrato è stato
                     cancellato!<br><br>
                     Data notifica: {{ $notification->created_at }}
                 @endif
