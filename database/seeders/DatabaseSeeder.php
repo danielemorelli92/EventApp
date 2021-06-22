@@ -28,41 +28,16 @@ class DatabaseSeeder extends Seeder
 
         $events = collect();
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             $coordinates = $this->generate_random_point([42.4612, 14.2111], 120.0);
             $events->push(
-                Event::factory()->hasImages(3)->hasAuthor()->create([
+                Event::factory()->hasAuthor()->create([
                     'latitude' => $coordinates[0],
                     'longitude' => $coordinates[1]
                 ])
             );
         }
 
-        $events->push(Event::factory()->hasImages(4)->create([
-            'latitude' => 42.529336,
-            'longitude' => 14.1420603,
-            'starting_time' => date(now()->addDays(rand(1, 120)))
-        ]));
-        $events->push(Event::factory()->hasImages(4)->hasAuthor()->create([
-            'latitude' => 42.473373,
-            'longitude' => 14.079042,
-            'starting_time' => date(now()->addDays(rand(1, 120)))
-        ]));
-        $events->push(Event::factory()->hasImages(4)->hasAuthor()->create([
-            'latitude' => 42.362286,
-            'longitude' => 14.152149,
-            'starting_time' => date(now()->addDays(rand(1, 120)))
-        ]));
-        $events->push(Event::factory()->hasImages(4)->hasAuthor()->create([
-            'latitude' => 42.394787,
-            'longitude' => 14.296755,
-            'starting_time' => date(now()->addDays(rand(1, 120)))
-        ]));
-        $events->push(Event::factory()->hasImages(4)->hasAuthor()->create([
-            'latitude' => 42.405689,
-            'longitude' => 14.290663,
-            'starting_time' => date(now()->addDays(rand(1, 120)))
-        ]));
 
         $tags = Tag::factory()->count(16)->create();
         $users = User::factory()->count(100)->create();
