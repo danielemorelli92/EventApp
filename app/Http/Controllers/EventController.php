@@ -110,10 +110,10 @@ class EventController extends Controller
             return $event->getDistanceToMe() > 25 && $event->getDistanceToMe() <= 100 && $event->isNotInPromo(); //tra i 25 e i 100km, in promo
         }))->union($futureEvents->filter(function (Event $event) {
             return $event->getDistanceToMe() > 100; //oltre i 100km
-        }));
+        }))->splice(30);
 
         return view('events-highlighted', [
-            'events' => $futureEvents//$events->flatten()
+            'events' => $events
         ]);
     }
 
