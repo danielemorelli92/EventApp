@@ -6,7 +6,7 @@
         <div class="section-title" style="margin-left: 12px">Eventi prossimi</div>
         <div class="events-list">
             @foreach($events as $event)
-                @if ($event->offer != null)
+                @if ($event->isInPromo())
                     @include('components.event-rectangle-promoted-container')
                 @else
                     @include('components.event-rectangle-container')
