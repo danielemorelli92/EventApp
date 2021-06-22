@@ -61,81 +61,89 @@
         <div id="" style="margin-bottom: 8px; display: flex; flex-direction: row; align-content: center">
             <p class="section-title" style="margin-left: 12px; margin-right: auto">Lista richieste di
                 abilitazione</p>
-            <input
-                type="search"
-                style="margin-top: 4px; margin-bottom: 4px;"
-                onkeyup='searchTable()'
-                onsearch='searchTable()'
-                id="search"
-                name="search"
-                class="filters-item"
-                placeholder="Ricerca testuale">
+            @if($pending_requests->count() != 0 || $closed_requests->count() != 0)
+                <input
+                    type="search"
+                    style="margin-top: 4px; margin-bottom: 4px;"
+                    onkeyup='searchTable()'
+                    onsearch='searchTable()'
+                    id="search"
+                    name="search"
+                    class="filters-item"
+                    placeholder="Ricerca testuale">
+            @endif
         </div>
 
-        <table id='lista_richieste' style="width:100%">
+        @if($pending_requests->count() != 0 || $closed_requests->count() != 0)
+            <table id='lista_richieste' style="width:100%">
 
-            <tr class="tr_titles" >
-                <th style="width: 24px">ID</th>
-                <th>Data sottomissione</th>
-                <th>Nome richiedente</th>
-                <th>Cognome richiedente</th>
-                <th>Data di nascita</th>
-                <th>Codice documento</th>
-                <th>Tipo Documento</th>
-                <th style="width: 110px">Stato</th>
-                <th style="width: 160px;">Controlli</th>
-            </tr>
-            @foreach($pending_requests as $request)
+                <tr class="tr_titles" >
+                    <th style="width: 24px">ID</th>
+                    <th>Data sottomissione</th>
+                    <th>Nome richiedente</th>
+                    <th>Cognome richiedente</th>
+                    <th>Data di nascita</th>
+                    <th>Codice documento</th>
+                    <th>Tipo Documento</th>
+                    <th style="width: 110px">Stato</th>
+                    <th style="width: 160px;">Controlli</th>
+                </tr>
+                @foreach($pending_requests as $request)
 
-                <tr>
-                    <th>{{$request->id}}</th>
-                    <td>{{$request->created_at}}</td>
-                    <td>{{$request->nome}}</td>
-                    <td>{{$request->cognome}}</td>
-                    <td>{{$request->data_nascita}}</td>
-                    <td>{{$request->codice_documento}}</td>
-                    <td>
-                        @switch($request->tipo_documento)
-                        @case ('identity card')
-                            Carta identità
-                            @break
-                        @case ('driving license')
-                             Patente
-                            @break
-                        @case ('passport')
-                            Passaporto
-                            @break
-                        @endswitch
-                           </td>
-                    <td>Pending</td>
-                    <th style="display: flex; flex-direction: row">
+                    <tr>
+                        <th>{{$request->id}}</th>
+                        <td>{{$request->created_at}}</td>
+                        <td>{{$request->nome}}</td>
+                        <td>{{$request->cognome}}</td>
+                        <td>{{$request->data_nascita}}</td>
+                        <td>{{$request->codice_documento}}</td>
+                        <td>
+                            @switch($request->tipo_documento)
+                            @case ('identity card')
+                                Carta identità
+                                @break
+                            @case ('driving license')
+                                 Patente
+                                @break
+                            @case ('passport')
+                                Passaporto
+                                @break
+                            @endswitch
+                               </td>
+                        <td>Pending</td>
+                        <th style="display: flex; flex-direction: row">
 
-                            <form action="/permissions/{{ $request->user_id }}" method="POST">
+                                <form action="/permissions/{{ $request->user_id }}" method="POST">
+                                    @csrf
+                                    @method('post')
+                                    <button type="submit" style="height:36px; margin-left: auto; margin-right: 4px">Accetta</button>
+                                </form>
+
+                            <form action="/request/{{ $request->id }}" method="POST">
                                 @csrf
-                                @method('post')
-                                <button type="submit" style="height:36px; margin-left: auto; margin-right: 4px">Accetta</button>
+                                @method('delete')
+                                <button type="submit" style="height:36px; margin-right: auto;" >Rifiuta</button>
                             </form>
 
-                        <form action="/request/{{ $request->id }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" style="height:36px; margin-right: auto;" >Rifiuta</button>
-                        </form>
+                        </th>
+                    </tr>
+                @endforeach
 
-                    </th>
-                </tr>
-            @endforeach
-
-            @foreach($closed_requests as $request)
-                <tr style="height: 40px">
-                    <th>{{$request->id}}</th>
-                    <td>{{$request->created_at}}</td>
-                    <td>{{$request->nome}}</td>
-                    <td>{{$request->cognome}}</td>
-                    <td>Closed</td>
-                </tr>
-            @endforeach
-        </table>
+                @foreach($closed_requests as $request)
+                    <tr style="height: 40px">
+                        <th>{{$request->id}}</th>
+                        <td>{{$request->created_at}}</td>
+                        <td>{{$request->nome}}</td>
+                        <td>{{$request->cognome}}</td>
+                        <td>Closed</td>
+                    </tr>
+                @endforeach
+            </table>
+        @else
+            <div class="placeholder-item"  id='lista_richieste' style="width: auto" >
+                <div class="placeholder-item-text">non ci sono richieste da gestire</div>
+            </div>
+        @endif
 
 
 
