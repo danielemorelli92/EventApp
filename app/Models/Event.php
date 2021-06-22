@@ -126,4 +126,14 @@ class Event extends Model
     {
         return (new Carbon($this->starting_time))->day == $day;
     }
+
+    public function isInPromo(): bool
+    {
+        return $this->load('offer')->offer != null;
+    }
+
+    public function isNotInPromo(): bool
+    {
+        return !$this->isInPromo();
+    }
 }

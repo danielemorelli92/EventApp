@@ -96,6 +96,27 @@ class EventController extends Controller
         ]);
     }
 
+    public function welcome()
+    {
+        $futureEvents = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time')->get();
+
+        $events = $futureEvents->filter(function (Event $event) {  //filtra, per ogni evento...
+            return $event->getDistanceToMe() <= 25 && $event->isInPromo();   // a una distanza non superiore di 25km, in promo
+        })->union($futureEvents->filter(function (Event $event) { // a cui aggiunge in fondo (push)
+            return $event->getDistanceToMe() <= 25 && $event->isNotInPromo(); // a una distanza non superiore di 25km, non in promo
+        }))->union($futureEvents->filter(function (Event $event) {
+            return $event->getDistanceToMe() > 25 && $event->getDistanceToMe() <= 100 && $event->isInPromo(); //tra i 25 e i 100km, in promo
+        }))->union($futureEvents->filter(function (Event $event) {
+            return $event->getDistanceToMe() > 25 && $event->getDistanceToMe() <= 100 && $event->isNotInPromo(); //tra i 25 e i 100km, in promo
+        }))->union($futureEvents->filter(function (Event $event) {
+            return $event->getDistanceToMe() > 100; //oltre i 100km
+        }));
+
+        return view('events-highlighted', [
+            'events' => $futureEvents//$events->flatten()
+        ]);
+    }
+
     public function show(Event $event)
     {
         return view('event', [
