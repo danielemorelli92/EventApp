@@ -386,6 +386,7 @@ class EventManagementTest extends TestCase
             'discount' => 70
         ]);
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
+            'price' => 10.0,
             'offer_start' => '2031-08-09 12:30',
             'offer_end' => '2031-08-11 12:30',
             'offer_discount' => 50
