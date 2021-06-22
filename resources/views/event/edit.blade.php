@@ -64,8 +64,8 @@
 
 
                     <div class="big-form-row">
-                        <label class="big-form-label" for="offer_end">Offerta al %</label>
-                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="0" max="100"
+                        <label class="big-form-label" for="offer_end">Sconto del %</label>
+                        <input class="big-form-compact-field" type="number" id="offer_discount" name="offer_discount" placeholder="%" min="1" max="100"
                                onchange="
                             if (this.value !== '') {
                                 this.setAttribute('required', 'required');
