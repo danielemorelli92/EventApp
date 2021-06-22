@@ -63,7 +63,8 @@
                                             >La posizione di un evento a cui sei
                                 registrato è stata modificata!@break
                                 @case(\App\Notifications\DateChanged::class)
-                                                <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
+                                                <a class="notification-item"
+                                                   href="/event/{{$notification->data['event_id']}}">
                                                     <div
                                                         @if($notification->read_at == null)
                                                         class="notification-item-title-unread"
@@ -71,26 +72,26 @@
                                                         class="notification-item-title"
                                                         @endif
                                                     >La data di un evento a cui sei registrato è
-                                stata modificata!@break
-                                @case(\App\Notifications\EventCanceled::class)
-                                                        <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
-                                                            <div
-                                                                @if($notification->read_at == null)
-                                                                class="notification-item-title-unread"
-                                                                @else
-                                                                class="notification-item-title"
-                                                                @endif
-                                                            >Un evento a cui eri registrato è stato
-                                cancellato!@break
-                                @case(\App\Notifications\ReplyToMe::class)
-                                                                <a class="notification-item" href="/event/{{$notification->data['event_id']}}">
-                                                                    <div
-                                                                        @if($notification->read_at == null)
-                                                                        class="notification-item-title-unread"
-                                                                        @else
-                                                                        class="notification-item-title"
-                                                                        @endif
-                                                                    >Qualcuno ha risposto ad un tuo commento! @break
+                                                        stata modificata!@break
+                                                        @case(\App\Notifications\EventCanceled::class)
+                                                        <div
+                                                            @if($notification->read_at == null)
+                                                            class="notification-item-title-unread"
+                                                            @else
+                                                            class="notification-item-title"
+                                                            @endif
+                                                        >Un evento a cui eri registrato è stato
+                                                            cancellato!@break
+                                                            @case(\App\Notifications\ReplyToMe::class)
+                                                            <a class="notification-item"
+                                                               href="/event/{{$notification->data['event_id']}}">
+                                                                <div
+                                                                    @if($notification->read_at == null)
+                                                                    class="notification-item-title-unread"
+                                                                    @else
+                                                                    class="notification-item-title"
+                                                                    @endif
+                                                                >Qualcuno ha risposto ad un tuo commento! @break
                                 @case(\App\Notifications\MessageToMe::class)
                                                                         <a class="notification-item" href="/chats">
                                                                             <div
