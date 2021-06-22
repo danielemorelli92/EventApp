@@ -124,7 +124,7 @@ class EventManagementTest extends TestCase
         $this->assertNotNull(Event::all()->first()->offer, 'creazione offerta fallita');
         $this->assertEquals('2021-09-09 12:30:00', Event::all()->first()->offer->start, "l'offerta non ha il valore di inizio corretto");
         $this->assertEquals('2021-09-11 12:30:00', Event::all()->first()->offer->end, "l'offerta non ha il valore di fine corretto");
-        $this->assertEquals(70, Event::all()->first()->offer->discount, "l'offerta non ha il valore di sconto corretto");
+        $this->assertEquals(30, Event::all()->first()->offer->discount, "l'offerta non ha il valore di sconto corretto");
     }
     public function test_a_organizer_cant_create_invalid_offer_for_event()
     {
