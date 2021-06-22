@@ -31,7 +31,7 @@ Route::get('/', function () {
     }
 });
 
-Route::get('/welcome', function () {
+/*Route::get('/welcome', function () {
     $events = Event::query()->where('starting_time', '>=', date(now()))->orderBy('starting_time')->get();
     $events = $events->filter(function ($event) {
         return $event->getDistanceToMe() <= 25;
@@ -40,7 +40,9 @@ Route::get('/welcome', function () {
     return view('events-highlighted', [
         'events' => $events
     ]);
-});
+});*/
+
+Route::get('/welcome', [EventController::class, 'welcome']);
 
 Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
 
