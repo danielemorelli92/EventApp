@@ -55,8 +55,9 @@ class WelcomeTest extends TestCase
         }))->union($futureEvents->filter(function (Event $event) {
             return $event->getDistanceToMe() > 100; //oltre i 100km
         }))->values() // solo i valori
-        ->pluck('id')
-            ->splice(30);
+        ->pluck('id');
+
+        $expected->splice(30);
 
 
         $this->assertEquals($expected->toArray(), $actual, 'gli elementi non vengono visualizzati oppure non nel giusto ordine');
