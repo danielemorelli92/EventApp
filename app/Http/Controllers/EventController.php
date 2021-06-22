@@ -179,7 +179,7 @@ class EventController extends Controller
                     "event_id" => $event->id,
                     "start" => request()->offer_start,
                     "end" => request()->offer_end,
-                    "discount" => request()->offer_discount,
+                    "discount" => 100 - request()->offer_discount,
                 ]);
             }
         }
@@ -411,14 +411,14 @@ class EventController extends Controller
                         "event_id" => $event->id,
                         "start" => request()->offer_start,
                         "end" => request()->offer_end,
-                        "discount" => request()->offer_discount,
+                        "discount" => 100 - request()->offer_discount,
                     ]);
                 } else {
                     $event->offer->update([
                         "event_id" => $event->id,
                         "start" => request()->offer_start,
                         "end" => request()->offer_end,
-                        "discount" => request()->offer_discount,
+                        "discount" => 100 - request()->offer_discount,
                     ]);
                 }
             }
