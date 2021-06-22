@@ -189,6 +189,7 @@ class EventController extends Controller
 
         if (request()->has('offer_discount')) {
             if (
+                (request()->price == null || request()->price == 0) ||
                 (request()->offer_start != null && request()->offer_start > request()->starting_time) ||
                 (request()->offer_start != null && request()->offer_end != null && request()->offer_end < request()->offer_start) ||
                 (request()->offer_start != null && request()->offer_discount == null) ||
@@ -418,16 +419,22 @@ class EventController extends Controller
         $event->refresh();
 
 
-        if (request()->has('offer_discount')) {
-            if (
-                (request()->starting_time != null && request()->offer_start != null && strtotime(request()->offer_start) > strtotime(request()->starting_time) ) ||
-                (request()->offer_start != null && request()->offer_end != null && strtotime(request()->offer_end) < strtotime(request()->offer_start)) ||
-                (request()->offer_start != null && request()->offer_discount == null) ||
-                (request()->offer_start == null && request()->offer_discount != null)
-            ) {
-                abort(400);
+        if (
+            !( ( !request()->has('offer_discount') || request('offer_discount') == null || request('offer_discount') == "" )
+            &&
+             ( !request()->has('offer_start') || request('offer_start') == null || request('offer_start') == "" ) )
+        ) //se nella modifica non ho svuotato i campi di start e discount
+            {
+                if (
+                    (request()->price == null || request()->price == 0) ||
+                    (request()->starting_time != null && request()->offer_start != null && strtotime(request()->offer_start) > strtotime(request()->starting_time) ) ||
+                    (request()->offer_start != null && request()->offer_end != null && strtotime(request()->offer_end) < strtotime(request()->offer_start)) ||
+                    (request()->offer_start != null && request()->offer_discount == null) ||
+                    (request()->offer_start == null && request()->offer_discount != null)
+                ) {
+                    abort(400);
             } else {
-                if ($event->offer == null) {
+                if ($event->isNotInPromo()) {
                     Offer::create([
                         "event_id" => $event->id,
                         "start" => request()->offer_start,
@@ -443,7 +450,7 @@ class EventController extends Controller
                     ]);
                 }
             }
-        } else if ($event->offer != null) {
+        } else if ($event->isInPromo()) {
             $event->offer->delete();
         }
 
