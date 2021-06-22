@@ -5,9 +5,15 @@
     <div class="main-content-column">
         <div class="section-title" style="margin-left: 12px">I miei eventi</div>
         <div class="events-list">
-            @foreach($my_events as $event)
-                @include('components.event-rectangle-container')
-            @endforeach
+            @if($my_events->count() != 0)
+                @foreach($my_events as $event)
+                    @include('components.event-rectangle-container')
+                @endforeach
+            @else
+                <div class="placeholder-item">
+                    <div class="placeholder-item-text">non hai eventi creati</div>
+                </div>
+            @endif
         </div>
     </div>
 

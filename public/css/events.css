@@ -857,6 +857,22 @@ input[type="file"] {
     font-size: 20px;
     font-weight: bold;
 }
+.placeholder-item{
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    border: 0.5px solid #bbb;
+
+    margin: 8px;
+    padding: 40px 0;
+    width: 100%;
+}
+.placeholder-item-text{
+    color: #777;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
 .text-area{
     word-wrap: break-word;
     margin: 8px;
