@@ -94,7 +94,10 @@
                                 <div
                                     style="width: 100%; display: flex; flex-direction: column; align-items: flex-start;">
                                     @foreach($events as $event)
-                                        @if($event->isThisDay($date->day))
+                                        @if(
+                                            (($event->ending_time == null || $event->ending_time == "" ) && $event->isThisDay($date->day)) ||
+                                            (!($event->ending_time == null || $event->ending_time == "" ) && $event->hasThisDay($date->year, $date->month, $date->day))
+                                            )
                                             <form style="width: calc(100% - 1.5px); height: auto"
                                                   action="/event/{{$event->id}}">
                                                 <button class="calendar-event-clickable-item"
