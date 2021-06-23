@@ -70,7 +70,7 @@ class NotificationTest extends TestCase
         DB::table('users')->where('id', $admin->id)->update(['type' => 'admin']);
 
         $this->actingAs($admin)->put('/events/' . $event->id, [
-            'starting_time' => date(now()->addDays(3)->setHour(3))
+            'starting_time' => date(now()->setSeconds(0)->addDays(3)->setHour(3))
         ]);
 
         $notifica = $user->notifications->first();
@@ -83,7 +83,7 @@ class NotificationTest extends TestCase
     public function test_a_user_registered_for_an_event_receives_a_notification_if_the_event_is_deleted()
     {
         $event = Event::factory()->create([
-            'starting_time' => date(now()->addDays(4))
+            'starting_time' => date(now()->setSeconds(0)->addDays(4))
         ]);
         $user = User::factory()->create();
         $event->registeredUsers()->attach($user);

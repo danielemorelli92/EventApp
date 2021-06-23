@@ -26,7 +26,7 @@ class EventsExploreTest extends TestCase
     public function test_a_user_can_select_a_event()
     {
         Event::factory(10)->create([
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
         $html_content = $this->get('/events')->content(); //estraggo la pagina html visualizzata dall'utente
         preg_match_all('/<a.*?href="\/event\/\d+">/', $html_content, $matches); //c'è almeno un link agli eventi?
@@ -37,17 +37,17 @@ class EventsExploreTest extends TestCase
     {
         $event_title_matched = Event::factory()->create([
             'title' => 'matched',
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
         $event_description_matched = Event::factory()->create([
             'title' => 'another',
             'description' => 'matched',
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
         $eventNotSerched = Event::factory()->create([
             'title' => 'do not show',
             'description' => 'do not show',
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
 
         $response = $this->get('/events?search=matched');
@@ -67,7 +67,7 @@ class EventsExploreTest extends TestCase
     public function test_a_user_can_access_the_event_page_from_the_events_list_in_explore_events_page()
     {
         $event = Event::factory()->create([
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
         $response = $this->get('/events');
         $response->assertSee($event->title);
@@ -141,14 +141,14 @@ class EventsExploreTest extends TestCase
             'title' => 'si deve leggere questo',
             'latitude' => 42.5049, // coordinate vicine
             'longitude' => 14.1389, // (Montesilvano, circa 7km di distanza),
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
         $far_event = Event::factory()->create([
             'title' => 'ma non questo qui',
             'latitude' => -42.25573,  // coordinate lontane
             'longitude' => 151.47322,  // (in mezzo all'oceano vicino l'Australia,
             //  circa 16500km di distanza. Perché sì.)
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
         $response = $this->get('/events?dist-max=50');
 
@@ -161,11 +161,11 @@ class EventsExploreTest extends TestCase
     {
         $today_event = Event::factory()->create([
             'title' => 'si deve leggere questo',
-            'starting_time' => date(now()->addHours(5))  // un evento che inizia tra 5 ore
+            'starting_time' => date(now()->setSeconds(0)->addHours(5))  // un evento che inizia tra 5 ore
         ]);
         $next_year_event = Event::factory()->create([
             'title' => 'ma non questo qui',
-            'starting_time' => date(now()->addYear())     // un evento che inizia l'anno prossimo
+            'starting_time' => date(now()->setSeconds(0)->addYear())     // un evento che inizia l'anno prossimo
         ]);
         $response = $this->get('/events?data-max=tomorrow');
 
@@ -178,12 +178,12 @@ class EventsExploreTest extends TestCase
     {
 
         $event_with_tag = Event::factory()->create([
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
         $tag = Tag::factory()->create();
         $event_with_tag->tags()->attach($tag);
         $event_without_tag = Event::factory()->create([
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
 
 
@@ -273,7 +273,7 @@ class EventsExploreTest extends TestCase
     public function test_a_user_can_access_author_event_profile_from_event_page()
     {
         $event = Event::factory()->create([
-            'starting_time' => date(now()->addYear())
+            'starting_time' => date(now()->setSeconds(0)->addYear())
         ]);
 
         $response = $this->get('/event/' . $event->id);

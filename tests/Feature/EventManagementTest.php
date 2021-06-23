@@ -293,8 +293,8 @@ class EventManagementTest extends TestCase
             'ticket_office' => 'old url',
             'website' => 'old url',
             'city' => 'old city',
-            'starting_time' => date(now()),
-            'ending_time' => date(now()),
+            'starting_time' => date(now()->setSeconds(0)),
+            'ending_time' => date(now()->setSeconds(0)),
             'author_id' => $user->id,
         ]);
 
@@ -346,7 +346,7 @@ class EventManagementTest extends TestCase
         $updated_event->refresh();
         self::assertEquals('new city', $updated_event->city, "l'indirizzo dell'evento non è stato modificato");
 
-        $new_date = date(now()->addWeek());
+        $new_date = date(now()->setSeconds(0)->addWeek());
         $request = $this->actingAs($user)->put('/events/' . $event->id, [
             'starting_time' => $new_date
         ]);
@@ -423,8 +423,8 @@ class EventManagementTest extends TestCase
             'ticket_office' => 'old url',
             'website' => 'old url',
             'city' => 'old city',
-            'starting_time' => date(now()),
-            'ending_time' => date(now())
+            'starting_time' => date(now()->setSeconds(0)),
+            'ending_time' => date(now()->setSeconds(0))
         ]);
 
         $event->refresh();
@@ -453,7 +453,7 @@ class EventManagementTest extends TestCase
         $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, [
             'city' => 'new city'
         ]);
-        $new_date = date(now()->addWeek());
+        $new_date = date(now()->setSeconds(0)->addWeek());
         $request = $this->actingAs($user_without_events)->put('/events/' . $event->id, [
             'starting_time' => $new_date
         ]);
