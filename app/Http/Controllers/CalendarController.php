@@ -31,10 +31,13 @@ class CalendarController extends Controller
             $date = $date->subDay();
         }
 
-        $events = Auth::user()->registeredEvents
-            ->filter(function ($event) use ($last_day, $first_day) {
+        $events = Auth::user()->registeredEvents->filter(function ($event) use ($last_day, $first_day) {
+            if ($event->ending_time == null || $event->ending_time == "") {
                 return $event->start_between($first_day, $last_day);
-            });
+            } else {
+                return $event->happening_between($first_day, $last_day);
+            }
+        });
 
         return view('calendar', [
             'date' => $date,
