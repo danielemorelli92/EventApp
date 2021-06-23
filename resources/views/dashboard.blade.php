@@ -6,26 +6,44 @@
         <section id="suggested_events">
             <div class="section-title">Eventi suggeriti in base ai tuoi gusti</div>
             <div class="events-list">
-                @foreach($interesting_events as $event)
-                    @include('components.event-square')
-                @endforeach
+                @if($interesting_events->count() != 0)
+                    @foreach($interesting_events as $event)
+                        @include('components.event-square')
+                    @endforeach
+                @else
+                    <div class="placeholder-item">
+                        <div class="placeholder-item-text">non ci sono eventi che assecondino i tuoi gusti</div>
+                    </div>
+                @endif
             </div>
         </section>
         <section id="registered_events_future">
             <div class="section-title">Eventi a cui sei registrato</div>
 
             <div class="events-list">
+                @if($registered_events_future->count() != 0)
                 @foreach($registered_events_future as $event)
                     @include('components.event-square')
                 @endforeach
+                @else
+                    <div class="placeholder-item">
+                        <div class="placeholder-item-text">non ci sono eventi a cui tu sia registrato</div>
+                    </div>
+                @endif
             </div>
         </section>
         <section id="registered_events_past">
             <div class="section-title">Eventi a cui hai partecipato</div>
             <div class="events-list">
+                @if($registered_events_past->count() != 0)
                 @foreach($registered_events_past as $event)
                     @include('components.event-square')
                 @endforeach
+                @else
+                    <div class="placeholder-item">
+                        <div class="placeholder-item-text">finora non hai partecipato ad eventi</div>
+                    </div>
+                @endif
             </div>
         </section>
     </div>

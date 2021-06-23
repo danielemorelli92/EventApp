@@ -136,4 +136,15 @@ class Event extends Model
     {
         return !$this->isInPromo();
     }
+
+    public function setAttribute($key, $value)
+    {
+        if ($key == 'starting_time') {
+            parent::setAttribute('starting_time', (new Carbon($value))->setSeconds(0));
+        } else if ($key == 'ending_time') {
+            parent::setAttribute('ending_time', (new Carbon($value))->setSeconds(0));
+        } else {
+            parent::setAttribute($key, $value);
+        }
+    }
 }

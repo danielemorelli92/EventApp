@@ -47,7 +47,7 @@ class UserTest extends TestCase
         $user = User::factory()->create();
         $event = Event::factory()->create([
             'title' => 'evento a cui user ha partecipato',
-            'starting_time' => date(now()->subWeek())
+            'starting_time' => date(now()->setSeconds(0)->subWeek())
         ]);
 
         $event->registeredUsers()->attach($user);

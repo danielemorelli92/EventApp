@@ -25,11 +25,11 @@ class PersonalAreaTest extends TestCase
         $user = User::factory()->create();
         $event = Event::factory()->create([
             'title' => 'evento a cui sei registrato',
-            'starting_time' => date(now()->addDay())
+            'starting_time' => date(now()->setSeconds(0)->addDay())
         ]);
         $event2 = Event::factory()->create([
             'title' => 'non deve essere visto',
-            'starting_time' => date(now()->addDay())
+            'starting_time' => date(now()->setSeconds(0)->addDay())
         ]);
 
         //  LOGGATO SI REGISTRA ALL'EVENTO
@@ -70,15 +70,15 @@ class PersonalAreaTest extends TestCase
         $tag = Tag::factory()->create();
         $event_interesting = Event::factory()->create([
             'title' => 'interessante',
-            'starting_time' => date(now()->addWeek())
+            'starting_time' => date(now()->setSeconds(0)->addWeek())
         ]); // da mostrare
         $event_not_interesting = Event::factory()->create([
             'title' => 'non mostrare',
-            'starting_time' => date(now()->addWeek())
+            'starting_time' => date(now()->setSeconds(0)->addWeek())
         ]); // da non mostrare
         $event_registered_already = Event::factory()->create([
             'title' => 'gia registrato',
-            'starting_time' => date(now()->addWeek())
+            'starting_time' => date(now()->setSeconds(0)->addWeek())
         ]); // da non mostrare
         $passed_event = Event::factory()->create([ // evento con interessi associati ma già passato
             'starting_time' => date(now()->setYear(2019))
@@ -118,7 +118,7 @@ class PersonalAreaTest extends TestCase
 
         $event = Event::factory()->create([
             'title' => 'evento a cui sei registrato',
-            'starting_time' => date(now()->subWeek())
+            'starting_time' => date(now()->setSeconds(0)->subWeek())
         ]);
 
         $this->post('/login', [

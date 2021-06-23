@@ -24,7 +24,7 @@ class CalendarController extends Controller
 
         $date = Carbon::create($year, $month, 1);
         $first_day = Carbon::create($year, $month, 1)->firstOfMonth();
-        $last_day = Carbon::create($year, $month, 1)->lastOfMonth();
+        $last_day = Carbon::create($year, $month, 1)->lastOfMonth()->addDay()->subSecond();
 
 
         while (!$date->isMonday()) {

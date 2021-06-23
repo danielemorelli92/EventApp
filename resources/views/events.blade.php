@@ -4,11 +4,20 @@
 @section('content')
     <div class="main-content-column">
         <div class="section-title" style="margin-left: 12px">Eventi in base ai filtri</div>
+
+
+        @if($events->count() != 0)
         <div class="events-list">
+
             @foreach($events as $event)
                 @include('components.event-rectangle-container')
             @endforeach
         </div>
+        @else
+            <div class="placeholder-item"  id='lista_richieste' style="width: auto" >
+                <div class="placeholder-item-text">non ci sono eventi in base ai filtri selezionati</div>
+            </div>
+        @endif
     </div>
 
     <form method="get" action="/events" class="right-side-column" >
