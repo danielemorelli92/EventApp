@@ -1,1 +1,1 @@
-create database eventapp;
+create database if not exists eventapp_4loops;

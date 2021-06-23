@@ -1,1 +1,1 @@
-install composer && composer require laravel/breeze && php artisan breeze:install && composer require munafio/chatify && php artisan chatify:install && npm install && cp .env.example .env && php artisan key:generate && mysql -u root < mysql_script.sql && php artisan migrate && php artisan db:seed
+composer require laravel/breeze && composer require munafio/chatify && composer update && npm update && cp .env.example .env && php artisan key:generate && mysql -u root < mysql_script.sql && php artisan migrate && php artisan db:seed
