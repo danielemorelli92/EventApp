@@ -12,6 +12,7 @@ Il progetto è utilizzabile in due modi:<br>
  - DB username: 'root'
  - DB password: ''
  - DB name: 'eventapp_4loops'
+
 P.S: la cartella standalone contiene un proprio DB che non necessita di configurazioni
 
  
