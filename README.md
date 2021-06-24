@@ -25,7 +25,7 @@ Abbiamo creato 3 utenti generici, la password è sempre 'password':
  
 Inoltre son presenti utenti che abbiamo usato personalmente per popolare il database.
 
-## Importa la repository
+## Importa la repository        (Metodo alternativo per l'importazione e il setup del progetto)
 
 ### Prerequisiti
 1) Composer (https://getcomposer.org/doc/00-intro.md)
